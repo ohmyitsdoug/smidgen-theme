@@ -112,24 +112,24 @@
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 64,
-        "pad_bottom": 88
+        "pad_bottom": 32
       }
     },
     "sm_callout_RPELUc": {
       "type": "sm-callout",
       "name": "Smidgen · Callout",
       "settings": {
-        "heading": "Have a game idea?",
-        "text": "Tell us which game and what's missing. We'll send a replacement, free.",
-        "link_label": "Request a part →",
-        "link": "",
+        "heading": "Have the next best game idea?",
+        "text": "Let us help you make your vision a reality.",
+        "link_label": "Learn what we're looking for→",
+        "link": "shopify://pages/contact-us",
         "icon_name": "lightbulb",
         "icon": "star",
         "icon_color": "#EA5D00",
         "icon_fg": "#FFFFFF",
         "box_bg": "#FFFFFF",
         "section_bg": "#FFF503",
-        "pad_top": 0,
+        "pad_top": 16,
         "pad_bottom": 72
       }
     },
