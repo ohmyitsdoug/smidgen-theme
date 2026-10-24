@@ -1228,3 +1228,123 @@ a.sm-hero__badge:hover {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.sm-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.sm-footer__brand {
+  flex: 1 1 320px;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sm-footer__card {
+  flex: 0 1 auto;
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 56px;
+  background: var(--sm-white);
+  color: var(--sm-black);
+  border: var(--sm-outline);
+  border-radius: var(--sm-radius);
+  box-shadow: 8px 8px 0 var(--sm-purple);
+  padding: 28px 36px;
+}
+
+.sm-footer__col {
+  min-width: 140px;
+}
+
+.sm-footer__heading {
+  margin: 0 0 10px;
+  font-family: var(--sm-font-game);
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--sm-purple);
+}
+
+.sm-footer__col ul,
+.sm-footer__policies {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sm-footer__col li + li {
+  margin-top: 8px;
+}
+
+.sm-footer .sm-footer__col a {
+  color: var(--sm-black);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.sm-footer .sm-footer__col a:hover,
+.sm-footer .sm-footer__col a[aria-current='page'] {
+  color: var(--sm-purple);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.sm-footer__social {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sm-white);
+  border: var(--sm-outline);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--sm-purple);
+}
+
+.sm-footer .sm-footer__social,
+.sm-footer .sm-footer__social:hover {
+  color: var(--sm-black);
+}
+
+.sm-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(255 255 255 / 0.3);
+  font-size: 0.875rem;
+}
+
+.sm-footer__policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.sm-footer .sm-footer__policies a {
+  color: inherit;
+  opacity: 0.85;
+}
+
+@media (max-width: 749px) {
+  .sm-footer__card {
+    margin-left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    gap: 28px;
+  }
+}

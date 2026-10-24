@@ -8,10 +8,21 @@
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
-  assign m = product.metafields.smidgen
-  assign video_url = m.howto_video.value
-  assign steps = m.howto_steps.value
-  assign rules = m.rules_pdf.value
+  assign vf = s.video_field | default: 'smidgen.howto_video' | split: '.'
+  assign sf = s.steps_field | default: 'smidgen.howto_steps' | split: '.'
+  assign rf = s.rules_field | default: 'smidgen.rules_pdf' | split: '.'
+  assign video_val = product.metafields[vf[0]][vf[1]].value
+  assign steps = product.metafields[sf[0]][sf[1]].value
+  assign rules = product.metafields[rf[0]][rf[1]].value
+
+  assign video_file = blank
+  assign video_url = blank
+  if video_val.media_type == 'video' or video_val.media_type == 'external_video'
+    assign video_file = video_val
+  elsif video_val != blank
+    assign video_url = video_val
+  endif
+  assign rules_url = rules.url | default: rules
 
   assign step_count = 0
   for step in steps
@@ -33,7 +44,7 @@
   endif
 
   assign has_any = false
-  if video_url != blank or step_count > 0 or rules != blank
+  if video_url != blank or video_file != blank or step_count > 0 or rules_url != blank
     assign has_any = true
   endif
   assign num_colors = '#753189,#EA5D00,#20A4F3,#000000' | split: ','
@@ -50,7 +61,15 @@
     <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
       <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
 
-      {%- if video_url != blank -%}
+      {%- if video_file != blank -%}
+        <div class="sm-video">
+          {%- if video_file.media_type == 'external_video' -%}
+            {{ video_file | external_video_tag: loading: 'lazy' }}
+          {%- else -%}
+            {{ video_file | video_tag: controls: true, preload: 'metadata', playsinline: true }}
+          {%- endif -%}
+        </div>
+      {%- elsif video_url != blank -%}
         <div class="sm-video">
           {%- if yt_id != blank -%}
             <iframe
@@ -96,41 +115,154 @@
         </ol>
       {%- endif -%}
 
-      {%- if rules != blank -%}
-        <a class="sm-btn" href="{{ rules.url }}" target="_blank" rel="noopener" style="align-self: flex-start;">
+      {%- if rules_url != blank -%}
+        <a class="sm-btn" href="{{ rules_url }}" target="_blank" rel="noopener" style="align-self: flex-start;">
           {{- s.rules_label -}}
         </a>
       {%- endif -%}
     </div>
   </section>
   {% render 'sm-divider', shape: s.divider_shape, from: s.bg, to: s.outer_color %}
+{%- elsif request.design_mode -%}
+  <div class="sm-container sm-container--narrow" style="--sm-pad-top: 24px; --sm-pad-bottom: 24px;">
+    <p style="margin: 0; padding: 20px; border: 3px dashed #000; border-radius: 20px; font-family: var(--sm-font-body);">
+      <strong>Learn to play is hidden on this product</strong> (only you can see this note).
+      Add a how-to video, steps or a rules PDF to this product's fields
+      ({{ s.video_field | default: 'smidgen.howto_video' }}, {{ s.steps_field | default: 'smidgen.howto_steps' }}, {{ s.rules_field | default: 'smidgen.rules_pdf' }}),
+      or point this section at fields you already use in its settings.
+    </p>
+  </div>
 {%- endif -%}
 
 {% schema %}
 {
   "name": "Smidgen · Learn to play",
   "tag": "div",
-  "enabled_on": { "templates": ["product"] },
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
   "settings": [
-    { "type": "paragraph", "content": "Uses each game's how-to video, steps and rules PDF fields. Hidden on games that have none of them." },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Learn to play" },
-    { "type": "text", "id": "rules_label", "label": "Rules button label", "default": "Download the rules (PDF)" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "color", "id": "outer_color", "label": "Color of sections above and below", "default": "#FFFFFF" },
     {
-      "type": "select", "id": "divider_shape", "label": "Divider shape",
+      "type": "paragraph",
+      "content": "Uses each game's how-to video, steps and rules PDF fields. Hidden on games that have none of them."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Learn to play"
+    },
+    {
+      "type": "text",
+      "id": "rules_label",
+      "label": "Rules button label",
+      "default": "Download the rules (PDF)"
+    },
+    {
+      "type": "header",
+      "content": "Product fields"
+    },
+    {
+      "type": "paragraph",
+      "content": "Type the namespace.key of each product field, as shown in Settings → Custom data → Products. Use these if your products already have a video or rules field."
+    },
+    {
+      "type": "text",
+      "id": "video_field",
+      "label": "Video field",
+      "default": "smidgen.howto_video",
+      "info": "URL (YouTube links embed) or a Shopify video file"
+    },
+    {
+      "type": "text",
+      "id": "steps_field",
+      "label": "Steps field",
+      "default": "smidgen.howto_steps"
+    },
+    {
+      "type": "text",
+      "id": "rules_field",
+      "label": "Rules PDF field",
+      "default": "smidgen.rules_pdf",
+      "info": "File or URL"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "outer_color",
+      "label": "Color of sections above and below",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "select",
+      "id": "divider_shape",
+      "label": "Divider shape",
       "options": [
-        { "value": "wave", "label": "Wave" }, { "value": "zigzag", "label": "Zigzag" },
-        { "value": "scallop", "label": "Scallop" }, { "value": "straight", "label": "Straight line" }
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
       ],
       "default": "wave"
     },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 72 }
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 72
+    }
   ],
-  "presets": [{ "name": "Smidgen · Learn to play" }]
+  "presets": [
+    {
+      "name": "Smidgen · Learn to play"
+    }
+  ]
 }
 {% endschema %}
