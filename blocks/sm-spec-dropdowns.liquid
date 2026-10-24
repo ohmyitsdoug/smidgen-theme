@@ -42,7 +42,22 @@
 
   assign weight = bs.weight | strip
   if weight == blank and v.weight > 0
-    assign weight = v.weight | weight_with_unit
+    comment
+      variant.weight is always in grams.
+    endcomment
+    case bs.weight_unit
+      when 'oz'
+        assign weight = v.weight | divided_by: 28.3495 | round: 1 | append: ' oz'
+      when 'lb'
+        assign weight = v.weight | divided_by: 453.592 | round: 2 | append: ' lb'
+      when 'g'
+        assign weight = v.weight | round | append: ' g'
+      when 'kg'
+        assign weight = v.weight | divided_by: 1000.0 | round: 2 | append: ' kg'
+      else
+        assign weight = v.weight | weight_with_unit
+    endcase
+    assign weight = weight | replace: '.0 ', ' '
   endif
 
   assign test_field = blank
@@ -124,6 +139,15 @@
     { "type": "text", "id": "height", "label": "Height", "info": "Database icon → Product → Height" },
     { "type": "text", "id": "box_unit", "label": "Unit after size", "default": "in", "info": "Leave empty if your fields already include units." },
     { "type": "text", "id": "weight_label", "label": "Weight row label", "default": "Weight" },
+    {
+      "type": "select", "id": "weight_unit", "label": "Weight unit",
+      "options": [
+        { "value": "oz", "label": "Ounces (oz)" }, { "value": "lb", "label": "Pounds (lb)" },
+        { "value": "g", "label": "Grams (g)" }, { "value": "kg", "label": "Kilograms (kg)" },
+        { "value": "store", "label": "Store default" }
+      ],
+      "default": "oz"
+    },
     { "type": "text", "id": "weight", "label": "Weight", "info": "Leave empty to use the product's shipping weight (set under Shipping on the product)." },
     { "type": "header", "content": "Testing" },
     { "type": "text", "id": "testing_label", "label": "Label", "default": "Safety testing" },
