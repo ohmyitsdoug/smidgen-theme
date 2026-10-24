@@ -1,4 +1,10 @@
 {%- liquid
+  assign card_bg = blank
+  if section.settings.card_bg_mode == 'custom'
+    assign card_bg = section.settings.card_bg
+  endif
+-%}
+{%- liquid
   assign s = section.settings
   if s.products != blank
     assign games = s.products
@@ -32,7 +38,7 @@
 
     <div class="sm-grid sm-grid--cards" style="--sm-min: {{ s.card_min }}px;">
       {%- for product in games limit: s.limit -%}
-        {% render 'sm-game-card', product: product %}
+        {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg %}
       {%- else -%}
         <p>Pick a collection or games for this section in the theme editor.</p>
       {%- endfor -%}
@@ -48,42 +54,218 @@
   "name": "Smidgen · Game grid",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Pick your game" },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "All games →" },
-    { "type": "url", "id": "link", "label": "Link" },
-    { "type": "header", "content": "Games" },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "product_list", "id": "products", "label": "Or pick games by hand", "limit": 12 },
-    { "type": "range", "id": "limit", "label": "Games to show", "min": 1, "max": 24, "step": 1, "default": 8 },
-    { "type": "range", "id": "card_min", "label": "Card width", "min": 200, "max": 360, "step": 10, "unit": "px", "default": 240 },
     {
-      "type": "select", "id": "doodle", "label": "Doodle",
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick your game"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "All games →"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Games"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Or pick games by hand",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Games to show",
+      "min": 1,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_min",
+      "label": "Card width",
+      "min": 200,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 240
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "squiggle", "label": "Squiggle" },
-        { "value": "spiral", "label": "Spiral" }, { "value": "zigzag", "label": "Zigzag" },
-        { "value": "star", "label": "Star" }
+        {
+          "value": "fit",
+          "label": "Fit (show the whole image)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (crop to fill the card)"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "select",
+      "id": "card_bg_mode",
+      "label": "Image background",
+      "options": [
+        {
+          "value": "game",
+          "label": "Each game's own color"
+        },
+        {
+          "value": "custom",
+          "label": "One color for all cards"
+        }
+      ],
+      "default": "game"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Background color",
+      "default": "#753189",
+      "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "doodle",
+      "label": "Doodle",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "squiggle",
+          "label": "Squiggle"
+        },
+        {
+          "value": "spiral",
+          "label": "Spiral"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        }
       ],
       "default": "none"
     },
-    { "type": "color", "id": "doodle_color", "label": "Doodle color", "default": "#EA5D00" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "color",
+      "id": "doodle_color",
+      "label": "Doodle color",
+      "default": "#EA5D00"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" },
-        { "value": "straight", "label": "Straight line" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
       ],
       "default": "none"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#20A4F3", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#20A4F3",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 88
+    }
   ],
-  "presets": [{ "name": "Smidgen · Game grid" }]
+  "presets": [
+    {
+      "name": "Smidgen · Game grid"
+    }
+  ]
 }
 {% endschema %}

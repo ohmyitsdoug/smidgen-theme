@@ -1,4 +1,10 @@
 {%- liquid
+  assign card_bg = blank
+  if section.settings.card_bg_mode == 'custom'
+    assign card_bg = section.settings.card_bg
+  endif
+-%}
+{%- liquid
   assign s = section.settings
   assign filter_tags = s.filter_tags | split: ','
   assign base_url = collection.url
@@ -66,7 +72,7 @@
 
       <div class="sm-grid sm-grid--cards" style="--sm-min: 260px;">
         {%- for product in collection.products -%}
-          {% render 'sm-game-card', product: product %}
+          {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg %}
         {%- else -%}
           <p style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 3px dashed #000; border-radius: 26px;">
             No games here yet. Check back soon!
@@ -95,12 +101,83 @@
 {
   "name": "Smidgen · Collection",
   "tag": "div",
-  "enabled_on": { "templates": ["collection"] },
+  "enabled_on": {
+    "templates": [
+      "collection"
+    ]
+  },
   "settings": [
-    { "type": "text", "id": "intro", "label": "Intro (used if the collection has no description)", "default": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight." },
-    { "type": "text", "id": "filter_tags", "label": "Filter buttons (product tags)", "info": "Comma-separated product tags, e.g. family, 2-player, quick-play, coming-soon. Only tags used in this collection appear.", "default": "family, 2-player, quick-play, coming-soon" },
-    { "type": "range", "id": "per_page", "label": "Games per page", "min": 8, "max": 48, "step": 4, "default": 24 },
-    { "type": "color", "id": "hero_bg", "label": "Header color", "default": "#FFF503" }
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Intro (used if the collection has no description)",
+      "default": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight."
+    },
+    {
+      "type": "text",
+      "id": "filter_tags",
+      "label": "Filter buttons (product tags)",
+      "info": "Comma-separated product tags, e.g. family, 2-player, quick-play, coming-soon. Only tags used in this collection appear.",
+      "default": "family, 2-player, quick-play, coming-soon"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Games per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image",
+      "options": [
+        {
+          "value": "fit",
+          "label": "Fit (show the whole image)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (crop to fill the card)"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "select",
+      "id": "card_bg_mode",
+      "label": "Image background",
+      "options": [
+        {
+          "value": "game",
+          "label": "Each game's own color"
+        },
+        {
+          "value": "custom",
+          "label": "One color for all cards"
+        }
+      ],
+      "default": "game"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Background color",
+      "default": "#753189",
+      "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "hero_bg",
+      "label": "Header color",
+      "default": "#FFF503"
+    }
   ]
 }
 {% endschema %}

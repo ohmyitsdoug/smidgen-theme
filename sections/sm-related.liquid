@@ -1,0 +1,112 @@
+{%- comment -%}
+  "Play these next": related games as Smidgen game cards.
+  Uses Shopify's product recommendations (loaded after the page renders).
+  Until those arrive, or if Shopify has none, it shows games from the
+  fallback collection, never including the current game.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign card_bg = blank
+  if s.card_bg_mode == 'custom'
+    assign card_bg = s.card_bg
+  endif
+  assign fallback = s.fallback.products | default: collections.all.products
+  assign rec_url = routes.product_recommendations_url | append: '?section_id=' | append: section.id | append: '&product_id=' | append: product.id | append: '&limit=' | append: s.limit | append: '&intent=' | append: s.intent
+-%}
+
+{%- capture cards -%}
+  {%- if recommendations.performed? -%}
+    {%- for rec in recommendations.products -%}
+      {% render 'sm-game-card', product: rec, image_fit: s.image_fit, bg: card_bg %}
+    {%- endfor -%}
+  {%- else -%}
+    {%- assign shown = 0 -%}
+    {%- for p in fallback -%}
+      {%- if p.id == product.id or shown >= s.limit -%}{%- continue -%}{%- endif -%}
+      {%- assign shown = shown | plus: 1 -%}
+      {% render 'sm-game-card', product: p, image_fit: s.image_fit, bg: card_bg %}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if cards != blank -%}
+  {%- if s.divider_top != 'none' -%}
+    {% render 'sm-divider', shape: s.divider_top, from: s.divider_from, to: s.bg %}
+  {%- endif -%}
+  <section
+    id="sm-{{ section.id }}"
+    class="sm-section"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    aria-labelledby="sm-{{ section.id }}-title"
+  >
+    <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+      <h2 id="sm-{{ section.id }}-title" class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3.2rem);">{{ s.heading }}</h2>
+      <div class="sm-grid sm-grid--cards" style="--sm-min: 240px;" data-sm-related data-url="{{ rec_url }}">
+        {{ cards }}
+      </div>
+    </div>
+  </section>
+
+  {%- unless recommendations.performed? -%}
+    <script>
+      (function () {
+        var grid = document.querySelector('#sm-{{ section.id }} [data-sm-related]');
+        if (!grid || !window.fetch) return;
+        fetch(grid.dataset.url)
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('[data-sm-related]');
+            if (fresh && fresh.querySelector('.sm-card')) grid.innerHTML = fresh.innerHTML;
+          })
+          .catch(function () {});
+      })();
+    </script>
+  {%- endunless -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Related games",
+  "tag": "div",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Play these next" },
+    {
+      "type": "select", "id": "intent", "label": "Type",
+      "options": [{ "value": "related", "label": "Related" }, { "value": "complementary", "label": "Complementary" }],
+      "default": "related"
+    },
+    { "type": "range", "id": "limit", "label": "Games to show", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "collection", "id": "fallback", "label": "Fallback collection", "info": "Shown while recommendations load, or when Shopify has none." },
+    { "type": "header", "content": "Cards" },
+    {
+      "type": "select", "id": "image_fit", "label": "Image",
+      "options": [{ "value": "fit", "label": "Fit (show the whole image)" }, { "value": "fill", "label": "Fill (crop to fill the card)" }],
+      "default": "fill"
+    },
+    {
+      "type": "select", "id": "card_bg_mode", "label": "Image background",
+      "options": [{ "value": "game", "label": "Each game's own color" }, { "value": "custom", "label": "One color for all cards" }],
+      "default": "game"
+    },
+    { "type": "color", "id": "card_bg", "label": "Background color", "default": "#753189", "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#20A4F3" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    {
+      "type": "select", "id": "divider_top", "label": "Divider above",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "zigzag"
+    },
+    { "type": "color", "id": "divider_from", "label": "Previous section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider_top != 'none' }}" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{ "name": "Smidgen · Related games" }]
+}
+{% endschema %}

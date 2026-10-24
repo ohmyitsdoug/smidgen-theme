@@ -843,17 +843,46 @@ html .button-secondary:hover {
 /* ==========================================================================
    Horizon product page, restyled to match the Smidgen design
    ========================================================================== */
+/* Media column: no frame on the whole column; the slideshow gets the frame
+   and thumbnails sit underneath on white, like the design. */
 .product-information__media {
+  max-width: 640px;
+  width: 100%;
+  justify-self: center;
+}
+
+.product-information__media slideshow-container {
   background: var(--sm-product-color, var(--sm-purple));
   border: var(--sm-outline);
   border-radius: 30px;
   box-shadow: var(--sm-shadow-lg);
   overflow: hidden;
-  padding: clamp(12px, 3vw, 32px);
 }
 
-.product-information__media img {
-  border-radius: 18px;
+.product-information__media slideshow-slide img,
+.product-information__media slideshow-slide video {
+  box-sizing: border-box;
+  max-height: min(560px, 62vh);
+  object-fit: contain;
+  padding: clamp(16px, 4vw, 44px);
+  border-radius: 34px;
+}
+
+.product-information__media .slideshow-controls__thumbnails {
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.product-information__media .slideshow-controls__thumbnail {
+  border: var(--sm-outline);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--sm-white);
+}
+
+.product-information__media .slideshow-controls__thumbnail[aria-selected='true'],
+.product-information__media .slideshow-controls__thumbnail[aria-current='true'] {
+  box-shadow: 4px 4px 0 var(--sm-orange);
 }
 
 .product-details h1 {
@@ -1134,4 +1163,24 @@ product-card.product-card,
 @media (max-width: 599px) {
   .sm-doodle--free { transform-origin: center; }
   .sm-doodle--hide-mobile { display: none; }
+}
+
+/* Game card image modes */
+.sm-card__media--fill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 599px) {
+  .sm-grid--cards .sm-card__media--fill img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (hover: hover) {
+  .sm-card:hover .sm-card__media--fill img {
+    transform: scale(1.06);
+  }
 }

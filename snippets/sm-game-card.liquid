@@ -6,10 +6,15 @@
 
   @param {product} product
   @param {string} [image_sizes]
+  @param {string} [image_fit] - 'fit' (whole image, default) or 'fill' (crop to fill the card art area)
+  @param {string} [bg] - background color for the art area; overrides the game's card_color
 {%- enddoc -%}
 {%- liquid
   assign m = product.metafields.smidgen
   assign card_color = m.card_color.value | default: '#753189'
+  if bg != blank
+    assign card_color = bg
+  endif
 
   assign badge = m.badge.value
   assign more = 'View game →'
@@ -28,7 +33,7 @@
   assign sizes = image_sizes | default: '(min-width: 1200px) 300px, (min-width: 600px) 45vw, 90vw'
 -%}
 <a href="{{ product.url }}" class="sm-card" style="--sm-card-color: {{ card_color }};">
-  <span class="sm-card__media">
+  <span class="sm-card__media{% if image_fit == 'fill' %} sm-card__media--fill{% endif %}">
     {%- if product.featured_media -%}
       {{
         product.featured_media
