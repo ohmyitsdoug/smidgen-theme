@@ -13,6 +13,8 @@
       "type": "sm-main-collection",
       "settings": {
         "intro": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight.",
+        "auto_tags": true,
+        "exclude_tags": "CUNO,mrbls,game,pins,promotions,wholesale",
         "filter_tags": "family, 2-player, quick-play, coming-soon",
         "all_label": "All",
         "all_link": "",
