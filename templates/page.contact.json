@@ -9,171 +9,149 @@
  */
 {
   "sections": {
-    "header": {
-      "type": "sm-help-hero",
+    "main": {
+      "type": "main-page",
       "blocks": {
-        "l1": {
-          "type": "link",
+        "title": {
+          "type": "text",
+          "name": "t:names.title",
           "settings": {
-            "label": "Orders & shipping",
-            "link": "#faq",
-            "icon": "?",
-            "color": "#FFF503",
-            "icon_color": "#000000"
-          }
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
-        "l2": {
-          "type": "link",
+        "content": {
+          "type": "text",
+          "name": "t:names.content",
           "settings": {
-            "label": "Rules & pieces",
-            "link": "#faq",
-            "icon": "✎",
-            "color": "#EA5D00",
-            "icon_color": "#FFFFFF"
-          }
-        },
-        "l3": {
-          "type": "link",
-          "settings": {
-            "label": "Wholesale",
-            "link": "/pages/wholesale",
-            "icon": "★",
-            "color": "#753189",
-            "icon_color": "#FFFFFF"
-          }
-        },
-        "l4": {
-          "type": "link",
-          "settings": {
-            "label": "Contact us",
-            "link": "#contact",
-            "icon": "✉",
-            "color": "#FFFFFF",
-            "icon_color": "#000000"
-          }
-        },
-        "l5": {
-          "type": "link",
-          "settings": {
-            "label": "Pitch us a game",
-            "link": "#pitch",
-            "icon": "!",
-            "color": "#20A4F3",
-            "icon_color": "#000000"
-          }
+            "text": "{{ closest.page.content }}",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "l1",
-        "l2",
-        "l3",
-        "l4",
-        "l5"
+        "title",
+        "content"
       ],
+      "disabled": true,
       "settings": {
-        "heading": "How can we help?"
+        "content_direction": "column",
+        "gap": 32,
+        "background_color": "",
+        "padding-block-start": 40,
+        "padding-block-end": 0
       }
     },
-    "faq": {
-      "type": "sm-faq",
-      "blocks": {
-        "q1": {
-          "type": "question",
-          "settings": {
-            "question": "How long does shipping take?",
-            "answer": "<p>[Your shipping window and carrier.]</p>"
-          }
-        },
-        "q2": {
-          "type": "question",
-          "settings": {
-            "question": "When do preorders ship?",
-            "answer": "<p>Each preorder page shows its expected ship month. We email you when it goes out.</p>"
-          }
-        },
-        "q3": {
-          "type": "question",
-          "settings": {
-            "question": "Where can I find the rules?",
-            "answer": "<p>Every game page has a printable PDF and, when we have one, a how-to-play video.</p>"
-          }
-        },
-        "q4": {
-          "type": "question",
-          "settings": {
-            "question": "I think a piece is missing.",
-            "answer": "<p>Use the contact form below and tell us which game and what's missing. We'll send a replacement.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4"
-      ],
-      "settings": {
-        "heading": "Common questions",
-        "use_product": false,
-        "schema": true,
-        "pad_top": 24
-      }
-    },
-    "contact": {
+    "sm_contact_6q7jFc": {
       "type": "sm-contact",
+      "name": "Smidgen · Contact form",
       "settings": {
+        "anchor": "contact",
+        "heading": "Contact us",
+        "text": "<p>We read every message and do our best to reply to everyone. We're a small team, so please give us a little time.</p><p>Game designer? <a href=\"#pitch\">See how to pitch us ↓</a></p>",
+        "email": "",
+        "extra": "<p><strong>Social</strong><br/>@playsmidgen on Instagram, TikTok & YouTube</p>",
+        "topics": "An order\nRules question\nMissing piece\nWholesale\nPress or events\nSomething else",
+        "show_order": true,
+        "ph_name": "Shawn Spencer",
+        "ph_email": "shawn@psych-santabarbara.example",
+        "ph_order": "#1042",
+        "ph_message": "Hey! My dad, a very hard man to impress, absolutely loved CUNO at game night. Where can I grab a copy for my best friend, Ghee Buttersnaps (a.k.a. Gus)? He'd be all over it.\n\nPineapple-ly yours,\nShawn Spencer, Head Psychic",
+        "button_label": "Send message",
+        "success": "Thanks! Your message is on its way. We'll get back to you as soon as we can.",
+        "bg": "#753189",
+        "fg": "#FFFFFF",
+        "link_color": "#FFF503",
         "divider_top": "zigzag",
         "divider_from": "#FFFFFF",
         "divider": "wave",
-        "divider_to": "#FFF503"
+        "divider_to": "#FFF503",
+        "pad_top": 48,
+        "pad_bottom": 72
       }
     },
-    "pitch": {
+    "sm_pitch_ityV8w": {
       "type": "sm-pitch",
       "blocks": {
-        "item1": {
+        "item_DXngfk": {
           "type": "item",
           "settings": {
             "text": "<b>Subject line:</b> \"Pitch: [Game name]\""
           }
         },
-        "item2": {
+        "item_qfqaHm": {
           "type": "item",
           "settings": {
             "text": "<b>One-line hook</b> and what makes it fun"
           }
         },
-        "item3": {
+        "item_YhfzPm": {
           "type": "item",
           "settings": {
             "text": "<b>Players, play time and ages</b>"
           }
         },
-        "item4": {
+        "item_r8zizy": {
           "type": "item",
           "settings": {
             "text": "<b>Sell sheet:</b> a one-page PDF"
           }
         },
-        "item5": {
+        "item_BcfqwX": {
           "type": "item",
           "settings": {
             "text": "<b>Gameplay video:</b> a 2–5 minute link showing a few turns"
           }
         },
-        "item6": {
+        "item_Qh8p7L": {
           "type": "item",
           "settings": {
             "text": "<b>Rules</b> as a PDF or shared link"
           }
         },
-        "item7": {
+        "item_B3pFKQ": {
           "type": "item",
           "settings": {
             "text": "<b>Playtesting so far:</b> how many groups, what you changed"
           }
         },
-        "item8": {
+        "item_nb3EXW": {
           "type": "item",
           "settings": {
             "text": "<b>A little about you</b> and where else it's been pitched"
@@ -181,22 +159,42 @@
         }
       },
       "block_order": [
-        "item1",
-        "item2",
-        "item3",
-        "item4",
-        "item5",
-        "item6",
-        "item7",
-        "item8"
+        "item_DXngfk",
+        "item_qfqaHm",
+        "item_YhfzPm",
+        "item_r8zizy",
+        "item_BcfqwX",
+        "item_Qh8p7L",
+        "item_B3pFKQ",
+        "item_nb3EXW"
       ],
-      "settings": {}
+      "name": "Smidgen · Pitch us a game",
+      "settings": {
+        "anchor": "pitch",
+        "eyebrow": "For game designers",
+        "heading": "Got a game? Pitch us!",
+        "intro": "<p>We love seeing new designs, especially quick-to-teach family games with real decisions. Send one email with the essentials below and we'll take a look.</p>",
+        "list_heading": "What to include in your email",
+        "note": "<p>Links beat big attachments. Please don't mail physical prototypes unless we ask for one.</p>",
+        "cta_heading": "Send your pitch",
+        "email": "",
+        "subject": "Pitch:",
+        "button_label": "Email your pitch",
+        "response": "<p>We do our best to reply to everyone, but reviewing pitches takes time, so please be patient with us. If it's a fit, we'll ask for a prototype or a video call.</p>",
+        "fits_heading": "What fits Smidgen",
+        "fits": "Teaches in a few minutes\nMeaningful choices without heavy rules\nKeeps every player in the game\nSmall, portable component count",
+        "bg": "#FFF503",
+        "fg": "#000000",
+        "divider": "none",
+        "divider_to": "#FFFFFF",
+        "pad_top": 40,
+        "pad_bottom": 88
+      }
     }
   },
   "order": [
-    "header",
-    "faq",
-    "contact",
-    "pitch"
+    "main",
+    "sm_contact_6q7jFc",
+    "sm_pitch_ityV8w"
   ]
 }
