@@ -77,7 +77,9 @@
         </div>
         {%- if s.bubble_image != blank -%}
           {%- if s.bubble_link != blank -%}<a href="{{ s.bubble_link }}" class="sm-vhero__bubble">{%- else -%}<span class="sm-vhero__bubble">{%- endif -%}
-            {{ s.bubble_image | image_url: width: 600 | image_tag: alt: s.bubble_image.alt, loading: 'eager', sizes: '240px' }}
+            {%- assign b_focal = s.bubble_image.presentation.focal_point | default: '50% 50%' -%}
+            {%- assign b_style = 'object-position: ' | append: b_focal -%}
+            {{ s.bubble_image | image_url: width: 800 | image_tag: alt: s.bubble_image.alt, loading: 'eager', sizes: '(min-width: 750px) 240px, 34vw', style: b_style }}
           {%- if s.bubble_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
           {%- if s.show_arrow -%}
             <svg class="sm-vhero__arrow" viewBox="0 0 190 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 70 C 30 30, 60 18, 82 34 C 98 46, 84 64, 70 56 C 56 48, 74 22, 108 24 C 140 26, 160 42, 176 64" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M156 62 L178 68 L174 46" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -252,7 +254,7 @@
       "type": "image_picker",
       "id": "bubble_image",
       "label": "Bubble image",
-      "info": "Sits in a circle over the screen's corner."
+      "info": "Fills the circle and is cropped to it. Set a focal point on the image to control the crop."
     },
     {
       "type": "color",
