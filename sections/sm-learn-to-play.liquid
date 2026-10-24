@@ -120,8 +120,23 @@
                   <span class="sm-visually-hidden">Step {{ n }}:</span>
                   {{ step.title.value }}
                 </h3>
-                {%- if step.description.value != blank -%}
-                  <div style="font-size: 1.05rem; line-height: 1.5;">{{ step.description | metafield_tag }}</div>
+                {%- liquid
+                  assign step_desc = step.description
+                  if step_desc.value == blank
+                    assign step_desc = step.body
+                  endif
+                  if step_desc.value == blank
+                    assign step_desc = step.details
+                  endif
+                  if step_desc.value == blank
+                    assign step_desc = step.text
+                  endif
+                  if step_desc.value == blank
+                    assign step_desc = step.content
+                  endif
+                -%}
+                {%- if step_desc.value != blank -%}
+                  <div style="font-size: 1.05rem; line-height: 1.5;">{{ step_desc | metafield_tag }}</div>
                 {%- endif -%}
               </li>
             {%- endif -%}
@@ -199,6 +214,7 @@
       "type": "text",
       "id": "steps_field",
       "label": "Steps field",
+      "info": "Type it, don't use the database icon. e.g. custom.how_to_steps",
       "default": "smidgen.howto_steps"
     },
     {
