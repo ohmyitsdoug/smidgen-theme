@@ -162,8 +162,8 @@
         "question_pjJetz": {
           "type": "question",
           "settings": {
-            "question": "Test",
-            "answer": "<p>&nbsp;Test</p>"
+            "question": "How long does shipping take?",
+            "answer": "<p>We typically ship within 1 business day.</p>"
           }
         },
         "question_hjc4pR": {
@@ -193,6 +193,9 @@
         "use_product": true,
         "open_first": false,
         "schema": true,
+        "show_box": false,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider_top": "none",
@@ -240,6 +243,9 @@
         "use_product": true,
         "open_first": false,
         "schema": true,
+        "show_box": false,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider_top": "none",
