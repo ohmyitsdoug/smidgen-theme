@@ -106,7 +106,7 @@
         "button_link": "",
         "button_2_label": "",
         "button_2_link": "",
-        "small_print": "★★★★★ Loved by families",
+        "small_print": "",
         "product": "cuno",
         "image": "shopify://shop_images/CUNO_BOX.png",
         "circle_color": "#753189",
@@ -237,7 +237,7 @@
         "bg": "#ffffff",
         "fg": "#000000",
         "divider": "scallop",
-        "divider_to": "#FFF503",
+        "divider_to": "#fff503",
         "pad_top": 48,
         "pad_bottom": 88
       }
