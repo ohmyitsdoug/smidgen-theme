@@ -27,7 +27,7 @@
         "doodle": "squiggle",
         "doodle_color": "#fff503",
         "doodle_position": "top-right",
-        "doodle_2": "star",
+        "doodle_2": "none",
         "doodle_2_color": "#ea5d00",
         "bg": "#753189",
         "fg": "#ffffff",
@@ -67,6 +67,7 @@
         "v1": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "01",
             "color": "#753189",
             "label_color": "#ffffff",
@@ -77,6 +78,7 @@
         "v2": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "02",
             "color": "#ea5d00",
             "label_color": "#ffffff",
@@ -87,6 +89,7 @@
         "v3": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "03",
             "color": "#20a4f3",
             "label_color": "#000000",
@@ -106,10 +109,28 @@
         "doodle_color": "#fff503",
         "bg": "#fff503",
         "fg": "#000000",
-        "divider": "wave",
+        "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 64,
         "pad_bottom": 88
+      }
+    },
+    "sm_callout_RPELUc": {
+      "type": "sm-callout",
+      "name": "Smidgen · Callout",
+      "settings": {
+        "heading": "Have a game idea?",
+        "text": "Tell us which game and what's missing. We'll send a replacement, free.",
+        "link_label": "Request a part →",
+        "link": "",
+        "icon_name": "lightbulb",
+        "icon": "star",
+        "icon_color": "#EA5D00",
+        "icon_fg": "#FFFFFF",
+        "box_bg": "#FFFFFF",
+        "section_bg": "#FFF503",
+        "pad_top": 0,
+        "pad_bottom": 72
       }
     },
     "timeline": {
@@ -118,6 +139,7 @@
         "t1": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "2024",
             "color": "#753189",
             "label_color": "#ffffff",
@@ -128,6 +150,7 @@
         "t2": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "Dec 2025",
             "color": "#ea5d00",
             "label_color": "#ffffff",
@@ -138,6 +161,7 @@
         "t3": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "Jan 2026",
             "color": "#20a4f3",
             "label_color": "#000000",
@@ -148,6 +172,7 @@
         "t4": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "Today",
             "color": "#fff503",
             "label_color": "#000000",
@@ -223,6 +248,7 @@
     "hero",
     "story",
     "values",
+    "sm_callout_RPELUc",
     "timeline",
     "stats"
   ]
