@@ -63,20 +63,29 @@
             <p style="margin: 0;">This game has no reviews yet, so this section is hidden on the live store (unless you add featured reviews).</p>
           {%- endif -%}
 
-          <div class="sm-reviews__apps">
-            {%- for block in section.blocks -%}
-              {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
-            {%- endfor -%}
-          </div>
+          {%- comment -%} App blocks: badges/medals go here, the review widget goes in the panel below. {%- endcomment -%}
+          {%- capture app_side -%}{%- endcapture -%}
+          {%- capture app_panel -%}{%- endcapture -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              {%- capture one_app -%}{% render block %}{%- endcapture -%}
+              {%- assign probe = one_app | downcase -%}
+              {%- if probe contains 'medal' -%}
+                {%- capture app_side -%}{{ app_side }}{{ one_app }}{%- endcapture -%}
+              {%- else -%}
+                {%- capture app_panel -%}{{ app_panel }}{{ one_app }}{%- endcapture -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if app_side != blank -%}<div class="sm-reviews__apps">{{ app_side }}</div>{%- endif -%}
+          {%- if app_panel != blank -%}
+            <a href="#sm-reviews-all-{{ section.id }}" class="sm-btn" data-sm-reviews-open style="align-self: flex-start;">{{ s.write_label }}</a>
+          {%- endif -%}
 
-          {%- if request.design_mode -%}
-            {%- assign has_app = false -%}
-            {%- for block in section.blocks -%}{%- if block.type == '@app' -%}{%- assign has_app = true -%}{%- endif -%}{%- endfor -%}
-            {%- unless has_app -%}
-              <p style="margin: 0; padding: 14px; border: 3px dashed #000; border-radius: 16px; font-size: 0.9rem; background: #fff; color: #000;">
-                <strong>Only you see this:</strong> add block → Apps → <em>Judge.me Review widget</em> to pull in reviews and the "Write a review" form. Add <em>Judge.me Medals</em> here too for the badges.
-              </p>
-            {%- endunless -%}
+          {%- if request.design_mode and app_panel == blank -%}
+            <p style="margin: 0; padding: 14px; border: 3px dashed #000; border-radius: 16px; font-size: 0.9rem; background: #fff; color: #000;">
+              <strong>Only you see this:</strong> add block → Apps → <em>Judge.me Review widget</em> for the full review list and "Write a review" form.
+            </p>
           {%- endif -%}
         </div>
 
@@ -102,8 +111,21 @@
             <button type="button" class="sm-reviews__arrow" data-dir="-1" aria-label="Previous reviews"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"/></svg></button>
             <button type="button" class="sm-reviews__arrow" data-dir="1" aria-label="Next reviews"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg></button>
           </div>
+          <p class="sm-reviews__empty" data-sm-reviews-empty hidden>{{ s.empty_text }}</p>
         </div>
       </div>
+
+      {%- if app_panel != blank -%}
+        <details class="sm-reviews__panel" id="sm-reviews-all-{{ section.id }}" data-sm-reviews-panel>
+          <summary class="sm-reviews__panel-toggle">{{ s.all_label }}</summary>
+          <div class="sm-reviews__panel-body">{{ app_panel }}</div>
+        </details>
+      {%- endif -%}
+
+      {%- assign legacy = product.metafields.judgeme.widget.value | default: product.metafields.judgeme.widget -%}
+      {%- if legacy != blank -%}
+        <template data-sm-reviews-source>{{ legacy }}</template>
+      {%- endif -%}
     </div>
   </section>
   {%- if s.divider != 'none' -%}
@@ -117,6 +139,8 @@
       var section = root.querySelector('[data-sm-reviews]');
       var track = root.querySelector('[data-sm-reviews-track]');
       var nav = root.querySelector('[data-sm-reviews-nav]');
+      var panel = root.querySelector('[data-sm-reviews-panel]');
+      var empty = root.querySelector('[data-sm-reviews-empty]');
       var max = parseInt(section.getAttribute('data-max'), 10) || 12;
       var seen = {};
 
@@ -124,74 +148,100 @@
         var n = el.querySelector(sel);
         return n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
       }
-      function stars(n) {
+      function starStr(n) {
         var out = '';
-        for (var i = 1; i <= 5; i++) out += i <= n ? '★' : '☆';
+        for (var i = 1; i <= 5; i++) out += i <= n ? '\u2605' : '\u2606';
         return out;
       }
       function updateNav() {
-        var scrollable = track.scrollWidth > track.clientWidth + 4;
-        nav.hidden = !scrollable;
+        nav.hidden = !(track.scrollWidth > track.clientWidth + 4);
       }
-      function build() {
-        var revs = root.querySelectorAll('.jdgm-rev');
-        if (!revs.length) return false;
-        var added = 0;
-        revs.forEach(function (rev) {
-          if (track.children.length >= max) return;
-          var body = txt(rev, '.jdgm-rev__body');
-          if (!body) return;
-          var key = (rev.getAttribute('data-review-id') || '') + body.slice(0, 40);
-          if (seen[key]) return;
-          seen[key] = true;
+      function addCard(score, title, body, author, verified) {
+        if (track.children.length >= max || !body) return;
+        var key = author + '|' + body.slice(0, 50);
+        if (seen[key]) return;
+        seen[key] = true;
+        var fig = document.createElement('figure');
+        fig.className = 'sm-review-card';
+        var st = document.createElement('span');
+        st.className = 'sm-review-card__stars';
+        st.setAttribute('aria-label', score + ' out of 5 stars');
+        st.textContent = starStr(score);
+        fig.appendChild(st);
+        if (title) {
+          var t = document.createElement('strong');
+          t.className = 'sm-review-card__title';
+          t.textContent = title;
+          fig.appendChild(t);
+        }
+        var q = document.createElement('blockquote');
+        q.className = 'sm-review-card__text';
+        q.textContent = body;
+        fig.appendChild(q);
+        var c = document.createElement('figcaption');
+        c.className = 'sm-review-card__who';
+        c.textContent = (author || 'Customer') + (verified ? ' \u00b7 Verified buyer' : '');
+        fig.appendChild(c);
+        track.appendChild(fig);
+      }
+      function harvest(scope) {
+        scope.querySelectorAll('.jdgm-rev').forEach(function (rev) {
           var scoreEl = rev.querySelector('[data-score]');
-          var score = scoreEl ? Math.round(parseFloat(scoreEl.getAttribute('data-score'))) : 5;
-          var title = txt(rev, '.jdgm-rev__title');
-          var author = txt(rev, '.jdgm-rev__author') || 'Customer';
-          var verified = !!rev.querySelector('.jdgm-rev__buyer-badge, .jdgm--verified');
-          var fig = document.createElement('figure');
-          fig.className = 'sm-review-card';
-          var s = document.createElement('span');
-          s.className = 'sm-review-card__stars';
-          s.setAttribute('aria-label', score + ' out of 5 stars');
-          s.textContent = stars(score);
-          fig.appendChild(s);
-          if (title) {
-            var t = document.createElement('strong');
-            t.className = 'sm-review-card__title';
-            t.textContent = title;
-            fig.appendChild(t);
-          }
-          var q = document.createElement('blockquote');
-          q.className = 'sm-review-card__text';
-          q.textContent = body;
-          fig.appendChild(q);
-          var c = document.createElement('figcaption');
-          c.className = 'sm-review-card__who';
-          c.textContent = author + (verified ? ' · Verified buyer' : '');
-          fig.appendChild(c);
-          track.appendChild(fig);
-          added++;
+          var score = scoreEl ? Math.round(parseFloat(scoreEl.getAttribute('data-score'))) || 5 : 5;
+          addCard(
+            score,
+            txt(rev, '.jdgm-rev__title'),
+            txt(rev, '.jdgm-rev__body'),
+            txt(rev, '.jdgm-rev__author'),
+            !!rev.querySelector('.jdgm-rev__buyer-badge, .jdgm--verified, [data-verified-buyer="true"]')
+          );
         });
-        if (track.children.length) section.classList.add('sm-reviews--built');
+      }
+      function refresh() {
+        var has = track.children.length > 0;
+        track.hidden = !has;
+        if (empty) empty.hidden = has || !panel;
         updateNav();
-        return added > 0;
+        return has;
+      }
+
+      // 1. Judge.me's saved review HTML (server-rendered)
+      var tpl = root.querySelector('template[data-sm-reviews-source]');
+      if (tpl) harvest(tpl.content);
+      // 2. Classic Judge.me widget markup on the page, if any
+      harvest(root);
+      refresh();
+
+      if (!track.children.length) {
+        var mo = new MutationObserver(function () { harvest(root); if (refresh()) mo.disconnect(); });
+        mo.observe(root, { childList: true, subtree: true });
+        setTimeout(function () {
+          mo.disconnect();
+          if (!refresh() && panel) panel.open = true;
+        }, 4000);
+      }
+
+      var openBtn = root.querySelector('[data-sm-reviews-open]');
+      if (openBtn && panel) {
+        openBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          panel.open = true;
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(function () {
+            var w = panel.querySelector('.jdgm-write-rev-link, [class*="write-review"], button');
+            if (w && w.click && /write/i.test(w.textContent || '')) w.click();
+          }, 400);
+        });
       }
 
       nav.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-dir]');
-        if (!b) return;
+        var btn = e.target.closest('button[data-dir]');
+        if (!btn) return;
         var card = track.querySelector('.sm-review-card');
         var step = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-        track.scrollBy({ left: step * parseInt(b.getAttribute('data-dir'), 10), behavior: 'smooth' });
+        track.scrollBy({ left: step * parseInt(btn.getAttribute('data-dir'), 10), behavior: 'smooth' });
       });
       window.addEventListener('resize', updateNav);
-
-      build();
-      updateNav();
-      var mo = new MutationObserver(function () { build(); });
-      mo.observe(root, { childList: true, subtree: true });
-      setTimeout(function () { mo.disconnect(); }, 20000);
     })();
   </script>
 {%- endif -%}
@@ -202,8 +252,11 @@
   "tag": "div",
   "enabled_on": { "templates": ["product"] },
   "settings": [
-    { "type": "paragraph", "content": "Add the Judge.me Review widget (and Judge.me Medals for badges) as app blocks. Its reviews are shown as Smidgen cards you can scroll through. Featured review blocks show first." },
+    { "type": "paragraph", "content": "Review cards come from Judge.me's saved reviews plus any Featured review blocks. Add the Judge.me Review widget app block for the full list and review form (shown in a See all reviews panel). Judge.me Medals blocks show under the rating." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews" },
+    { "type": "text", "id": "write_label", "label": "Write review button", "default": "Write a review" },
+    { "type": "text", "id": "all_label", "label": "All reviews toggle", "default": "See all reviews" },
+    { "type": "text", "id": "empty_text", "label": "Text when no cards load", "default": "Read what players are saying below." },
     { "type": "range", "id": "max_reviews", "label": "Max review cards", "min": 3, "max": 30, "step": 1, "default": 12 },
     { "type": "checkbox", "id": "hide_empty", "label": "Hide when a game has no reviews", "default": true },
     { "type": "header", "content": "Colors" },
