@@ -17,7 +17,7 @@
         "exclude_tags": "custom.hide_tags",
         "show_tags_field": "custom.filter_tags",
         "hide_tags_field": "custom.hide_tags",
-        "filter_tags": "Games,",
+        "filter_tags": "games,merch",
         "all_label": "All",
         "all_link": "",
         "item_word": "game",
