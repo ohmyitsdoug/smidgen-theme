@@ -8,11 +8,20 @@
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
-  assign vf = s.video_field | default: 'smidgen.howto_video' | split: '.'
-  assign sf = s.steps_field | default: 'smidgen.howto_steps' | split: '.'
-  assign rf = s.rules_field | default: 'smidgen.rules_pdf' | split: '.'
+  assign vf = s.video_field | default: 'smidgen.howto_video' | strip | split: '.'
+  assign sf = s.steps_field | default: 'smidgen.howto_steps' | strip | split: '.'
+  assign rf = s.rules_field | default: 'smidgen.rules_pdf' | strip | split: '.'
   assign video_val = product.metafields[vf[0]][vf[1]].value
-  assign steps = product.metafields[sf[0]][sf[1]].value
+  assign steps_mf = product.metafields[sf[0]][sf[1]]
+  assign steps = steps_mf.value
+  assign steps_single = false
+  assign steps_total = steps.size | default: 0
+  if steps_mf != blank and steps_mf.type contains 'list.' 
+    assign steps_single = false
+  elsif steps_mf != blank
+    assign steps_single = true
+    assign steps_total = 1
+  endif
   assign rules = product.metafields[rf[0]][rf[1]].value
 
   if s.video_link != blank
@@ -39,7 +48,12 @@
   assign rules_url = rules.url | default: rules
 
   assign step_count = 0
-  for step in steps
+  for i in (1..steps_total)
+    if steps_single
+      assign step = steps
+    else
+      assign step = steps[forloop.index0]
+    endif
     if step.title.value != blank
       assign step_count = step_count | plus: 1
     endif
@@ -110,7 +124,8 @@
       {%- if step_count > 0 -%}
         <ol class="sm-steps sm-grid" style="--sm-min: 250px;">
           {%- assign n = 0 -%}
-          {%- for step in steps -%}
+          {%- for i in (1..steps_total) -%}
+            {%- if steps_single -%}{%- assign step = steps -%}{%- else -%}{%- assign step = steps[forloop.index0] -%}{%- endif -%}
             {%- if step.title.value != blank -%}
               {%- assign color_index = n | modulo: 4 -%}
               {%- assign n = n | plus: 1 -%}
