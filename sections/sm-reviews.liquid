@@ -1,31 +1,44 @@
 {%- comment -%}
   Reviews for product pages, powered by Judge.me.
-  - The summary box reads Shopify's standard review fields
-    (reviews.rating, reviews.rating_count), which Judge.me keeps updated.
-  - Add the Judge.me "Review widget" app block inside this section for the
-    review list and "Write a review" form.
-  - When a game has no reviews yet and "Hide when empty" is on, the whole
-    section is skipped (good for preorders).
+  - Summary box: Shopify's standard review fields (reviews.rating,
+    reviews.rating_count), which Judge.me keeps updated.
+  - Review cards: a scrollable row. Cards come from "Featured review" blocks
+    (written in the editor) plus the reviews Judge.me loads on the page,
+    restyled into Smidgen cards.
+  - App blocks (Judge.me Review widget, Medals / badges) sit in the left
+    column. When cards are built, Judge.me's own list is hidden and only its
+    "Write a review" button and form stay visible.
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign featured_count = 0
+  for block in section.blocks
+    if block.type == 'review' and block.settings.text != blank
+      assign featured_count = featured_count | plus: 1
+    endif
+  endfor
   assign show = true
-  if s.hide_empty and rating_count == 0 and request.design_mode == false
+  if s.hide_empty and rating_count == 0 and featured_count == 0 and request.design_mode == false
     assign show = false
   endif
 -%}
 {%- if show -%}
+  {%- if s.divider_top != 'none' -%}
+    {% render 'sm-divider', shape: s.divider_top, from: s.divider_from, to: s.bg %}
+  {%- endif -%}
   <section
     id="reviews"
-    class="sm-section"
-    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    class="sm-section sm-reviews"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --sm-review-bg: {{ s.card_bg }};"
     aria-labelledby="sm-{{ section.id }}-title"
+    data-sm-reviews
+    data-max="{{ s.max_reviews }}"
   >
     <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
-      <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
-        <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 16px;">
+      <div class="sm-reviews__layout">
+        <div class="sm-reviews__side">
           <h2 id="sm-{{ section.id }}-title" class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem);">
             {{- s.heading -}}
           </h2>
@@ -47,17 +60,140 @@
               </span>
             </div>
           {%- elsif request.design_mode -%}
-            <p style="margin: 0;">This game has no reviews yet, so this section is hidden on the live store.</p>
+            <p style="margin: 0;">This game has no reviews yet, so this section is hidden on the live store (unless you add featured reviews).</p>
+          {%- endif -%}
+
+          <div class="sm-reviews__apps">
+            {%- for block in section.blocks -%}
+              {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if request.design_mode -%}
+            {%- assign has_app = false -%}
+            {%- for block in section.blocks -%}{%- if block.type == '@app' -%}{%- assign has_app = true -%}{%- endif -%}{%- endfor -%}
+            {%- unless has_app -%}
+              <p style="margin: 0; padding: 14px; border: 3px dashed #000; border-radius: 16px; font-size: 0.9rem; background: #fff; color: #000;">
+                <strong>Only you see this:</strong> add block → Apps → <em>Judge.me Review widget</em> to pull in reviews and the "Write a review" form. Add <em>Judge.me Medals</em> here too for the badges.
+              </p>
+            {%- endunless -%}
           {%- endif -%}
         </div>
-        <div style="flex: 2 1 520px; min-width: 0;">
-          {%- for block in section.blocks -%}
-            {% render block %}
-          {%- endfor -%}
+
+        <div class="sm-reviews__main">
+          <div class="sm-reviews__track" data-sm-reviews-track tabindex="0" aria-label="Customer reviews">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'review' and block.settings.text != blank -%}
+                <figure class="sm-review-card" {{ block.shopify_attributes }}>
+                  <span class="sm-review-card__stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+                    {%- for i in (1..5) -%}{%- if i <= block.settings.stars -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+                  </span>
+                  {%- if block.settings.title != blank -%}<strong class="sm-review-card__title">{{ block.settings.title }}</strong>{%- endif -%}
+                  <blockquote class="sm-review-card__text">{{ block.settings.text }}</blockquote>
+                  <figcaption class="sm-review-card__who">
+                    {{ block.settings.name | default: 'Verified buyer' }}
+                    {%- if block.settings.verified %} · Verified buyer{% endif -%}
+                  </figcaption>
+                </figure>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="sm-reviews__nav" data-sm-reviews-nav hidden>
+            <button type="button" class="sm-reviews__arrow" data-dir="-1" aria-label="Previous reviews"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"/></svg></button>
+            <button type="button" class="sm-reviews__arrow" data-dir="1" aria-label="Next reviews"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg></button>
+          </div>
         </div>
       </div>
     </div>
   </section>
+  {%- if s.divider != 'none' -%}
+    {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+  {%- endif -%}
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+      var section = root.querySelector('[data-sm-reviews]');
+      var track = root.querySelector('[data-sm-reviews-track]');
+      var nav = root.querySelector('[data-sm-reviews-nav]');
+      var max = parseInt(section.getAttribute('data-max'), 10) || 12;
+      var seen = {};
+
+      function txt(el, sel) {
+        var n = el.querySelector(sel);
+        return n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
+      }
+      function stars(n) {
+        var out = '';
+        for (var i = 1; i <= 5; i++) out += i <= n ? '★' : '☆';
+        return out;
+      }
+      function updateNav() {
+        var scrollable = track.scrollWidth > track.clientWidth + 4;
+        nav.hidden = !scrollable;
+      }
+      function build() {
+        var revs = root.querySelectorAll('.jdgm-rev');
+        if (!revs.length) return false;
+        var added = 0;
+        revs.forEach(function (rev) {
+          if (track.children.length >= max) return;
+          var body = txt(rev, '.jdgm-rev__body');
+          if (!body) return;
+          var key = (rev.getAttribute('data-review-id') || '') + body.slice(0, 40);
+          if (seen[key]) return;
+          seen[key] = true;
+          var scoreEl = rev.querySelector('[data-score]');
+          var score = scoreEl ? Math.round(parseFloat(scoreEl.getAttribute('data-score'))) : 5;
+          var title = txt(rev, '.jdgm-rev__title');
+          var author = txt(rev, '.jdgm-rev__author') || 'Customer';
+          var verified = !!rev.querySelector('.jdgm-rev__buyer-badge, .jdgm--verified');
+          var fig = document.createElement('figure');
+          fig.className = 'sm-review-card';
+          var s = document.createElement('span');
+          s.className = 'sm-review-card__stars';
+          s.setAttribute('aria-label', score + ' out of 5 stars');
+          s.textContent = stars(score);
+          fig.appendChild(s);
+          if (title) {
+            var t = document.createElement('strong');
+            t.className = 'sm-review-card__title';
+            t.textContent = title;
+            fig.appendChild(t);
+          }
+          var q = document.createElement('blockquote');
+          q.className = 'sm-review-card__text';
+          q.textContent = body;
+          fig.appendChild(q);
+          var c = document.createElement('figcaption');
+          c.className = 'sm-review-card__who';
+          c.textContent = author + (verified ? ' · Verified buyer' : '');
+          fig.appendChild(c);
+          track.appendChild(fig);
+          added++;
+        });
+        if (track.children.length) section.classList.add('sm-reviews--built');
+        updateNav();
+        return added > 0;
+      }
+
+      nav.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-dir]');
+        if (!b) return;
+        var card = track.querySelector('.sm-review-card');
+        var step = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
+        track.scrollBy({ left: step * parseInt(b.getAttribute('data-dir'), 10), behavior: 'smooth' });
+      });
+      window.addEventListener('resize', updateNav);
+
+      build();
+      updateNav();
+      var mo = new MutationObserver(function () { build(); });
+      mo.observe(root, { childList: true, subtree: true });
+      setTimeout(function () { mo.disconnect(); }, 20000);
+    })();
+  </script>
 {%- endif -%}
 
 {% schema %}
@@ -66,15 +202,52 @@
   "tag": "div",
   "enabled_on": { "templates": ["product"] },
   "settings": [
-    { "type": "paragraph", "content": "Add the Judge.me Review widget as an app block in this section." },
+    { "type": "paragraph", "content": "Add the Judge.me Review widget (and Judge.me Medals for badges) as app blocks. Its reviews are shown as Smidgen cards you can scroll through. Featured review blocks show first." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews" },
+    { "type": "range", "id": "max_reviews", "label": "Max review cards", "min": 3, "max": 30, "step": 1, "default": 12 },
     { "type": "checkbox", "id": "hide_empty", "label": "Hide when a game has no reviews", "default": true },
+    { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
     { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "header", "content": "Divider above" },
+    {
+      "type": "select", "id": "divider_top", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_from", "label": "Previous section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider_top != 'none' }}" },
+    { "type": "header", "content": "Divider below" },
+    {
+      "type": "select", "id": "divider", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#20A4F3", "visible_if": "{{ section.settings.divider != 'none' }}" },
+    { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 24 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 80 }
   ],
-  "blocks": [{ "type": "@app" }],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "review",
+      "name": "Featured review",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Review" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true }
+      ]
+    }
+  ],
   "presets": [{ "name": "Smidgen · Reviews" }]
 }
 {% endschema %}
