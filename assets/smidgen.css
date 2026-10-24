@@ -1539,8 +1539,8 @@ a.sm-hero__badge:hover {
 
 /* Rising Sun: giant half circle with a wobbly ring */
 .sm-sun__disc {
-  position: absolute; left: 50%; width: min(1500px, 130vw); aspect-ratio: 1 / 1;
-  bottom: calc(min(1500px, 130vw) * (var(--sun-show, 34) / 100 - 1)); transform: translateX(-50%); pointer-events: none;
+  position: absolute; left: 50%; top: var(--sun-top, 60px); width: min(1500px, 130vw); aspect-ratio: 1 / 1;
+  transform: translateX(-50%); pointer-events: none; z-index: 0;
 }
 .sm-sun__fill { position: absolute; inset: 0; border-radius: 50%; background: var(--sun-color); }
 .sm-sun__disc svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -1551,8 +1551,9 @@ a.sm-hero__badge:hover {
   display: inline-flex; background: var(--sm-black); color: var(--sm-yellow); border-radius: 999px; padding: 8px 18px;
   font-family: var(--sm-font-display); font-size: 1.35rem;
 }
-.sm-sun__art { display: flex; align-items: flex-end; justify-content: center; margin-top: 16px; min-height: 200px; }
-.sm-sun__main { position: relative; z-index: 2; width: min(360px, 44vw); }
+.sm-sun__art { position: relative; align-self: stretch; display: flex; align-items: flex-end; justify-content: center; margin-top: 24px; min-height: 260px; }
+.sm-sun__art > span { position: relative; z-index: 1; }
+.sm-sun__main { position: relative; z-index: 2 !important; width: min(360px, 44vw); }
 .sm-sun__main img { width: 100%; height: auto; display: block; filter: drop-shadow(10px 12px 0 rgba(0, 0, 0, 0.35)); }
 .sm-sun__side { width: min(240px, 30vw); transform: translateY(30px) rotate(-12deg); margin-right: -30px; }
 .sm-sun__side--right { transform: translateY(30px) rotate(12deg); margin-right: 0; margin-left: -30px; }
