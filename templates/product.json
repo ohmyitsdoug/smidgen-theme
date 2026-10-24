@@ -365,6 +365,9 @@
       "settings": {
         "heading": "Learn to play",
         "rules_label": "Download the rules (PDF)",
+        "video_field": "",
+        "steps_field": "smidgen.howto_steps",
+        "rules_field": "smidgen.rules_pdf",
         "bg": "#fff503",
         "fg": "#000000",
         "outer_color": "#ffffff",
@@ -377,6 +380,7 @@
       "type": "sm-in-the-box",
       "settings": {
         "heading": "What's in the box",
+        "components_field": "smidgen.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "pad_top": 48,
