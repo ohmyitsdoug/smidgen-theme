@@ -331,6 +331,13 @@
                 "circle": "-20%"
               },
               "blocks": {}
+            },
+            "sm_spec_dropdowns": {
+              "type": "sm-spec-dropdowns",
+              "settings": {
+                "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
+                "extra_field": "custom.upc"
+              }
             }
           },
           "block_order": [
@@ -342,6 +349,7 @@
             "price_tVjtKg",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "sm_spec_dropdowns",
             "sm_bundle"
           ]
         }
