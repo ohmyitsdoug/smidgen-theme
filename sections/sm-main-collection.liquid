@@ -245,7 +245,43 @@
       </div>
 
       <div class="sm-grid sm-grid--cards" style="--sm-min: 240px; --sm-max: {{ section.settings.card_max }}px;">
+        {%- liquid
+          comment
+            Default order: groups first (e.g. games, then merch), each group in
+            the default sort. Skipped as soon as a shopper picks a sort.
+          endcomment
+          assign groups = s.group_order | downcase | split: ','
+          assign use_groups = false
+          if collection.sort_by == blank and s.group_order != blank
+            assign use_groups = true
+          endif
+          assign done_ids = '|'
+        -%}
+        {%- if use_groups -%}
+          {%- for g in groups -%}
+            {%- assign g_s = g | strip -%}
+            {%- if g_s == blank -%}{%- continue -%}{%- endif -%}
+            {%- for product in list -%}
+              {%- liquid
+                assign pid = '|' | append: product.id | append: '|'
+                if done_ids contains pid
+                  continue
+                endif
+                assign p_type = product.type | downcase | strip
+                assign p_tags = product.tags | join: '|' | downcase | prepend: '|' | append: '|'
+                assign g_key = '|' | append: g_s | append: '|'
+                unless p_type == g_s or p_tags contains g_key
+                  continue
+                endunless
+                assign done_ids = done_ids | append: product.id | append: '|'
+              -%}
+              {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg, more_label: section.settings.more_label, soon_label: section.settings.soon_label %}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- endif -%}
         {%- for product in list -%}
+          {%- assign pid = '|' | append: product.id | append: '|' -%}
+          {%- if done_ids contains pid -%}{%- continue -%}{%- endif -%}
           {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg, more_label: section.settings.more_label, soon_label: section.settings.soon_label %}
         {%- else -%}
           <p style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 3px dashed #000; border-radius: 26px;">
@@ -383,6 +419,13 @@
         }
       ],
       "default": "title-ascending"
+    },
+    {
+      "type": "text",
+      "id": "group_order",
+      "label": "Show these first, in order",
+      "default": "game, merch",
+      "info": "Product types or tags, comma-separated. Applies until a shopper picks a sort. Everything else follows."
     },
     {
       "type": "range",
