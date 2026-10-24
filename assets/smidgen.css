@@ -1358,3 +1358,11 @@ a.sm-hero__badge:hover {
 @media (min-width: 750px) {
   .sm-box.sm-checklist { padding: 28px 36px; }
 }
+
+/* FAQ + What's in the box side by side */
+.sm-faq-split { display: grid; gap: 40px; }
+.sm-faq-split > div { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.sm-faq-split .sm-box.sm-checklist { margin-top: 0; }
+@media (min-width: 990px) {
+  .sm-faq-split--two { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 56px; align-items: start; }
+}

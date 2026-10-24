@@ -16,7 +16,7 @@
   assign f_ship_date = m.ship_date.value | default: mc.ship_date.value
   assign f_award = m.award.value | default: mc.award.value
   assign f_card_color = m.card_color.value | default: mc.card_color.value
-  assign f_tagline = m.tagline.value | default: mc.tagline.value
+  assign f_tagline = m.tagline.value | default: mc.tagline.value | default: mc.subtitle.value | default: m.hook.value | default: mc.hook.value
   assign part = block.settings.part
   assign is_preorder = false
   if p.tags contains 'preorder'

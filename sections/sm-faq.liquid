@@ -15,6 +15,24 @@
     assign meta_faqs = product.metafields.smidgen.faqs.value | default: product.metafields.custom.faqs.value
   endif
 
+  assign box_items = blank
+  assign box_count = 0
+  if product and s.show_box
+    assign cf = s.components_field | default: 'custom.components' | strip | split: '.'
+    assign box_field = product.metafields[cf[0]][cf[1]]
+    if box_field.type contains 'list.'
+      assign box_items = box_field.value
+    else
+      assign box_items = box_field.value | newline_to_br | split: '<br />'
+    endif
+    for item in box_items
+      assign item_text = item | strip
+      if item_text != blank
+        assign box_count = box_count | plus: 1
+      endif
+    endfor
+  endif
+
   assign count = 0
   for entry in meta_faqs
     if entry.question.value != blank and entry.answer.value != blank
@@ -26,8 +44,9 @@
       assign count = count | plus: 1
     endif
   endfor
+  assign total = count | plus: box_count
 -%}
-{%- if count > 0 -%}
+{%- if total > 0 -%}
   {%- if s.divider_top != 'none' -%}
     {% render 'sm-divider', shape: s.divider_top, from: s.divider_from, to: s.bg %}
   {%- endif -%}
@@ -37,7 +56,21 @@
     style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
     aria-labelledby="sm-{{ section.id }}-title"
   >
-    <div class="sm-container sm-container--narrow" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    <div class="sm-container{% if box_count == 0 or count == 0 %} sm-container--narrow{% endif %}" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+     <div class="sm-faq-split{% if box_count > 0 and count > 0 %} sm-faq-split--two{% endif %}">
+      {%- if box_count > 0 -%}
+        <div id="in-the-box" class="sm-faq-split__box">
+          <h2 class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem);">{{ s.box_heading }}</h2>
+          <ul class="sm-checklist sm-box" style="box-shadow: 6px 6px 0 var(--sm-blue);">
+            {%- for item in box_items -%}
+              {%- assign item_text = item | strip -%}
+              {%- if item_text != blank -%}<li>{{ item_text }}</li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+      {%- if count > 0 -%}
+      <div class="sm-faq-split__faq">
       <h2 id="sm-{{ section.id }}-title" class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem);">
         {{- s.heading -}}
       </h2>
@@ -59,13 +92,16 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      </div>
+      {%- endif -%}
+     </div>
     </div>
   </section>
   {%- if s.divider != 'none' -%}
     {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
   {%- endif -%}
 
-  {%- if s.schema -%}
+  {%- if s.schema and count > 0 -%}
     {%- capture faq_items -%}
       {%- for entry in meta_faqs -%}
         {%- if entry.question.value != blank and entry.answer.value != blank -%}
@@ -96,6 +132,10 @@
     { "type": "checkbox", "id": "use_product", "label": "Use product FAQs on product pages", "default": true },
     { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": false },
     { "type": "checkbox", "id": "schema", "label": "Add FAQ structured data for search", "default": true },
+    { "type": "header", "content": "What's in the box" },
+    { "type": "checkbox", "id": "show_box", "label": "Show box contents beside", "default": false, "info": "Product pages only. Side by side on desktop, stacked on mobile." },
+    { "type": "text", "id": "box_heading", "label": "Box heading", "default": "What's in the box", "visible_if": "{{ section.settings.show_box }}" },
+    { "type": "text", "id": "components_field", "label": "Components field", "default": "custom.components", "info": "namespace.key of the product's components field", "visible_if": "{{ section.settings.show_box }}" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
     { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
