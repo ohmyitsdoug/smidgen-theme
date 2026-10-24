@@ -1205,3 +1205,26 @@ a.sm-hero__badge:hover {
 @media (max-width: 599px) {
   .sm-hero__badge { top: -2%; right: 0; max-width: 38%; }
 }
+
+/* Item grids: cards keep a max width and the row centers when not full */
+.sm-grid--cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--sm-min, 240px)), var(--sm-max, 320px)));
+  justify-content: center;
+}
+
+.sm-card__media--wide {
+  aspect-ratio: 16 / 10;
+}
+
+.sm-card__title--text {
+  font-family: var(--sm-font-body);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 599px) {
+  .sm-grid--cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

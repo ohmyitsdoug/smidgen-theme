@@ -34,7 +34,7 @@
           <nav aria-label="Filter games">
             <ul class="sm-pills">
               <li>
-                <a class="sm-pill" href="{{ base_url }}" {% if current_tags == blank %}aria-current="page"{% endif %}>All games</a>
+                <a class="sm-pill" href="{{ base_url }}" {% if current_tags == blank %}aria-current="page"{% endif %}>{{ section.settings.all_label }}</a>
               </li>
               {%- for raw_tag in filter_tags -%}
                 {%- assign tag = raw_tag | strip -%}
@@ -56,7 +56,7 @@
         <form method="get" style="display: flex; align-items: center; gap: 10px;">
           <span aria-live="polite" style="font-weight: 500;">
             {{ collection.products_count }}
-            {{ collection.products_count | pluralize: 'game', 'games' }}
+            {{ collection.products_count | pluralize: section.settings.item_word, section.settings.items_word }}
           </span>
           <label for="sm-sort-{{ section.id }}" style="font-weight: 700;">Sort</label>
           <select id="sm-sort-{{ section.id }}" class="sm-select" name="sort_by" onchange="this.form.submit()">
@@ -70,12 +70,12 @@
         </form>
       </div>
 
-      <div class="sm-grid sm-grid--cards" style="--sm-min: 260px;">
+      <div class="sm-grid sm-grid--cards" style="--sm-min: 240px; --sm-max: {{ section.settings.card_max }}px;">
         {%- for product in collection.products -%}
-          {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg %}
+          {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg, more_label: section.settings.more_label, soon_label: section.settings.soon_label %}
         {%- else -%}
           <p style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 3px dashed #000; border-radius: 26px;">
-            No games here yet. Check back soon!
+            {{ section.settings.empty_text }}
           </p>
         {%- endfor -%}
       </div>
@@ -121,9 +121,34 @@
       "default": "family, 2-player, quick-play, coming-soon"
     },
     {
+      "type": "text",
+      "id": "all_label",
+      "label": "'All' button text",
+      "default": "All games"
+    },
+    {
+      "type": "text",
+      "id": "item_word",
+      "label": "Item word (one)",
+      "default": "game",
+      "info": "Used in the count, e.g. 1 game / 1 shirt"
+    },
+    {
+      "type": "text",
+      "id": "items_word",
+      "label": "Item word (many)",
+      "default": "games"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty message",
+      "default": "Nothing here yet. Check back soon!"
+    },
+    {
       "type": "range",
       "id": "per_page",
-      "label": "Games per page",
+      "label": "Items per page",
       "min": 8,
       "max": 48,
       "step": 4,
@@ -171,6 +196,28 @@
       "label": "Background color",
       "default": "#753189",
       "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "card_max",
+      "label": "Max card width",
+      "min": 240,
+      "max": 440,
+      "step": 20,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Card link text",
+      "default": "View game →"
+    },
+    {
+      "type": "text",
+      "id": "soon_label",
+      "label": "Card link text (coming soon)",
+      "default": "Get notified →"
     },
     {
       "type": "color",

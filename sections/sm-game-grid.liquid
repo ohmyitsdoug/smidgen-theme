@@ -7,11 +7,15 @@
 {%- liquid
   assign s = section.settings
   if s.products != blank
-    assign games = s.products
+    assign items = s.products
   elsif s.collection != blank
-    assign games = s.collection.products
+    assign items = s.collection.products
   else
-    assign games = collections.all.products
+    assign items = collections.all.products
+  endif
+  assign default_link = routes.all_products_collection_url
+  if s.source == 'blog' and s.blog != blank
+    assign default_link = s.blog.url
   endif
 -%}
 <section
@@ -31,17 +35,25 @@
           </div>
         {%- endif -%}
         {%- if s.link_label != blank -%}
-          <a class="sm-link" href="{{ s.link | default: routes.all_products_collection_url }}">{{ s.link_label }}</a>
+          <a class="sm-link" href="{{ s.link | default: default_link }}">{{ s.link_label }}</a>
         {%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="sm-grid sm-grid--cards" style="--sm-min: {{ s.card_min }}px;">
-      {%- for product in games limit: s.limit -%}
-        {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg %}
+    <div class="sm-grid sm-grid--cards" style="--sm-min: {{ s.card_min }}px; --sm-max: {{ s.card_max }}px;">
+      {%- if s.source == 'blog' -%}
+        {%- for article in s.blog.articles limit: s.limit -%}
+          {% render 'sm-article-card', article: article, image_fit: s.image_fit, bg: card_bg, more_label: s.article_label %}
+        {%- else -%}
+          <p>Pick a blog for this section in the theme editor.</p>
+        {%- endfor -%}
       {%- else -%}
-        <p>Pick a collection or games for this section in the theme editor.</p>
-      {%- endfor -%}
+        {%- for product in items limit: s.limit -%}
+          {% render 'sm-game-card', product: product, image_fit: s.image_fit, bg: card_bg, more_label: s.more_label, soon_label: s.soon_label %}
+        {%- else -%}
+          <p>Pick a collection or products for this section in the theme editor.</p>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -51,7 +63,7 @@
 
 {% schema %}
 {
-  "name": "Smidgen · Game grid",
+  "name": "Smidgen · Item grid",
   "tag": "div",
   "settings": [
     {
@@ -63,33 +75,58 @@
     {
       "type": "text",
       "id": "link_label",
-      "label": "Link label",
+      "label": "Section link label",
       "default": "All games →"
     },
     {
       "type": "url",
       "id": "link",
-      "label": "Link"
+      "label": "Section link",
+      "info": "Defaults to all products, or the blog when showing posts."
     },
     {
       "type": "header",
-      "content": "Games"
+      "content": "Items"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Show",
+      "options": [
+        {
+          "value": "products",
+          "label": "Products (games, merch, bundles)"
+        },
+        {
+          "value": "blog",
+          "label": "Blog posts"
+        }
+      ],
+      "default": "products"
     },
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Collection",
+      "visible_if": "{{ section.settings.source == 'products' }}"
     },
     {
       "type": "product_list",
       "id": "products",
-      "label": "Or pick games by hand",
-      "limit": 12
+      "label": "Or pick products by hand",
+      "limit": 12,
+      "visible_if": "{{ section.settings.source == 'products' }}"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "visible_if": "{{ section.settings.source == 'blog' }}"
     },
     {
       "type": "range",
       "id": "limit",
-      "label": "Games to show",
+      "label": "Items to show",
       "min": 1,
       "max": 24,
       "step": 1,
@@ -98,7 +135,7 @@
     {
       "type": "range",
       "id": "card_min",
-      "label": "Card width",
+      "label": "Min card width",
       "min": 200,
       "max": 360,
       "step": 10,
@@ -147,6 +184,37 @@
       "label": "Background color",
       "default": "#753189",
       "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "card_max",
+      "label": "Max card width",
+      "min": 240,
+      "max": 440,
+      "step": 20,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Card link text",
+      "default": "View game →",
+      "visible_if": "{{ section.settings.source == 'products' }}"
+    },
+    {
+      "type": "text",
+      "id": "soon_label",
+      "label": "Card link text (coming soon)",
+      "default": "Get notified →",
+      "visible_if": "{{ section.settings.source == 'products' }}"
+    },
+    {
+      "type": "text",
+      "id": "article_label",
+      "label": "Card link text",
+      "default": "Read more →",
+      "visible_if": "{{ section.settings.source == 'blog' }}"
     },
     {
       "type": "select",
@@ -264,7 +332,7 @@
   ],
   "presets": [
     {
-      "name": "Smidgen · Game grid"
+      "name": "Smidgen · Item grid"
     }
   ]
 }

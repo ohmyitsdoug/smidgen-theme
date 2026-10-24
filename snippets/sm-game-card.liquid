@@ -1,5 +1,6 @@
 {%- doc -%}
-  Smidgen game card. The whole card links to the game; no add-to-cart.
+  Smidgen item card for products (games, merch, bundles). The whole card
+  links to the product; no add-to-cart.
   Reads optional product metafields in the `smidgen` namespace:
   card_color, hook, badge, players, play_time, ages, ship_date.
   Tags `preorder` and `coming-soon` change the badge and link label.
@@ -8,6 +9,8 @@
   @param {string} [image_sizes]
   @param {string} [image_fit] - 'fit' (whole image, default) or 'fill' (crop to fill the card art area)
   @param {string} [bg] - background color for the art area; overrides the game's card_color
+  @param {string} [more_label] - link text, default 'View game →'
+  @param {string} [soon_label] - link text for coming-soon items, default 'Get notified →'
 {%- enddoc -%}
 {%- liquid
   assign m = product.metafields.smidgen
@@ -17,10 +20,10 @@
   endif
 
   assign badge = m.badge.value
-  assign more = 'View game →'
+  assign more = more_label | default: 'View game →'
   if product.tags contains 'coming-soon'
     assign badge = badge | default: 'Coming soon'
-    assign more = 'Get notified →'
+    assign more = soon_label | default: 'Get notified →'
   elsif product.tags contains 'preorder'
     assign badge = badge | default: 'Preorder'
   elsif product.compare_at_price > product.price
