@@ -1438,3 +1438,8 @@ a.sm-hero__badge:hover {
 .sm-spec-acc__body { margin-top: 10px; padding-left: 32px; font-size: 1rem; line-height: 1.5; }
 .sm-spec-acc__body ul { margin: 0; padding-left: 18px; }
 .sm-spec-acc__body p { margin: 0 0 6px; }
+
+.sm-spec-acc__list { margin: 0; display: grid; gap: 6px; }
+.sm-spec-acc__list > div { display: flex; gap: 12px; }
+.sm-spec-acc__list dt { font-weight: 700; min-width: 64px; }
+.sm-spec-acc__list dd { margin: 0; }

@@ -78,16 +78,15 @@
 -%}
 {%- if box != blank or weight != blank or has_test or extra_field.value != blank -%}
   <div class="sm-spec-acc" {{ block.shopify_attributes }}>
-    {%- if box != blank -%}
+    {%- if box != blank or weight != blank -%}
       <details>
         <summary>{% render 'sm-icon', name: 'package', size: 22 %}<span>{{ bs.box_label }}</span></summary>
-        <div class="sm-spec-acc__body">{{ box }}</div>
-      </details>
-    {%- endif -%}
-    {%- if weight != blank -%}
-      <details>
-        <summary>{% render 'sm-icon', name: 'shopping-bag', size: 22 %}<span>{{ bs.weight_label }}</span></summary>
-        <div class="sm-spec-acc__body">{{ weight }}</div>
+        <div class="sm-spec-acc__body">
+          <dl class="sm-spec-acc__list">
+            {%- if box != blank -%}<div><dt>{{ bs.size_row_label }}</dt><dd>{{ box }}</dd></div>{%- endif -%}
+            {%- if weight != blank -%}<div><dt>{{ bs.weight_label }}</dt><dd>{{ weight }}</dd></div>{%- endif -%}
+          </dl>
+        </div>
       </details>
     {%- endif -%}
     {%- if has_test -%}
@@ -131,15 +130,15 @@
   "tag": null,
   "settings": [
     { "type": "paragraph", "content": "Each dropdown only shows when the product has that info. Fields are namespace.key from Settings → Custom data → Products." },
-    { "type": "header", "content": "Box size" },
-    { "type": "text", "id": "box_label", "label": "Label", "default": "Box size" },
+    { "type": "header", "content": "Box size & weight" },
+    { "type": "text", "id": "box_label", "label": "Dropdown label", "default": "Box size & weight" },
+    { "type": "text", "id": "size_row_label", "label": "Size row label", "default": "Size" },
     { "type": "text", "id": "box_field", "label": "Single box size field", "info": "Optional, e.g. custom.box_size. Otherwise uses the 3 fields below." },
     { "type": "text", "id": "length_field", "label": "Length field", "default": "custom.length" },
     { "type": "text", "id": "width_field", "label": "Width field", "default": "custom.width" },
     { "type": "text", "id": "height_field", "label": "Height field", "default": "custom.height" },
     { "type": "text", "id": "box_unit", "label": "Unit after size", "default": "in", "info": "Leave empty if your fields already include units." },
-    { "type": "header", "content": "Weight" },
-    { "type": "text", "id": "weight_label", "label": "Label", "default": "Weight" },
+    { "type": "text", "id": "weight_label", "label": "Weight row label", "default": "Weight" },
     { "type": "text", "id": "weight_field", "label": "Weight field", "default": "custom.weight" },
     { "type": "checkbox", "id": "use_shipping_weight", "label": "Use shipping weight if field is empty", "default": true, "info": "The weight set on the product's variant." },
     { "type": "header", "content": "Testing" },
