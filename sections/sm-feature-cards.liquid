@@ -16,6 +16,7 @@
           <div class="sm-box" style="display: flex; flex-direction: column; gap: 14px;" {{ block.shopify_attributes }}>
             {%- if block.settings.label != blank -%}
               <span
+                class="sm-icon-label"
                 style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: {{ block.settings.color }}; color: {{ block.settings.label_color }}; border: var(--sm-outline); border-radius: 18px; font-family: var(--sm-font-display); font-weight: 900; font-size: 1.6rem;"
                 aria-hidden="true"
               >

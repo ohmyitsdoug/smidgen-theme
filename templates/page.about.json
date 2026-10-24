@@ -1,0 +1,188 @@
+{
+  "sections": {
+    "hero": {
+      "type": "sm-hero",
+      "settings": {
+        "eyebrow": "About us",
+        "heading": "We make games for the whole table.",
+        "highlight": "",
+        "text": "<p>Smidgen Games is a tiny studio just outside Baltimore, MD, making classic-feeling family games since 2024.</p>",
+        "button_label": "",
+        "button_2_label": "",
+        "small_print": "",
+        "note": "",
+        "doodle": "squiggle",
+        "doodle_color": "#FFF503",
+        "doodle_position": "top-right",
+        "doodle_2": "star",
+        "doodle_2_color": "#EA5D00",
+        "bg": "#753189",
+        "fg": "#FFFFFF",
+        "divider": "wave",
+        "divider_to": "#FFFFFF",
+        "pad_bottom": 56
+      }
+    },
+    "story": {
+      "type": "sm-image-text",
+      "settings": {
+        "heading": "How it started",
+        "use_page_content": true,
+        "text": "<p>[Your origin story: who you are, why you started, what a Smidgen game feels like at the table.]</p><p>We're a two-person team. Every game is playtested with real families, classrooms and game-store regulars before it ships.</p>",
+        "note": "Doug, designer & co-owner",
+        "image_style": "cutout",
+        "divider": "zigzag",
+        "divider_to": "#FFF503"
+      }
+    },
+    "values": {
+      "type": "sm-feature-cards",
+      "blocks": {
+        "v1": {
+          "type": "card",
+          "settings": {
+            "label": "01",
+            "color": "#753189",
+            "label_color": "#FFFFFF",
+            "title": "Teach in minutes",
+            "text": "<p>Light on rules, heavy on choices. If it needs a long explanation, it isn't done yet.</p>"
+          }
+        },
+        "v2": {
+          "type": "card",
+          "settings": {
+            "label": "02",
+            "color": "#EA5D00",
+            "label_color": "#FFFFFF",
+            "title": "Nobody gets punished",
+            "text": "<p>No sitting out, no runaway losers. Everyone stays in it until the last turn.</p>"
+          }
+        },
+        "v3": {
+          "type": "card",
+          "settings": {
+            "label": "03",
+            "color": "#20A4F3",
+            "label_color": "#000000",
+            "title": "Proven at real tables",
+            "text": "<p>Playtest feedback decides what stays.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "heading": "What every Smidgen game has to do",
+        "doodle": "none",
+        "bg": "#FFF503",
+        "divider": "wave",
+        "divider_to": "#FFFFFF"
+      }
+    },
+    "timeline": {
+      "type": "sm-feature-cards",
+      "blocks": {
+        "t1": {
+          "type": "card",
+          "settings": {
+            "label": "2024",
+            "color": "#753189",
+            "label_color": "#FFFFFF",
+            "title": "Smidgen is founded",
+            "text": ""
+          }
+        },
+        "t2": {
+          "type": "card",
+          "settings": {
+            "label": "[Year]",
+            "color": "#EA5D00",
+            "label_color": "#FFFFFF",
+            "title": "CUNO launches",
+            "text": ""
+          }
+        },
+        "t3": {
+          "type": "card",
+          "settings": {
+            "label": "2025",
+            "color": "#20A4F3",
+            "label_color": "#000000",
+            "title": "CUNO wins Strategy Game of the Year",
+            "text": "<p>Sparks Play Award.</p>"
+          }
+        },
+        "t4": {
+          "type": "card",
+          "settings": {
+            "label": "Today",
+            "color": "#FFF503",
+            "label_color": "#000000",
+            "title": "In 14+ stores",
+            "text": "<p>With STACK5 and Going Bananas! on the way.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "heading": "The story so far",
+        "doodle": "none",
+        "bg": "#FFFFFF",
+        "divider": "scallop",
+        "divider_to": "#20A4F3"
+      }
+    },
+    "stats": {
+      "type": "sm-stats",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "14+",
+            "label": "retail stores"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "2,000+",
+            "label": "games shipped"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "4.9/5",
+            "label": "average rating"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "heading": "Come play with us",
+        "button_label": "See our games",
+        "button_2_label": "Say hello",
+        "button_2_link": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "story",
+    "values",
+    "timeline",
+    "stats"
+  ]
+}

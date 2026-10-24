@@ -1,0 +1,106 @@
+{%- liquid
+  assign s = section.settings
+  assign filter_tags = s.filter_tags | split: ','
+  assign base_url = collection.url
+-%}
+<section class="sm-section" style="--sm-bg: {{ s.hero_bg }}; --sm-fg: #000;" aria-labelledby="sm-{{ section.id }}-title">
+  {% render 'sm-doodle', shape: 'squiggle', color: '#753189', position: 'top-right' %}
+  {% render 'sm-doodle', shape: 'spiral', color: '#EA5D00', position: 'bottom-right' %}
+  <div class="sm-container" style="--sm-pad-top: 48px; --sm-pad-bottom: 24px; gap: 10px;">
+    <nav aria-label="Breadcrumb" style="font-size: 0.95rem;">
+      <a href="{{ routes.root_url }}" style="color: inherit;">Home</a> / <span>{{ collection.title }}</span>
+    </nav>
+    <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="sm-lede sm-rte">{{ collection.description }}</div>
+    {%- elsif s.intro != blank -%}
+      <div class="sm-lede">{{ s.intro }}</div>
+    {%- endif -%}
+  </div>
+</section>
+{% render 'sm-divider', shape: 'wave', from: s.hero_bg, to: '#FFFFFF' %}
+
+<section class="sm-section" style="--sm-bg: #fff;">
+  {%- paginate collection.products by s.per_page -%}
+    <div class="sm-container" style="--sm-pad-top: 24px; --sm-pad-bottom: 88px;">
+      <div class="sm-filter-bar">
+        {%- if filter_tags.size > 0 and s.filter_tags != blank -%}
+          <nav aria-label="Filter games">
+            <ul class="sm-pills">
+              <li>
+                <a class="sm-pill" href="{{ base_url }}" {% if current_tags == blank %}aria-current="page"{% endif %}>All games</a>
+              </li>
+              {%- for raw_tag in filter_tags -%}
+                {%- assign tag = raw_tag | strip -%}
+                {%- if collection.all_tags contains tag -%}
+                  <li>
+                    <a
+                      class="sm-pill"
+                      href="{{ base_url }}/{{ tag | handle }}"
+                      {% if current_tags contains tag %}aria-current="page"{% endif %}
+                    >
+                      {{- tag | replace: '-', ' ' | capitalize -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+        <form method="get" style="display: flex; align-items: center; gap: 10px;">
+          <span aria-live="polite" style="font-weight: 500;">
+            {{ collection.products_count }}
+            {{ collection.products_count | pluralize: 'game', 'games' }}
+          </span>
+          <label for="sm-sort-{{ section.id }}" style="font-weight: 700;">Sort</label>
+          <select id="sm-sort-{{ section.id }}" class="sm-select" name="sort_by" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                {{- option.name -}}
+              </option>
+            {%- endfor -%}
+          </select>
+          <noscript><button type="submit" class="sm-btn">Sort</button></noscript>
+        </form>
+      </div>
+
+      <div class="sm-grid sm-grid--cards" style="--sm-min: 260px;">
+        {%- for product in collection.products -%}
+          {% render 'sm-game-card', product: product %}
+        {%- else -%}
+          <p style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 3px dashed #000; border-radius: 26px;">
+            No games here yet. Check back soon!
+          </p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="sm-pagination" aria-label="Pages">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span {% if part.title == paginate.current_page %}class="is-current" aria-current="page"{% endif %}>{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Next page">→</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    </div>
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Smidgen · Collection",
+  "tag": "div",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "text", "id": "intro", "label": "Intro (used if the collection has no description)", "default": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight." },
+    { "type": "text", "id": "filter_tags", "label": "Filter buttons (product tags)", "info": "Comma-separated product tags, e.g. family, 2-player, quick-play, coming-soon. Only tags used in this collection appear.", "default": "family, 2-player, quick-play, coming-soon" },
+    { "type": "range", "id": "per_page", "label": "Games per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "color", "id": "hero_bg", "label": "Header color", "default": "#FFF503" }
+  ]
+}
+{% endschema %}

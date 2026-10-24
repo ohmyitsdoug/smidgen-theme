@@ -1,60 +1,142 @@
 {%- doc -%}
-  Smidgen game facts for the product buy box: award sticker, preorder ship
-  note and spec tiles (ages / players / play time). Every piece is optional
-  and only renders when its product field has a value.
+  Smidgen pieces for the product buy box. Pick which part this block shows:
+  - badges: award sticker + preorder ship note (also sets the gallery color)
+  - tagline: tagline + review rating link
+  - specs: ages / players / play time tiles
+  - bundle: link to a bundle with a discount circle
+  Every piece only renders when its product field (or setting) has a value.
 {%- enddoc -%}
 {%- liquid
   assign p = closest.product | default: product
   assign m = p.metafields.smidgen
+  assign part = block.settings.part
   assign is_preorder = false
   if p.tags contains 'preorder'
     assign is_preorder = true
   endif
+  assign rating = p.metafields.reviews.rating.value
+  assign rating_count = p.metafields.reviews.rating_count.value | default: 0
+  assign tagline = m.tagline.value | default: p.metafields.descriptors.subtitle.value
 -%}
-{%- if m.award != blank or m.ages != blank or m.players != blank or m.play_time != blank or is_preorder -%}
-  <div class="sm-game-facts" style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; font-family: var(--sm-font-body);" {{ block.shopify_attributes }}>
-    {%- if m.award != blank and block.settings.show_award -%}
-      <span class="sm-sticker" style="font-size: 1.3rem;">{{ m.award.value }}</span>
+
+{%- case part -%}
+  {%- when 'badges' -%}
+    {%- if m.card_color != blank -%}
+      <style>
+        .product-information { --sm-product-color: {{ m.card_color.value }}; }
+      </style>
     {%- endif -%}
-    {%- if is_preorder -%}
-      <span class="sm-badge">
-        Preorder
-        {%- if m.ship_date != blank %} · ships {{ m.ship_date.value }}{% endif -%}
-      </span>
+    {%- if m.award != blank or is_preorder -%}
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;" {{ block.shopify_attributes }}>
+        {%- if m.award != blank -%}
+          <span class="sm-sticker">{{ m.award.value }}</span>
+        {%- endif -%}
+        {%- if is_preorder -%}
+          <span class="sm-badge">
+            Preorder
+            {%- if m.ship_date != blank %} · ships {{ m.ship_date.value }}{% endif -%}
+          </span>
+        {%- endif -%}
+      </div>
     {%- endif -%}
+
+  {%- when 'tagline' -%}
+    {%- if tagline != blank or rating_count > 0 -%}
+      <div style="display: flex; flex-direction: column; gap: 8px;" {{ block.shopify_attributes }}>
+        {%- if tagline != blank -%}
+          <p style="margin: 0; font-family: var(--sm-font-display); font-size: 1.75rem; line-height: 1.1; color: var(--sm-purple);">
+            {{- tagline -}}
+          </p>
+        {%- endif -%}
+        {%- if rating_count > 0 -%}
+          {%- assign full_stars = rating.rating | round -%}
+          <a href="#reviews" style="color: inherit; font-weight: 700; text-decoration: none;">
+            <span aria-hidden="true" style="color: var(--sm-orange);">
+              {%- for i in (1..5) -%}
+                {%- if i <= full_stars -%}★{%- else -%}☆{%- endif -%}
+              {%- endfor -%}
+            </span>
+            {{ rating.rating | round: 1 }} · {{ rating_count }}
+            {{ rating_count | pluralize: 'review', 'reviews' }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'specs' -%}
     {%- if m.ages != blank or m.players != blank or m.play_time != blank -%}
-      <dl style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0;">
+      <dl style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0;" {{ block.shopify_attributes }}>
         {%- if m.ages != blank -%}
-          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Ages</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.ages.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.ages.value }}</dd>
           </div>
         {%- endif -%}
         {%- if m.players != blank -%}
-          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Players</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.players.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.players.value }}</dd>
           </div>
         {%- endif -%}
         {%- if m.play_time != blank -%}
-          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Play time</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.play_time.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.play_time.value }}</dd>
           </div>
         {%- endif -%}
       </dl>
     {%- endif -%}
-  </div>
-{%- endif -%}
+
+  {%- when 'bundle' -%}
+    {%- assign bundle = block.settings.bundle -%}
+    {%- if bundle != blank and bundle.id != p.id -%}
+      <a
+        href="{{ bundle.url }}"
+        style="display: flex; align-items: center; gap: 16px; width: 100%; box-sizing: border-box; border: 3px dashed #000; border-radius: 22px; padding: 14px 18px; color: inherit; text-decoration: none;"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.circle != blank -%}
+          <span style="flex: 0 0 auto; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; background: var(--sm-orange); color: #fff; border: 2px solid #000; border-radius: 50%; font-family: var(--sm-font-display); font-weight: 900; font-size: 1.2rem;">
+            {{- block.settings.circle -}}
+          </span>
+        {%- endif -%}
+        <span style="display: flex; flex-direction: column; gap: 2px;">
+          <strong>{{ block.settings.heading }}</strong>
+          <span>
+            {{- bundle.title }} · {{ bundle.price | money -}}
+            {%- if bundle.compare_at_price > bundle.price %} (was {{ bundle.compare_at_price | money }}){% endif -%}
+          </span>
+        </span>
+      </a>
+    {%- endif -%}
+{%- endcase -%}
 
 {% schema %}
 {
   "name": "Smidgen · Game facts",
   "settings": [
-    { "type": "paragraph", "content": "Shows the game's award, preorder ship date and ages / players / play time from its product fields. Anything empty is skipped." },
-    { "type": "checkbox", "id": "show_award", "label": "Show award sticker", "default": true },
-    { "type": "color", "id": "tile_color", "label": "Tile color", "default": "#FFF503" }
+    {
+      "type": "select",
+      "id": "part",
+      "label": "Show",
+      "options": [
+        { "value": "badges", "label": "Award + preorder badges" },
+        { "value": "tagline", "label": "Tagline + rating" },
+        { "value": "specs", "label": "Ages / players / time tiles" },
+        { "value": "bundle", "label": "Bundle link" }
+      ],
+      "default": "specs"
+    },
+    { "type": "color", "id": "tile_color", "label": "Tile color", "default": "#FFF503", "visible_if": "{{ block.settings.part == 'specs' }}" },
+    { "type": "product", "id": "bundle", "label": "Bundle", "visible_if": "{{ block.settings.part == 'bundle' }}" },
+    { "type": "text", "id": "heading", "label": "Bundle heading", "default": "Also in the Family Game Night Bundle", "visible_if": "{{ block.settings.part == 'bundle' }}" },
+    { "type": "text", "id": "circle", "label": "Circle text", "default": "-20%", "visible_if": "{{ block.settings.part == 'bundle' }}" }
   ],
-  "presets": [{ "name": "Smidgen · Game facts" }]
+  "presets": [
+    { "name": "Smidgen · Award + preorder", "settings": { "part": "badges" } },
+    { "name": "Smidgen · Tagline + rating", "settings": { "part": "tagline" } },
+    { "name": "Smidgen · Game spec tiles", "settings": { "part": "specs" } },
+    { "name": "Smidgen · Bundle link", "settings": { "part": "bundle" } }
+  ]
 }
 {% endschema %}
