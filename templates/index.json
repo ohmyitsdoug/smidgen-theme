@@ -169,7 +169,7 @@
         "c1": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "rocket-launch",
             "label": "01",
             "color": "#fff503",
             "label_color": "#000000",
@@ -180,7 +180,7 @@
         "c2": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "chat-circle-dots",
             "label": "02",
             "color": "#ea5d00",
             "label_color": "#ffffff",
@@ -191,7 +191,7 @@
         "c3": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "smiley",
             "label": "03",
             "color": "#753189",
             "label_color": "#ffffff",
@@ -251,7 +251,7 @@
       "type": "sm-newsletter",
       "settings": {
         "heading": "Join the Smidgen family",
-        "text": "<p>New games, preorder drops, and events near you. No spam, just fun.</p>",
+        "text": "<p>Get notified for new games, preorder drops, and events near you. No spam, just fun.</p>",
         "placeholder": "you@email.com",
         "button_label": "Sign me up",
         "success": "You're in! Watch your inbox.",
