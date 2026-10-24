@@ -1539,7 +1539,7 @@ a.sm-hero__badge:hover {
 
 /* Rising Sun: giant half circle with a wobbly ring */
 .sm-sun__disc {
-  position: absolute; left: 50%; top: var(--sun-top, 60px); width: min(1500px, 130vw); aspect-ratio: 1 / 1;
+  position: absolute; left: 50%; top: var(--sun-top, 60px); width: var(--sun-w, 180vw); aspect-ratio: 1 / 1;
   transform: translateX(-50%); pointer-events: none; z-index: 0;
 }
 .sm-sun__fill { position: absolute; inset: 0; border-radius: 50%; background: var(--sun-color); }
