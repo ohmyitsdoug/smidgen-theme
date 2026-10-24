@@ -11,7 +11,22 @@
   "sections": {
     "main": {
       "type": "sm-main-collection",
-      "settings": {}
+      "settings": {
+        "intro": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight.",
+        "filter_tags": "family, 2-player, quick-play, coming-soon",
+        "all_label": "All",
+        "item_word": "game",
+        "items_word": "games",
+        "empty_text": "Nothing here yet. Check back soon!",
+        "per_page": 24,
+        "image_fit": "fit",
+        "card_bg_mode": "game",
+        "card_bg": "#753189",
+        "card_max": 320,
+        "more_label": "View item→",
+        "soon_label": "Get notified →",
+        "hero_bg": "#fff503"
+      }
     }
   },
   "order": [
