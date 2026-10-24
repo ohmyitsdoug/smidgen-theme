@@ -15,8 +15,11 @@
   assign steps = product.metafields[sf[0]][sf[1]].value
   assign rules = product.metafields[rf[0]][rf[1]].value
 
+  if s.video_link != blank
+    assign video_val = s.video_link
+  endif
   if video_val == blank
-    assign guesses = 'custom.how_to_play_video,custom.how_to_play,custom.howto_video,custom.video,custom.video_url,custom.youtube' | split: ','
+    assign guesses = 'custom.how_to_play_youtube,custom.how_to_play_video,custom.how_to_play,custom.howto_video,custom.video,custom.video_url,custom.youtube' | split: ','
     for g in guesses
       assign gp = g | split: '.'
       assign try = product.metafields[gp[0]][gp[1]].value
@@ -178,6 +181,12 @@
     {
       "type": "paragraph",
       "content": "Type the namespace.key of each product field, as shown in Settings → Custom data → Products. Use these if your products already have a video or rules field."
+    },
+    {
+      "type": "url",
+      "id": "video_link",
+      "label": "Video link",
+      "info": "Click the database icon and pick your URL video field (e.g. How to play Youtube). Overrides the field below."
     },
     {
       "type": "text",
