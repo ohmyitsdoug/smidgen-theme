@@ -381,7 +381,7 @@
       "type": "sm-in-the-box",
       "settings": {
         "heading": "What's in the box",
-        "components_field": "{{ product.metafields.custom.components | metafield_text }}",
+        "components_field": "custom.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "pad_top": 48,
