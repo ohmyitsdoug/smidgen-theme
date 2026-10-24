@@ -16,7 +16,13 @@
             <li {{ block.shopify_attributes }}>
               <a class="sm-link-card" href="{{ block.settings.link | default: '#' }}">
                 <span class="sm-link-card__icon" style="background: {{ block.settings.color }}; color: {{ block.settings.icon_color }};" aria-hidden="true">
-                  {{- block.settings.icon -}}
+                  {%- if block.settings.icon_image != blank -%}
+                    {{ block.settings.icon_image | image_url: width: 96 | image_tag: alt: '', width: 30, height: 30, loading: 'lazy', style: 'width: 30px; height: 30px; object-fit: contain;' }}
+                  {%- elsif block.settings.icon_name != blank and block.settings.icon_name != 'none' -%}
+                    {% render 'sm-icon', name: block.settings.icon_name, size: 28 %}
+                  {%- else -%}
+                    {{- block.settings.icon -}}
+                  {%- endif -%}
                 </span>
                 {{ block.settings.label }}
               </a>
@@ -37,38 +43,377 @@
   "tag": "div",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "info": "Leave empty to use the page title.", "default": "How can we help?" },
-    { "type": "richtext", "id": "text", "label": "Text" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#20A4F3" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave empty to use the page title.",
+      "default": "How can we help?"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#20A4F3"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        }
       ],
       "default": "wave"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 64 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 32 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 32
+    }
   ],
   "blocks": [
     {
       "type": "link",
       "name": "Link card",
       "settings": [
-        { "type": "text", "id": "label", "label": "Label" },
-        { "type": "url", "id": "link", "label": "Link", "info": "Use #faq, #contact or #pitch to jump down this page." },
-        { "type": "text", "id": "icon", "label": "Icon text", "info": "A short symbol, e.g. ? or ✉" },
-        { "type": "color", "id": "color", "label": "Icon color", "default": "#FFF503" },
-        { "type": "color", "id": "icon_color", "label": "Icon text color", "default": "#000000" }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Use #faq, #contact or #pitch to jump down this page."
+        },
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "package",
+              "label": "Box / package"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / shipping"
+            },
+            {
+              "value": "question",
+              "label": "Question mark"
+            },
+            {
+              "value": "envelope-simple",
+              "label": "Envelope / email"
+            },
+            {
+              "value": "storefront",
+              "label": "Storefront"
+            },
+            {
+              "value": "puzzle-piece",
+              "label": "Puzzle piece"
+            },
+            {
+              "value": "dice-five",
+              "label": "Dice"
+            },
+            {
+              "value": "cards",
+              "label": "Cards"
+            },
+            {
+              "value": "game-controller",
+              "label": "Game controller"
+            },
+            {
+              "value": "lightbulb",
+              "label": "Lightbulb / idea"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "smiley",
+              "label": "Smiley"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "timer",
+              "label": "Timer"
+            },
+            {
+              "value": "hourglass",
+              "label": "Hourglass"
+            },
+            {
+              "value": "users-three",
+              "label": "Group of people"
+            },
+            {
+              "value": "user",
+              "label": "Person"
+            },
+            {
+              "value": "baby",
+              "label": "Baby / kids"
+            },
+            {
+              "value": "chat-circle-dots",
+              "label": "Chat bubble"
+            },
+            {
+              "value": "megaphone",
+              "label": "Megaphone"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "confetti",
+              "label": "Confetti"
+            },
+            {
+              "value": "shopping-bag",
+              "label": "Shopping bag"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "trophy",
+              "label": "Trophy"
+            },
+            {
+              "value": "medal",
+              "label": "Medal"
+            },
+            {
+              "value": "crown",
+              "label": "Crown"
+            },
+            {
+              "value": "seal-check",
+              "label": "Verified seal"
+            },
+            {
+              "value": "shield-check",
+              "label": "Shield check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check mark"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs up"
+            },
+            {
+              "value": "handshake",
+              "label": "Handshake"
+            },
+            {
+              "value": "rocket-launch",
+              "label": "Rocket"
+            },
+            {
+              "value": "house",
+              "label": "House"
+            },
+            {
+              "value": "map-pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "airplane-tilt",
+              "label": "Airplane"
+            },
+            {
+              "value": "calendar-blank",
+              "label": "Calendar"
+            },
+            {
+              "value": "book-open",
+              "label": "Book / rules"
+            },
+            {
+              "value": "file-pdf",
+              "label": "PDF file"
+            },
+            {
+              "value": "play-circle",
+              "label": "Play button"
+            },
+            {
+              "value": "video-camera",
+              "label": "Video camera"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "graduation-cap",
+              "label": "Graduation cap"
+            },
+            {
+              "value": "chalkboard-teacher",
+              "label": "Teacher"
+            },
+            {
+              "value": "wrench",
+              "label": "Wrench / repair"
+            },
+            {
+              "value": "arrows-clockwise",
+              "label": "Replay / refresh"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "coffee",
+              "label": "Coffee"
+            },
+            {
+              "value": "paw-print",
+              "label": "Paw print"
+            },
+            {
+              "value": "info",
+              "label": "Info"
+            },
+            {
+              "value": "instagram-logo",
+              "label": "Instagram"
+            },
+            {
+              "value": "tiktok-logo",
+              "label": "TikTok"
+            },
+            {
+              "value": "youtube-logo",
+              "label": "YouTube"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Or upload your own icon",
+          "info": "SVG or PNG, square. Overrides the icon above."
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Or icon text",
+          "info": "Used when no icon is picked, e.g. ? or 01"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Icon color",
+          "default": "#FFF503"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon text color",
+          "default": "#000000"
+        }
       ]
     }
   ],
-  "presets": [{ "name": "Smidgen · Header + links" }]
+  "presets": [
+    {
+      "name": "Smidgen · Header + links"
+    }
+  ]
 }
 {% endschema %}
