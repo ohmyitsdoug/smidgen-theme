@@ -1,0 +1,60 @@
+{%- doc -%}
+  Smidgen game facts for the product buy box: award sticker, preorder ship
+  note and spec tiles (ages / players / play time). Every piece is optional
+  and only renders when its product field has a value.
+{%- enddoc -%}
+{%- liquid
+  assign p = closest.product | default: product
+  assign m = p.metafields.smidgen
+  assign is_preorder = false
+  if p.tags contains 'preorder'
+    assign is_preorder = true
+  endif
+-%}
+{%- if m.award != blank or m.ages != blank or m.players != blank or m.play_time != blank or is_preorder -%}
+  <div class="sm-game-facts" style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; font-family: var(--sm-font-body);" {{ block.shopify_attributes }}>
+    {%- if m.award != blank and block.settings.show_award -%}
+      <span class="sm-sticker" style="font-size: 1.3rem;">{{ m.award.value }}</span>
+    {%- endif -%}
+    {%- if is_preorder -%}
+      <span class="sm-badge">
+        Preorder
+        {%- if m.ship_date != blank %} · ships {{ m.ship_date.value }}{% endif -%}
+      </span>
+    {%- endif -%}
+    {%- if m.ages != blank or m.players != blank or m.play_time != blank -%}
+      <dl style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0;">
+        {%- if m.ages != blank -%}
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+            <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Ages</dt>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.ages.value }}</dd>
+          </div>
+        {%- endif -%}
+        {%- if m.players != blank -%}
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+            <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Players</dt>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.players.value }}</dd>
+          </div>
+        {%- endif -%}
+        {%- if m.play_time != blank -%}
+          <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 84px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
+            <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Play time</dt>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;">{{ m.play_time.value }}</dd>
+          </div>
+        {%- endif -%}
+      </dl>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Game facts",
+  "settings": [
+    { "type": "paragraph", "content": "Shows the game's award, preorder ship date and ages / players / play time from its product fields. Anything empty is skipped." },
+    { "type": "checkbox", "id": "show_award", "label": "Show award sticker", "default": true },
+    { "type": "color", "id": "tile_color", "label": "Tile color", "default": "#FFF503" }
+  ],
+  "presets": [{ "name": "Smidgen · Game facts" }]
+}
+{% endschema %}

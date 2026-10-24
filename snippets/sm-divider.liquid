@@ -1,0 +1,34 @@
+{%- doc -%}
+  Outlined shape divider between two background colors.
+
+  @param {string} shape - wave | zigzag | scallop | straight
+  @param {string} from - color above the divider
+  @param {string} to - color below the divider
+  @param {number} [height] - height in px (default 64)
+{%- enddoc -%}
+{%- liquid
+  assign h = height | default: 64
+  case shape
+    when 'zigzag'
+      assign edge = 'M0,60 L60,20 L120,60 L180,20 L240,60 L300,20 L360,60 L420,20 L480,60 L540,20 L600,60 L660,20 L720,60 L780,20 L840,60 L900,20 L960,60 L1020,20 L1080,60 L1140,20 L1200,60 L1260,20 L1320,60 L1380,20 L1440,60'
+    when 'scallop'
+      assign edge = 'M0,70 A60,50 0 0 1 120,70 A60,50 0 0 1 240,70 A60,50 0 0 1 360,70 A60,50 0 0 1 480,70 A60,50 0 0 1 600,70 A60,50 0 0 1 720,70 A60,50 0 0 1 840,70 A60,50 0 0 1 960,70 A60,50 0 0 1 1080,70 A60,50 0 0 1 1200,70 A60,50 0 0 1 1320,70 A60,50 0 0 1 1440,70'
+    when 'straight'
+      assign edge = 'M0,76 L1440,76'
+    else
+      assign edge = 'M0,40 C120,0 240,0 360,40 S600,80 720,40 S960,0 1080,40 S1320,80 1440,40'
+  endcase
+-%}
+<div class="sm-divider" aria-hidden="true" style="--sm-from: {{ from }}; --sm-divider-h: {{ h }}px;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+    <path d="{{ edge }} L1440,80 L0,80 Z" fill="{{ to }}"></path>
+    <path
+      d="{{ edge }}"
+      fill="none"
+      stroke="#000"
+      stroke-width="4"
+      stroke-linejoin="round"
+      vector-effect="non-scaling-stroke"
+    ></path>
+  </svg>
+</div>

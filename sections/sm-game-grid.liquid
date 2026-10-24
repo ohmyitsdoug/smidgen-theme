@@ -1,0 +1,89 @@
+{%- liquid
+  assign s = section.settings
+  if s.products != blank
+    assign games = s.products
+  elsif s.collection != blank
+    assign games = s.collection.products
+  else
+    assign games = collections.all.products
+  endif
+-%}
+<section
+  id="sm-{{ section.id }}"
+  class="sm-section"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  {% if s.heading != blank %}aria-labelledby="sm-{{ section.id }}-title"{% endif %}
+>
+  {% render 'sm-doodle', shape: s.doodle, color: s.doodle_color, position: 'top-right' %}
+  <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    {%- if s.heading != blank or s.link_label != blank -%}
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+        {%- if s.heading != blank -%}
+          <div>
+            <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
+            <svg width="220" height="22" viewBox="0 0 240 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 14 C 30 2, 50 22, 78 12 S 128 2, 156 12 S 206 22, 234 10" stroke="#EA5D00" stroke-width="8" stroke-linecap="round"/></svg>
+          </div>
+        {%- endif -%}
+        {%- if s.link_label != blank -%}
+          <a class="sm-link" href="{{ s.link | default: routes.all_products_collection_url }}">{{ s.link_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sm-grid sm-grid--cards" style="--sm-min: {{ s.card_min }}px;">
+      {%- for product in games limit: s.limit -%}
+        {% render 'sm-game-card', product: product %}
+      {%- else -%}
+        <p>Pick a collection or games for this section in the theme editor.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- if s.divider != 'none' -%}
+  {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Game grid",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pick your game" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "All games →" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "header", "content": "Games" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "product_list", "id": "products", "label": "Or pick games by hand", "limit": 12 },
+    { "type": "range", "id": "limit", "label": "Games to show", "min": 1, "max": 24, "step": 1, "default": 8 },
+    { "type": "range", "id": "card_min", "label": "Card width", "min": 200, "max": 360, "step": 10, "unit": "px", "default": 240 },
+    {
+      "type": "select", "id": "doodle", "label": "Doodle",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "squiggle", "label": "Squiggle" },
+        { "value": "spiral", "label": "Spiral" }, { "value": "zigzag", "label": "Zigzag" },
+        { "value": "star", "label": "Star" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "doodle_color", "label": "Doodle color", "default": "#EA5D00" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "header", "content": "Divider below" },
+    {
+      "type": "select", "id": "divider", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" },
+        { "value": "straight", "label": "Straight line" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#20A4F3", "visible_if": "{{ section.settings.divider != 'none' }}" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{ "name": "Smidgen · Game grid" }]
+}
+{% endschema %}

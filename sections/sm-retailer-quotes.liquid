@@ -1,0 +1,153 @@
+{%- liquid
+  assign s = section.settings
+  assign filled = 0
+  for block in section.blocks
+    if block.settings.quote != blank and block.settings.name != blank
+      assign filled = filled | plus: 1
+    endif
+  endfor
+-%}
+{%- if filled > 0 -%}
+  {%- if s.divider_top != 'none' -%}
+    {% render 'sm-divider', shape: s.divider_top, from: s.divider_from, to: s.bg %}
+  {%- endif -%}
+  <section
+    id="sm-{{ section.id }}"
+    class="sm-section"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    aria-labelledby="sm-{{ section.id }}-title"
+  >
+    {% render 'sm-doodle', shape: 'squiggle', color: s.doodle_color, position: 'top-right' %}
+    <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
+        {%- if s.eyebrow != blank -%}<span class="sm-badge">{{ s.eyebrow }}</span>{%- endif -%}
+        <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
+      </div>
+
+      {%- assign shown = 0 -%}
+      {%- capture others -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            if b.quote == blank or b.name == blank
+              continue
+            endif
+            assign shown = shown | plus: 1
+            assign where = b.role
+            if b.store != blank
+              if where != blank
+                assign where = where | append: ', '
+              endif
+              assign where = where | append: b.store
+            endif
+            if b.city != blank
+              assign where = where | append: ' · ' | append: b.city
+            endif
+          -%}
+          {%- if shown == 1 -%}
+            <figure class="sm-quote-feature" {{ block.shopify_attributes }}>
+              <div class="sm-quote-feature__media">
+                {%- if b.image != blank -%}
+                  {{ b.image | image_url: width: 900 | image_tag: alt: b.image.alt, loading: 'lazy', sizes: '(min-width: 900px) 45vw, 100vw' }}
+                {%- endif -%}
+                {%- if b.store != blank -%}<span class="sm-sticker">{{ b.store }}</span>{%- endif -%}
+              </div>
+              <div class="sm-quote-feature__body">
+                <svg width="64" height="48" viewBox="0 0 64 48" aria-hidden="true" focusable="false"><path d="M4 44 C 4 22, 10 8, 26 4 L 28 12 C 18 16, 16 22, 16 26 L 26 26 L 26 44 Z M36 44 C 36 22, 42 8, 58 4 L 60 12 C 50 16, 48 22, 48 26 L 58 26 L 58 44 Z" fill="#EA5D00" stroke="#000" stroke-width="3" stroke-linejoin="round"/></svg>
+                <blockquote>{{ b.quote }}</blockquote>
+                <figcaption style="display: flex; flex-direction: column; gap: 2px;">
+                  <strong style="font-size: 1.1rem;">{{ b.name }}</strong>
+                  {%- if where != blank -%}<span>{{ where }}</span>{%- endif -%}
+                </figcaption>
+              </div>
+            </figure>
+            <!--sm-split-->
+          {%- else -%}
+            <figure class="sm-box sm-quote" {{ block.shopify_attributes }}>
+              <blockquote>“{{ b.quote }}”</blockquote>
+              <figcaption class="sm-person">
+                <span class="sm-person__img">
+                  {%- if b.image != blank -%}
+                    {{ b.image | image_url: width: 160 | image_tag: alt: '', loading: 'lazy' }}
+                  {%- endif -%}
+                </span>
+                <span style="display: flex; flex-direction: column;">
+                  <strong style="font-size: 1.05rem;">{{ b.name }}</strong>
+                  {%- if where != blank -%}<span>{{ where }}</span>{%- endif -%}
+                </span>
+              </figcaption>
+            </figure>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign parts = others | split: '<!--sm-split-->' -%}
+      {{ parts[0] }}
+      {%- if shown > 1 -%}
+        <div class="sm-grid" style="--sm-min: 300px;">{{ parts[1] }}</div>
+      {%- endif -%}
+    </div>
+  </section>
+  {%- if s.divider != 'none' -%}
+    {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Retailer quotes",
+  "tag": "div",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "paragraph", "content": "The first quote is shown large with its image. Quotes missing text or a name are skipped, and the section hides when there are none." },
+    { "type": "text", "id": "eyebrow", "label": "Badge", "default": "From our retailers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Don't take our word for it" },
+    { "type": "color", "id": "doodle_color", "label": "Doodle color", "default": "#FFF503" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#753189" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" },
+    { "type": "header", "content": "Divider above" },
+    {
+      "type": "select", "id": "divider_top", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "wave"
+    },
+    { "type": "color", "id": "divider_from", "label": "Previous section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider_top != 'none' }}" },
+    { "type": "header", "content": "Divider below" },
+    {
+      "type": "select", "id": "divider", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "wave"
+    },
+    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider != 'none' }}" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "role", "label": "Role", "placeholder": "Owner" },
+        { "type": "text", "id": "store", "label": "Store" },
+        { "type": "text", "id": "city", "label": "City", "placeholder": "Baltimore, MD" },
+        { "type": "image_picker", "id": "image", "label": "Photo" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Retailer quotes",
+      "blocks": [{ "type": "quote" }, { "type": "quote" }, { "type": "quote" }]
+    }
+  ]
+}
+{% endschema %}

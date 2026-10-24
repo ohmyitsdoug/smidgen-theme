@@ -1,0 +1,136 @@
+{%- comment -%}
+  "Learn to play" for product pages. Reads product fields:
+  - smidgen.howto_video (URL; YouTube links are embedded)
+  - smidgen.howto_steps (list of `smidgen_step` entries: title, description)
+  - smidgen.rules_pdf (file)
+  Each part renders only when it has data. With no data at all, the section
+  and its wave dividers are left out entirely.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign m = product.metafields.smidgen
+  assign video_url = m.howto_video.value
+  assign steps = m.howto_steps.value
+  assign rules = m.rules_pdf.value
+
+  assign step_count = 0
+  for step in steps
+    if step.title.value != blank
+      assign step_count = step_count | plus: 1
+    endif
+  endfor
+
+  assign yt_id = blank
+  if video_url != blank
+    assign v = video_url | append: ''
+    if v contains 'youtu.be/'
+      assign yt_id = v | split: 'youtu.be/' | last | split: '?' | first
+    elsif v contains 'shorts/'
+      assign yt_id = v | split: 'shorts/' | last | split: '?' | first
+    elsif v contains 'v='
+      assign yt_id = v | split: 'v=' | last | split: '&' | first
+    endif
+  endif
+
+  assign has_any = false
+  if video_url != blank or step_count > 0 or rules != blank
+    assign has_any = true
+  endif
+  assign num_colors = '#753189,#EA5D00,#20A4F3,#000000' | split: ','
+-%}
+{%- if has_any -%}
+  {% render 'sm-divider', shape: s.divider_shape, from: s.outer_color, to: s.bg %}
+  <section
+    id="how-to-play"
+    class="sm-section"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    aria-labelledby="sm-{{ section.id }}-title"
+  >
+    {% render 'sm-doodle', shape: 'zigzag', color: '#753189', position: 'top-right' %}
+    <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+      <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
+
+      {%- if video_url != blank -%}
+        <div class="sm-video">
+          {%- if yt_id != blank -%}
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/{{ yt_id }}?rel=0"
+              title="How to play {{ product.title | escape }}"
+              loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          {%- else -%}
+            <a
+              class="sm-btn"
+              href="{{ video_url }}"
+              target="_blank"
+              rel="noopener"
+              style="position: absolute; inset: 0; margin: auto; width: fit-content; height: fit-content;"
+            >
+              Watch how to play
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if step_count > 0 -%}
+        <ol class="sm-steps sm-grid" style="--sm-min: 250px;">
+          {%- assign n = 0 -%}
+          {%- for step in steps -%}
+            {%- if step.title.value != blank -%}
+              {%- assign color_index = n | modulo: 4 -%}
+              {%- assign n = n | plus: 1 -%}
+              <li class="sm-box">
+                <span class="sm-step__num" style="--sm-num: {{ num_colors[color_index] }};" aria-hidden="true">{{ n }}</span>
+                <h3 class="sm-step__title">
+                  <span class="sm-visually-hidden">Step {{ n }}:</span>
+                  {{ step.title.value }}
+                </h3>
+                {%- if step.description.value != blank -%}
+                  <div style="font-size: 1.05rem; line-height: 1.5;">{{ step.description | metafield_tag }}</div>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+
+      {%- if rules != blank -%}
+        <a class="sm-btn" href="{{ rules.url }}" target="_blank" rel="noopener" style="align-self: flex-start;">
+          {{- s.rules_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </section>
+  {% render 'sm-divider', shape: s.divider_shape, from: s.bg, to: s.outer_color %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Learn to play",
+  "tag": "div",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Uses each game's how-to video, steps and rules PDF fields. Hidden on games that have none of them." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Learn to play" },
+    { "type": "text", "id": "rules_label", "label": "Rules button label", "default": "Download the rules (PDF)" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "color", "id": "outer_color", "label": "Color of sections above and below", "default": "#FFFFFF" },
+    {
+      "type": "select", "id": "divider_shape", "label": "Divider shape",
+      "options": [
+        { "value": "wave", "label": "Wave" }, { "value": "zigzag", "label": "Zigzag" },
+        { "value": "scallop", "label": "Scallop" }, { "value": "straight", "label": "Straight line" }
+      ],
+      "default": "wave"
+    },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 72 }
+  ],
+  "presets": [{ "name": "Smidgen · Learn to play" }]
+}
+{% endschema %}

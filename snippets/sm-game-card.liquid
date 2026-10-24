@@ -1,0 +1,78 @@
+{%- doc -%}
+  Smidgen game card. The whole card links to the game; no add-to-cart.
+  Reads optional product metafields in the `smidgen` namespace:
+  card_color, hook, badge, players, play_time, ages, ship_date.
+  Tags `preorder` and `coming-soon` change the badge and link label.
+
+  @param {product} product
+  @param {string} [image_sizes]
+{%- enddoc -%}
+{%- liquid
+  assign m = product.metafields.smidgen
+  assign card_color = m.card_color.value | default: '#753189'
+
+  assign badge = m.badge.value
+  assign more = 'View game →'
+  if product.tags contains 'coming-soon'
+    assign badge = badge | default: 'Coming soon'
+    assign more = 'Get notified →'
+  elsif product.tags contains 'preorder'
+    assign badge = badge | default: 'Preorder'
+  elsif product.compare_at_price > product.price
+    assign badge = badge | default: 'Sale'
+  endif
+
+  assign hook = m.hook.value | default: product.metafields.descriptors.subtitle.value
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign sizes = image_sizes | default: '(min-width: 1200px) 300px, (min-width: 600px) 45vw, 90vw'
+-%}
+<a href="{{ product.url }}" class="sm-card" style="--sm-card-color: {{ card_color }};">
+  <span class="sm-card__media">
+    {%- if product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 800
+        | image_tag: alt: '', loading: 'lazy', sizes: sizes, widths: '300, 450, 600, 800'
+      }}
+    {%- endif -%}
+    {%- if badge != blank -%}
+      <span class="sm-badge">{{ badge }}</span>
+    {%- endif -%}
+  </span>
+  <span class="sm-card__body">
+    <span class="sm-card__title">{{ product.title }}</span>
+    {%- if hook != blank -%}
+      <span class="sm-card__hook">{{ hook }}</span>
+    {%- endif -%}
+    {%- if m.players != blank or m.play_time != blank or m.ages != blank -%}
+      <span class="sm-chips">
+        {%- if m.ages != blank -%}<span class="sm-chip">{{ m.ages.value }}</span>{%- endif -%}
+        {%- if m.players != blank -%}<span class="sm-chip">{{ m.players.value }}</span>{%- endif -%}
+        {%- if m.play_time != blank -%}<span class="sm-chip">{{ m.play_time.value }}</span>{%- endif -%}
+      </span>
+    {%- endif -%}
+    {%- if rating_count > 0 -%}
+      <span class="sm-card__rating">
+        ★ {{ rating.rating | round: 1 }}
+        · {{ rating_count }}
+        {{ rating_count | pluralize: 'review', 'reviews' }}</span
+      >
+    {%- elsif m.ship_date != blank -%}
+      <span class="sm-card__rating">Ships {{ m.ship_date.value }}</span>
+    {%- endif -%}
+    <span class="sm-card__foot">
+      <span class="sm-card__price">
+        {%- if product.tags contains 'coming-soon' -%}
+          Coming soon
+        {%- else -%}
+          {{ product.price | money }}
+          {%- if product.compare_at_price > product.price -%}
+            <s>{{ product.compare_at_price | money }}</s>
+          {%- endif -%}
+        {%- endif -%}
+      </span>
+      <span class="sm-card__more" aria-hidden="true">{{ more }}</span>
+    </span>
+  </span>
+</a>

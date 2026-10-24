@@ -1,0 +1,23 @@
+{%- doc -%}
+  Decorative hand-drawn shape, hidden from assistive tech.
+
+  @param {string} shape - squiggle | spiral | zigzag | star | loop-arrow | none
+  @param {string} [color] - stroke/fill color
+  @param {string} [position] - top-left | top-right | bottom-left | bottom-right
+{%- enddoc -%}
+{%- liquid
+  assign c = color | default: '#753189'
+  assign pos = position | default: 'top-right'
+-%}
+{%- case shape -%}
+  {%- when 'squiggle' -%}
+    <svg class="sm-doodle sm-doodle--{{ pos }}" width="210" height="86" viewBox="0 0 220 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 45 C 35 10, 60 10, 80 45 S 125 80, 145 45 S 190 10, 210 45" stroke="{{ c }}" stroke-width="16" stroke-linecap="round"/></svg>
+  {%- when 'spiral' -%}
+    <svg class="sm-doodle sm-doodle--{{ pos }}" width="110" height="110" viewBox="0 0 110 110" fill="none" aria-hidden="true" focusable="false"><path d="M55 55 m-8 0 a8 8 0 1 1 16 0 a18 18 0 1 1 -36 0 a28 28 0 1 1 56 0" stroke="{{ c }}" stroke-width="12" stroke-linecap="round"/></svg>
+  {%- when 'zigzag' -%}
+    <svg class="sm-doodle sm-doodle--{{ pos }}" width="140" height="90" viewBox="0 0 140 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 25 L40 65 L70 25 L100 65 L130 25" stroke="{{ c }}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  {%- when 'star' -%}
+    <svg class="sm-doodle sm-doodle--{{ pos }}" width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 4 L60 36 L94 30 L68 52 L88 82 L56 70 L44 96 L38 64 L6 70 L28 46 L8 20 L40 30 Z" fill="{{ c }}" stroke="#000" stroke-width="4" stroke-linejoin="round"/></svg>
+  {%- when 'loop-arrow' -%}
+    <svg class="sm-doodle sm-doodle--{{ pos }}" width="170" height="90" viewBox="0 0 190 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 70 C 30 30, 60 18, 82 34 C 98 46, 84 64, 70 56 C 56 48, 74 22, 108 24 C 140 26, 160 42, 176 64" stroke="{{ c }}" stroke-width="7" stroke-linecap="round"/><path d="M156 62 L178 68 L174 46" stroke="{{ c }}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endcase -%}

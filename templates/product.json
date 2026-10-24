@@ -240,10 +240,19 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "sm_game_facts": {
+              "type": "sm-game-facts",
+              "settings": {
+                "show_award": true,
+                "tile_color": "#FFF503"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
+            "sm_game_facts",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
@@ -406,10 +415,39 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "sm_learn": {
+      "type": "sm-learn-to-play",
+      "settings": {}
+    },
+    "sm_box": {
+      "type": "sm-in-the-box",
+      "settings": {}
+    },
+    "sm_faq": {
+      "type": "sm-faq",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Good questions",
+        "use_product": true,
+        "schema": true,
+        "pad_top": 24
+      }
+    },
+    "sm_reviews": {
+      "type": "sm-reviews",
+      "blocks": {},
+      "block_order": [],
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "sm_learn",
+    "sm_box",
+    "sm_faq",
+    "sm_reviews",
     "product_recommendations_qggXJq"
   ]
 }

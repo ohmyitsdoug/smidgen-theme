@@ -1,0 +1,41 @@
+{% render 'sm-divider',
+  shape: section.settings.shape,
+  from: section.settings.from,
+  to: section.settings.to,
+  height: section.settings.height
+%}
+
+{% schema %}
+{
+  "name": "Smidgen · Divider",
+  "tag": "div",
+  "class": "sm-divider-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Shape",
+      "options": [
+        { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "straight", "label": "Straight line" }
+      ],
+      "default": "wave"
+    },
+    { "type": "color", "id": "from", "label": "Color above", "default": "#FFF503" },
+    { "type": "color", "id": "to", "label": "Color below", "default": "#FFFFFF" },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Height",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [{ "name": "Smidgen · Divider" }]
+}
+{% endschema %}

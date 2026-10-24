@@ -1,0 +1,136 @@
+{
+  "sections": {
+    "hero": {
+      "type": "sm-hero",
+      "settings": {
+        "eyebrow": "For retailers & educators",
+        "heading": "Bring Smidgen to your shelves.",
+        "highlight": "Smidgen",
+        "text": "<p>Award-winning family games in small boxes that demo in minutes.</p>",
+        "button_label": "Order on Faire",
+        "button_2_label": "Apply for wholesale",
+        "button_2_link": "#apply",
+        "note": "",
+        "doodle": "zigzag",
+        "doodle_2": "none",
+        "circle_color": "#20A4F3",
+        "divider": "wave",
+        "divider_to": "#FFFFFF"
+      }
+    },
+    "why": {
+      "type": "sm-feature-cards",
+      "blocks": {
+        "w1": {
+          "type": "card",
+          "settings": {
+            "label": "★",
+            "color": "#753189",
+            "label_color": "#FFFFFF",
+            "title": "Award winner",
+            "text": "<p>CUNO won the 2025 Sparks Play Award for Strategy Game of the Year.</p>"
+          }
+        },
+        "w2": {
+          "type": "card",
+          "settings": {
+            "label": "□",
+            "color": "#EA5D00",
+            "label_color": "#FFFFFF",
+            "title": "Small footprint",
+            "text": "<p>Compact boxes that fit by the register or on an end cap.</p>"
+          }
+        },
+        "w3": {
+          "type": "card",
+          "settings": {
+            "label": "5m",
+            "color": "#20A4F3",
+            "label_color": "#000000",
+            "title": "Demos in minutes",
+            "text": "<p>Staff can teach a customer at the counter.</p>"
+          }
+        },
+        "w4": {
+          "type": "card",
+          "settings": {
+            "label": "♥",
+            "color": "#FFF503",
+            "label_color": "#000000",
+            "title": "We show up",
+            "text": "<p>We run in-store board game socials to bring people through your door.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {
+        "heading": "Why stores stock us",
+        "bg": "#FFFFFF",
+        "doodle": "none",
+        "divider": "none"
+      }
+    },
+    "quotes": {
+      "type": "sm-retailer-quotes",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {}
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {}
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "sm-faq",
+      "blocks": {
+        "f1": {
+          "type": "question",
+          "settings": {
+            "question": "Where can I order wholesale?",
+            "answer": "<p>Order on Faire, or apply below for direct wholesale.</p>"
+          }
+        },
+        "f2": {
+          "type": "question",
+          "settings": {
+            "question": "What are your minimums?",
+            "answer": "<p>[Your minimum order and case packs.]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2"
+      ],
+      "settings": {
+        "heading": "Retailer questions",
+        "use_product": false,
+        "anchor": "apply"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "why",
+    "quotes",
+    "faq"
+  ]
+}

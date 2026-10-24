@@ -1,0 +1,136 @@
+{%- assign s = section.settings -%}
+<section
+  id="{{ s.anchor | default: 'pitch' }}"
+  class="sm-section"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  aria-labelledby="sm-{{ section.id }}-title"
+>
+  {% render 'sm-doodle', shape: 'star', color: '#20A4F3', position: 'top-right' %}
+  <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; max-width: 760px;">
+      {%- if s.eyebrow != blank -%}<span class="sm-badge">{{ s.eyebrow }}</span>{%- endif -%}
+      <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
+      {%- if s.intro != blank -%}<div class="sm-lede">{{ s.intro }}</div>{%- endif -%}
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px;">
+      {%- if section.blocks.size > 0 -%}
+        <div class="sm-box" style="flex: 2 1 540px; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+          <h3 class="sm-step__title" style="margin: 0;">{{ s.list_heading }}</h3>
+          <ol class="sm-numbered">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.text != blank -%}
+                <li {{ block.shopify_attributes }}>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+          {%- if s.note != blank -%}
+            <div style="padding-top: 8px; border-top: 2px dashed #000; font-size: 0.95rem; line-height: 1.5;">{{ s.note }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+        {%- if s.email != blank -%}
+          <div
+            class="sm-box"
+            style="background: var(--sm-purple); color: #fff; display: flex; flex-direction: column; align-items: flex-start; gap: 14px;"
+          >
+            <h3 class="sm-display" style="font-size: 2rem;">{{ s.cta_heading }}</h3>
+            <a href="mailto:{{ s.email }}?subject={{ s.subject | url_encode }}" style="color: var(--sm-yellow); font-weight: 700; font-size: 1.1rem;">
+              {{- s.email -}}
+            </a>
+            <a class="sm-btn sm-btn--secondary" href="mailto:{{ s.email }}?subject={{ s.subject | url_encode }}">
+              {{- s.button_label -}}
+            </a>
+          </div>
+        {%- endif -%}
+        {%- if s.response != blank -%}
+          <div class="sm-box" style="box-shadow: 6px 6px 0 var(--sm-orange);">
+            <h3 class="sm-step__title" style="margin: 0 0 8px;">What happens next</h3>
+            <div class="sm-rte" style="font-size: 1rem;">{{ s.response }}</div>
+          </div>
+        {%- endif -%}
+        {%- if s.fits != blank -%}
+          <div class="sm-box" style="box-shadow: none;">
+            <h3 class="sm-step__title" style="margin: 0 0 8px;">{{ s.fits_heading }}</h3>
+            <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45;">
+              {%- assign lines = s.fits | newline_to_br | split: '<br />' -%}
+              {%- for line in lines -%}
+                {%- assign t = line | strip -%}
+                {%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- if s.divider != 'none' -%}
+  {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Pitch us a game",
+  "tag": "div",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Link anchor", "default": "pitch", "info": "Link to this section with #pitch" },
+    { "type": "text", "id": "eyebrow", "label": "Badge", "default": "For game designers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Got a game? Pitch us!" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>We love seeing new designs, especially quick-to-teach family games with real decisions. Send one email with the essentials below and we'll take a look.</p>" },
+    { "type": "text", "id": "list_heading", "label": "Checklist heading", "default": "What to include in your email" },
+    { "type": "richtext", "id": "note", "label": "Note under checklist", "default": "<p>Links beat big attachments. Please don't mail physical prototypes unless we ask for one.</p>" },
+    { "type": "header", "content": "Email" },
+    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Send your pitch" },
+    { "type": "text", "id": "email", "label": "Email address" },
+    { "type": "text", "id": "subject", "label": "Email subject", "default": "Pitch: " },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Email your pitch" },
+    { "type": "richtext", "id": "response", "label": "What happens next", "default": "<p>We do our best to reply to everyone, but reviewing pitches takes time, so please be patient with us. If it's a fit, we'll ask for a prototype or a video call.</p>" },
+    { "type": "text", "id": "fits_heading", "label": "Fit list heading", "default": "What fits Smidgen" },
+    { "type": "textarea", "id": "fits", "label": "Fit list", "info": "One item per line", "default": "Teaches in a few minutes\nMeaningful choices without heavy rules\nKeeps every player in the game\nSmall, portable component count" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "header", "content": "Divider below" },
+    {
+      "type": "select", "id": "divider", "label": "Shape",
+      "options": [
+        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
+        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider != 'none' }}" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Checklist item",
+      "settings": [{ "type": "inline_richtext", "id": "text", "label": "Text" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Pitch us a game",
+      "blocks": [
+        { "type": "item", "settings": { "text": "<b>Subject line:</b> \"Pitch: [Game name]\"" } },
+        { "type": "item", "settings": { "text": "<b>One-line hook</b> and what makes it fun" } },
+        { "type": "item", "settings": { "text": "<b>Players, play time and ages</b>" } },
+        { "type": "item", "settings": { "text": "<b>Sell sheet:</b> a one-page PDF" } },
+        { "type": "item", "settings": { "text": "<b>Gameplay video:</b> a 2–5 minute link showing a few turns" } },
+        { "type": "item", "settings": { "text": "<b>Rules</b> as a PDF or shared link" } },
+        { "type": "item", "settings": { "text": "<b>Playtesting so far:</b> how many groups, what you changed" } },
+        { "type": "item", "settings": { "text": "<b>A little about you</b> and where else it's been pitched" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
