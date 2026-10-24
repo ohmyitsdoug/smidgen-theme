@@ -34,7 +34,8 @@
         "col_2"
       ],
       "settings": {
-        "tagline": "Made just outside Baltimore, MD"
+        "tagline": "Made just outside Baltimore, MD",
+        "pad_top": 64
       }
     }
   },
