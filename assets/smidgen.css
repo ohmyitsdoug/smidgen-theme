@@ -1400,16 +1400,20 @@ a.sm-hero__badge:hover {
 .sm-reviews__arrow:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--sm-black); }
 @media (max-width: 749px) { .sm-reviews__side { max-width: none; } .sm-reviews__layout { gap: 28px; } }
 
-/* Judge.me widget lives in a collapsible panel */
-.sm-reviews__panel { margin-top: 40px; border-top: 3px solid var(--sm-black); padding-top: 24px; }
+/* Judge.me widget lives in a panel; stays loaded but off-screen until opened */
+.sm-reviews__panel { position: relative; margin-top: 40px; border-top: 3px solid var(--sm-black); padding-top: 24px; }
 .sm-reviews__panel-toggle {
-  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; color: inherit;
   font-family: var(--sm-font-display); font-size: 1.6rem; line-height: 1;
 }
-.sm-reviews__panel-toggle::-webkit-details-marker { display: none; }
 .sm-reviews__panel-toggle::after { content: '+'; font-size: 1.8rem; transition: transform .2s; }
-.sm-reviews__panel[open] .sm-reviews__panel-toggle::after { transform: rotate(45deg); }
+.sm-reviews__panel.is-open .sm-reviews__panel-toggle::after { transform: rotate(45deg); }
 .sm-reviews__panel-body { margin-top: 24px; max-width: 900px; }
+.sm-reviews__panel:not(.is-open) .sm-reviews__panel-body {
+  position: absolute; left: -10000px; top: 0; width: 900px; height: 1px; overflow: hidden; margin: 0;
+}
+.sm-reviews__panel--quiet:not(.is-open) { margin: 0; padding: 0; border: 0; height: 0; }
+.sm-reviews__panel--quiet.is-open .sm-reviews__panel-body { margin-top: 0; }
 .sm-reviews__apps { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .sm-reviews__empty { margin: 0; font-size: 1.05rem; }
 .sm-reviews__track[hidden], .sm-reviews__empty[hidden] { display: none; }

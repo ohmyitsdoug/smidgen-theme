@@ -116,10 +116,12 @@
       </div>
 
       {%- if app_panel != blank -%}
-        <details class="sm-reviews__panel" id="sm-reviews-all-{{ section.id }}" data-sm-reviews-panel>
-          <summary class="sm-reviews__panel-toggle">{{ s.all_label }}</summary>
+        <div class="sm-reviews__panel{% unless s.show_all_toggle %} sm-reviews__panel--quiet{% endunless %}" id="sm-reviews-all-{{ section.id }}" data-sm-reviews-panel>
+          {%- if s.show_all_toggle -%}
+            <button type="button" class="sm-reviews__panel-toggle" data-sm-reviews-toggle aria-expanded="false">{{ s.all_label }}</button>
+          {%- endif -%}
           <div class="sm-reviews__panel-body">{{ app_panel }}</div>
-        </details>
+        </div>
       {%- endif -%}
 
       {%- assign legacy = product.metafields.judgeme.widget.value | default: product.metafields.judgeme.widget -%}
@@ -217,15 +219,24 @@
         mo.observe(root, { childList: true, subtree: true });
         setTimeout(function () {
           mo.disconnect();
-          if (!refresh() && panel) panel.open = true;
+          if (!refresh() && panel) setOpen(true);
         }, 4000);
       }
+
+      function setOpen(on) {
+        if (!panel) return;
+        panel.classList.toggle('is-open', on);
+        var tg = panel.querySelector('[data-sm-reviews-toggle]');
+        if (tg) tg.setAttribute('aria-expanded', on ? 'true' : 'false');
+      }
+      var toggle = root.querySelector('[data-sm-reviews-toggle]');
+      if (toggle) toggle.addEventListener('click', function () { setOpen(!panel.classList.contains('is-open')); });
 
       var openBtn = root.querySelector('[data-sm-reviews-open]');
       if (openBtn && panel) {
         openBtn.addEventListener('click', function (e) {
           e.preventDefault();
-          panel.open = true;
+          setOpen(true);
           panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
           setTimeout(function () {
             var w = panel.querySelector('.jdgm-write-rev-link, [class*="write-review"], button');
@@ -255,6 +266,7 @@
     { "type": "paragraph", "content": "Review cards come from Judge.me's saved reviews plus any Featured review blocks. Add the Judge.me Review widget app block for the full list and review form (shown in a See all reviews panel). Judge.me Medals blocks show under the rating." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews" },
     { "type": "text", "id": "write_label", "label": "Write review button", "default": "Write a review" },
+    { "type": "checkbox", "id": "show_all_toggle", "label": "Show 'See all reviews' toggle", "default": false, "info": "Off: Judge.me's full widget stays hidden and only opens when someone clicks Write a review." },
     { "type": "text", "id": "all_label", "label": "All reviews toggle", "default": "See all reviews" },
     { "type": "text", "id": "empty_text", "label": "Text when no cards load", "default": "Read what players are saying below." },
     { "type": "range", "id": "max_reviews", "label": "Max review cards", "min": 3, "max": 30, "step": 1, "default": 12 },
