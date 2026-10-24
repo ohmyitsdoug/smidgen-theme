@@ -20,21 +20,26 @@
             "menu": "footer",
             "heading": "Smidgen"
           }
-        },
-        "col_2": {
-          "type": "menu",
-          "settings": {
-            "menu": "main-menu",
-            "heading": "Shop"
-          }
         }
       },
       "block_order": [
-        "col_1",
-        "col_2"
+        "col_1"
       ],
       "settings": {
+        "blurb": "<p>Award-winning, family-friendly tabletop games that are easy to learn and packed with replayability.</p>",
+        "show_signup": true,
+        "signup_heading": "Join the game Smidgen family",
+        "signup_button": "Sign up",
+        "instagram": "https://instagram.com/playsmidgen",
+        "tiktok": "",
+        "youtube": "https://www.youtube.com/playsmidgen",
+        "facebook": "https://www.facebook.com/playsmidgen",
+        "x": "",
         "tagline": "Made just outside Baltimore, MD",
+        "bg": "#000000",
+        "fg": "#ffffff",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
         "pad_top": 64
       }
     }
