@@ -44,7 +44,7 @@
             "thumbnail_position": "bottom",
             "thumbnail_width": 44,
             "thumbnail_radius": 0,
-            "aspect_ratio": "1",
+            "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
             "media_fit": "contain",
             "media_radius": 18,
@@ -321,6 +321,27 @@
               },
               "block_order": []
             },
+            "sm_spec_dropdowns": {
+              "type": "sm-spec-dropdowns",
+              "settings": {
+                "box_label": "Box size & weight",
+                "size_row_label": "Size",
+                "box_field": "",
+                "length_field": "custom.length",
+                "width_field": "custom.width",
+                "height_field": "custom.height",
+                "box_unit": "in",
+                "weight_label": "Weight",
+                "weight_field": "custom.weight",
+                "use_shipping_weight": true,
+                "testing_label": "Safety testing",
+                "testing_field": "custom.testing",
+                "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
+                "extra_label": "UPC",
+                "extra_field": "custom.upc"
+              },
+              "blocks": {}
+            },
             "sm_bundle": {
               "type": "sm-game-facts",
               "settings": {
@@ -331,13 +352,6 @@
                 "circle": "-20%"
               },
               "blocks": {}
-            },
-            "sm_spec_dropdowns": {
-              "type": "sm-spec-dropdowns",
-              "settings": {
-                "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
-                "extra_field": "custom.upc"
-              }
             }
           },
           "block_order": [
@@ -430,6 +444,10 @@
       ],
       "settings": {
         "heading": "Reviews",
+        "write_label": "Write a review",
+        "show_all_toggle": false,
+        "all_label": "See all reviews",
+        "empty_text": "Read what players are saying below.",
         "max_reviews": 12,
         "hide_empty": true,
         "bg": "#ffffff",
