@@ -15,6 +15,17 @@
   assign steps = product.metafields[sf[0]][sf[1]].value
   assign rules = product.metafields[rf[0]][rf[1]].value
 
+  if video_val == blank
+    assign guesses = 'custom.how_to_play_video,custom.how_to_play,custom.howto_video,custom.video,custom.video_url,custom.youtube' | split: ','
+    for g in guesses
+      assign gp = g | split: '.'
+      assign try = product.metafields[gp[0]][gp[1]].value
+      if try != blank
+        assign video_val = try
+        break
+      endif
+    endfor
+  endif
   assign video_file = blank
   assign video_url = blank
   if video_val.media_type == 'video' or video_val.media_type == 'external_video'
