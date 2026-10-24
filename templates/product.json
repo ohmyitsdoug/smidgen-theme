@@ -220,7 +220,7 @@
               "type": "price",
               "settings": {
                 "show_sale_price_first": true,
-                "show_installments": true,
+                "show_installments": false,
                 "show_tax_info": true,
                 "type_preset": "paragraph",
                 "width": "100%",
@@ -234,7 +234,8 @@
                 "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "show_unit_price": false
               },
               "blocks": {}
             },
@@ -377,17 +378,6 @@
         "pad_bottom": 72
       }
     },
-    "sm_box": {
-      "type": "sm-in-the-box",
-      "settings": {
-        "heading": "What's in the box",
-        "components_field": "custom.components",
-        "bg": "#ffffff",
-        "fg": "#000000",
-        "pad_top": 48,
-        "pad_bottom": 24
-      }
-    },
     "sm_faq": {
       "type": "sm-faq",
       "settings": {
@@ -403,7 +393,9 @@
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 24,
-        "pad_bottom": 72
+        "pad_bottom": 72,
+        "show_box": true,
+        "components_field": "custom.components"
       }
     },
     "sm_reviews": {
@@ -442,7 +434,6 @@
   "order": [
     "main",
     "sm_learn",
-    "sm_box",
     "sm_faq",
     "sm_reviews",
     "sm_related"
