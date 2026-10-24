@@ -35,7 +35,7 @@ html:root {
    Global overrides: every Horizon button becomes a Smidgen button
    (brand rule: buttons are purple with white text; secondary is white/purple)
    -------------------------------------------------------------------------- */
-html .button:not(.button-unstyled),
+html .button:not(.button-unstyled, .localization-selector, .header-actions__action, .dropdown-localization__button),
 html button.shopify-payment-button__button--unbranded {
   --button-color: var(--sm-white);
   --button-background-color: var(--sm-purple);
@@ -50,7 +50,7 @@ html button.shopify-payment-button__button--unbranded {
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-html .button:not(.button-unstyled):hover,
+html .button:not(.button-unstyled, .localization-selector, .header-actions__action, .dropdown-localization__button):hover,
 html button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-color: var(--sm-white);
   --button-background-color: var(--sm-purple-dark);
@@ -854,6 +854,10 @@ html .button-secondary:hover {
 
 .product-information__media img {
   border-radius: 18px;
+}
+
+.product-information__media .media-gallery__grid {
+  gap: 12px;
 }
 
 .product-details h1 {
