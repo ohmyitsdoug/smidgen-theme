@@ -332,6 +332,7 @@
                 "box_unit": "in",
                 "weight_label": "Weight",
                 "weight_unit": "oz",
+                "weight_needs_size": true,
                 "weight": "{{ closest.product.metafields.custom.weight.value }}oz",
                 "testing_label": "Safety testing",
                 "testing_field": "custom.testing",
