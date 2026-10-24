@@ -17,14 +17,24 @@
         "highlight": "Smidgen",
         "text": "<p>Award-winning family games in small boxes that demo in minutes.</p>",
         "button_label": "Order on Faire",
+        "button_link": "",
         "button_2_label": "Apply for wholesale",
         "button_2_link": "#apply",
+        "small_print": "",
+        "product": "",
+        "circle_color": "#20a4f3",
         "note": "",
         "doodle": "zigzag",
+        "doodle_color": "#753189",
+        "doodle_position": "top-left",
         "doodle_2": "none",
-        "circle_color": "#20A4F3",
+        "doodle_2_color": "#20a4f3",
+        "bg": "#fff503",
+        "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF"
+        "divider_to": "#ffffff",
+        "pad_top": 72,
+        "pad_bottom": 40
       }
     },
     "why": {
@@ -35,7 +45,7 @@
           "settings": {
             "label": "★",
             "color": "#753189",
-            "label_color": "#FFFFFF",
+            "label_color": "#ffffff",
             "title": "Award winner",
             "text": "<p>CUNO won the 2025 Sparks Play Award for Strategy Game of the Year.</p>"
           }
@@ -43,9 +53,9 @@
         "w2": {
           "type": "card",
           "settings": {
-            "label": "□",
-            "color": "#EA5D00",
-            "label_color": "#FFFFFF",
+            "label": "[ ]",
+            "color": "#ea5d00",
+            "label_color": "#ffffff",
             "title": "Small footprint",
             "text": "<p>Compact boxes that fit by the register or on an end cap.</p>"
           }
@@ -53,8 +63,8 @@
         "w3": {
           "type": "card",
           "settings": {
-            "label": "5m",
-            "color": "#20A4F3",
+            "label": "<2m",
+            "color": "#20a4f3",
             "label_color": "#000000",
             "title": "Demos in minutes",
             "text": "<p>Staff can teach a customer at the counter.</p>"
@@ -64,7 +74,7 @@
           "type": "card",
           "settings": {
             "label": "♥",
-            "color": "#FFF503",
+            "color": "#fff503",
             "label_color": "#000000",
             "title": "We show up",
             "text": "<p>We run in-store board game socials to bring people through your door.</p>"
@@ -79,9 +89,14 @@
       ],
       "settings": {
         "heading": "Why stores stock us",
-        "bg": "#FFFFFF",
         "doodle": "none",
-        "divider": "none"
+        "doodle_color": "#fff503",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 64,
+        "pad_bottom": 88
       }
     },
     "quotes": {
@@ -89,15 +104,36 @@
       "blocks": {
         "q1": {
           "type": "quote",
-          "settings": {}
+          "settings": {
+            "quote": "This is a test",
+            "name": "Rob Campbell",
+            "role": "Board Game Specialist",
+            "store": "Games and Stuff",
+            "city": "Glen Burnie, MD",
+            "image": "shopify://shop_images/unnamed.webp"
+          }
         },
         "q2": {
           "type": "quote",
-          "settings": {}
+          "settings": {
+            "quote": "This is a test",
+            "name": "Annelise Tarnowski",
+            "role": "Owner",
+            "store": "The Rook Room",
+            "city": "Des Moines, IA",
+            "image": "shopify://shop_images/unnamed_91d43a16-85da-407c-b609-36d237e56983.webp"
+          }
         },
         "q3": {
           "type": "quote",
-          "settings": {}
+          "settings": {
+            "quote": "This is a test",
+            "name": "Ken Ingram",
+            "role": "Owner",
+            "store": "The Game Kastle",
+            "city": "College Park, MD",
+            "image": "shopify://shop_images/GK_Logo.png"
+          }
         }
       },
       "block_order": [
@@ -105,7 +141,19 @@
         "q2",
         "q3"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "From our retailers",
+        "heading": "Don't take our word for it",
+        "doodle_color": "#fff503",
+        "bg": "#753189",
+        "fg": "#ffffff",
+        "divider_top": "wave",
+        "divider_from": "#ffffff",
+        "divider": "wave",
+        "divider_to": "#ffffff",
+        "pad_top": 40,
+        "pad_bottom": 80
+      }
     },
     "faq": {
       "type": "sm-faq",
@@ -130,9 +178,19 @@
         "f2"
       ],
       "settings": {
+        "anchor": "apply",
         "heading": "Retailer questions",
         "use_product": false,
-        "anchor": "apply"
+        "open_first": false,
+        "schema": true,
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 48,
+        "pad_bottom": 72
       }
     }
   },
