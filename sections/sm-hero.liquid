@@ -15,6 +15,18 @@
 >
   {% render 'sm-doodle', shape: s.doodle, color: s.doodle_color, position: s.doodle_position %}
   {% render 'sm-doodle', shape: s.doodle_2, color: s.doodle_2_color, position: 'top-right' %}
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+      assign scale = b.size | divided_by: 100.0
+      assign d_style = 'left: ' | append: b.x | append: '%; top: ' | append: b.y | append: '%; transform: translate(-50%, -50%) rotate(' | append: b.rotate | append: 'deg) scale(' | append: scale | append: ');'
+      assign d_class = ''
+      if b.hide_mobile
+        assign d_class = 'sm-doodle--hide-mobile'
+      endif
+    -%}
+    {% render 'sm-doodle', shape: b.shape, color: b.color, style: d_style, extra_class: d_class, attrs: block.shopify_attributes %}
+  {%- endfor -%}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     <div class="sm-split">
       <div class="sm-hero__copy">
@@ -70,67 +82,467 @@
   "name": "Smidgen · Hero",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sticker", "default": "Award-winning family games" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Game night just got a Smidgen more fun!" },
-    { "type": "text", "id": "highlight", "label": "Word(s) to color purple", "info": "Must match text in the heading exactly.", "default": "Smidgen" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Small boxes, simple rules, big replay value. Games that set up fast and teach in minutes.</p>" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Find your game" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "text", "id": "button_2_label", "label": "Second button label" },
-    { "type": "url", "id": "button_2_link", "label": "Second button link" },
-    { "type": "text", "id": "small_print", "label": "Small print", "info": "e.g. your review score" },
-    { "type": "header", "content": "Art" },
-    { "type": "product", "id": "product", "label": "Featured game", "info": "Uses the game's main image if no image is set." },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "color", "id": "circle_color", "label": "Circle color", "default": "#753189" },
-    { "type": "text", "id": "note", "label": "Hand-written note", "default": "2025 Strategy Game of the Year!" },
-    { "type": "header", "content": "Doodles" },
     {
-      "type": "select", "id": "doodle", "label": "Doodle",
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sticker",
+      "default": "Award-winning family games"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Game night just got a Smidgen more fun!"
+    },
+    {
+      "type": "text",
+      "id": "highlight",
+      "label": "Word(s) to color purple",
+      "info": "Must match text in the heading exactly.",
+      "default": "Smidgen"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Small boxes, simple rules, big replay value. Games that set up fast and teach in minutes.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Find your game"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Second button label"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Second button link"
+    },
+    {
+      "type": "text",
+      "id": "small_print",
+      "label": "Small print",
+      "info": "e.g. your review score"
+    },
+    {
+      "type": "header",
+      "content": "Art"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Featured game",
+      "info": "Uses the game's main image if no image is set."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "circle_color",
+      "label": "Circle color",
+      "default": "#753189"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Hand-written note",
+      "default": "2025 Strategy Game of the Year!"
+    },
+    {
+      "type": "header",
+      "content": "Doodles"
+    },
+    {
+      "type": "select",
+      "id": "doodle",
+      "label": "Doodle",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "squiggle", "label": "Squiggle" },
-        { "value": "spiral", "label": "Spiral" }, { "value": "zigzag", "label": "Zigzag" },
-        { "value": "star", "label": "Star" }, { "value": "loop-arrow", "label": "Loop arrow" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "squiggle",
+          "label": "Squiggle"
+        },
+        {
+          "value": "spiral",
+          "label": "Spiral"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "Loop arrow"
+        },
+        {
+          "value": "dot",
+          "label": "Dot"
+        },
+        {
+          "value": "ring",
+          "label": "Ring"
+        },
+        {
+          "value": "triangle",
+          "label": "Triangle"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        },
+        {
+          "value": "tile",
+          "label": "Tile"
+        }
       ],
       "default": "squiggle"
     },
-    { "type": "color", "id": "doodle_color", "label": "Doodle color", "default": "#753189" },
     {
-      "type": "select", "id": "doodle_position", "label": "Doodle position",
+      "type": "color",
+      "id": "doodle_color",
+      "label": "Doodle color",
+      "default": "#753189"
+    },
+    {
+      "type": "select",
+      "id": "doodle_position",
+      "label": "Doodle position",
       "options": [
-        { "value": "top-left", "label": "Top left" }, { "value": "top-right", "label": "Top right" },
-        { "value": "bottom-left", "label": "Bottom left" }, { "value": "bottom-right", "label": "Bottom right" }
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
       ],
       "default": "top-left"
     },
     {
-      "type": "select", "id": "doodle_2", "label": "Second doodle (top right)",
+      "type": "select",
+      "id": "doodle_2",
+      "label": "Second doodle (top right)",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "squiggle", "label": "Squiggle" },
-        { "value": "spiral", "label": "Spiral" }, { "value": "zigzag", "label": "Zigzag" },
-        { "value": "star", "label": "Star" }, { "value": "loop-arrow", "label": "Loop arrow" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "squiggle",
+          "label": "Squiggle"
+        },
+        {
+          "value": "spiral",
+          "label": "Spiral"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "Loop arrow"
+        },
+        {
+          "value": "dot",
+          "label": "Dot"
+        },
+        {
+          "value": "ring",
+          "label": "Ring"
+        },
+        {
+          "value": "triangle",
+          "label": "Triangle"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        },
+        {
+          "value": "tile",
+          "label": "Tile"
+        }
       ],
       "default": "star"
     },
-    { "type": "color", "id": "doodle_2_color", "label": "Second doodle color", "default": "#20A4F3" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "color",
+      "id": "doodle_2_color",
+      "label": "Second doodle color",
+      "default": "#20A4F3"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" },
-        { "value": "straight", "label": "Straight line" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
       ],
       "default": "wave"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 72 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 40
+    }
   ],
-  "presets": [{ "name": "Smidgen · Hero" }]
+  "presets": [
+    {
+      "name": "Smidgen · Hero",
+      "blocks": [
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "dot",
+            "color": "#EA5D00",
+            "x": 48,
+            "y": 14,
+            "size": 100
+          }
+        },
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "ring",
+            "color": "#20A4F3",
+            "x": 6,
+            "y": 80,
+            "size": 90
+          }
+        },
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "plus",
+            "color": "#753189",
+            "x": 44,
+            "y": 86,
+            "size": 80,
+            "rotate": 15
+          }
+        },
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "triangle",
+            "color": "#FFFFFF",
+            "x": 92,
+            "y": 78,
+            "size": 70,
+            "rotate": -12,
+            "hide_mobile": true
+          }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "doodle",
+      "name": "Doodle",
+      "settings": [
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            {
+              "value": "squiggle",
+              "label": "Squiggle"
+            },
+            {
+              "value": "spiral",
+              "label": "Spiral"
+            },
+            {
+              "value": "zigzag",
+              "label": "Zigzag"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "loop-arrow",
+              "label": "Loop arrow"
+            },
+            {
+              "value": "dot",
+              "label": "Dot"
+            },
+            {
+              "value": "ring",
+              "label": "Ring"
+            },
+            {
+              "value": "triangle",
+              "label": "Triangle"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            },
+            {
+              "value": "tile",
+              "label": "Tile"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#20A4F3"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Left to right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Top to bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "label": "Size",
+          "min": 30,
+          "max": 250,
+          "step": 10,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "rotate",
+          "label": "Rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "°",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide on phones",
+          "default": false
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

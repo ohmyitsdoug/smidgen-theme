@@ -1123,3 +1123,15 @@ product-card.product-card,
 .sm-on-dark a:not(.sm-btn):not(.sm-pill) {
   color: var(--sm-yellow);
 }
+
+/* Free-placed doodles (Doodle blocks) */
+.sm-doodle--free {
+  position: absolute;
+  z-index: 0;
+  transform-origin: center;
+}
+
+@media (max-width: 599px) {
+  .sm-doodle--free { transform-origin: center; }
+  .sm-doodle--hide-mobile { display: none; }
+}
