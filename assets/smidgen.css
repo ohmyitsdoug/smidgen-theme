@@ -859,13 +859,53 @@ html .button-secondary:hover {
   overflow: hidden;
 }
 
-.product-information__media slideshow-slide img,
-.product-information__media slideshow-slide video {
+/* Every slide is a purple stage with the media centered on it. The image
+   itself gets the rounded corners, so the radius always hugs the picture,
+   whatever the gallery's aspect-ratio setting. */
+.product-information__media .product-media-container,
+.product-information__media .product-media-constraint-wrapper {
+  background: transparent !important;
+}
+.product-information__media slideshow-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-information__media .product-media-container--image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-information__media .product-media-container--image .product-media {
+  aspect-ratio: auto !important;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 40px);
   box-sizing: border-box;
-  max-height: min(560px, 62vh);
+}
+.product-information__media .product-media-container--image .product-media img {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: min(520px, 60vh);
   object-fit: contain;
-  padding: clamp(16px, 4vw, 44px);
-  border-radius: 34px;
+  padding: 0;
+  border-radius: 22px;
+}
+.product-information__media slideshow-slide video,
+.product-information__media slideshow-slide iframe {
+  border-radius: 22px;
+}
+.product-information__media .product-media-container--video,
+.product-information__media .product-media-container--external_video {
+  padding: clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
 }
 
 .product-information__media .slideshow-controls__thumbnails {
