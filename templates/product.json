@@ -220,6 +220,7 @@
               "type": "price",
               "settings": {
                 "show_sale_price_first": true,
+                "show_unit_price": false,
                 "show_installments": false,
                 "show_tax_info": true,
                 "type_preset": "paragraph",
@@ -234,8 +235,7 @@
                 "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "show_unit_price": false
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -382,10 +382,13 @@
       "type": "sm-faq",
       "settings": {
         "anchor": "faq",
-        "heading": "Good questions",
+        "heading": "Frequently asked questions",
         "use_product": true,
         "open_first": false,
         "schema": true,
+        "show_box": true,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider_top": "none",
@@ -393,9 +396,7 @@
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 24,
-        "pad_bottom": 72,
-        "show_box": true,
-        "components_field": "custom.components"
+        "pad_bottom": 72
       }
     },
     "sm_reviews": {
