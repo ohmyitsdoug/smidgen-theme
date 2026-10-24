@@ -17,31 +17,48 @@
         "highlight": "",
         "text": "<p>Smidgen Games is a tiny studio just outside Baltimore, MD, making classic-feeling family games since 2024.</p>",
         "button_label": "",
+        "button_link": "",
         "button_2_label": "",
+        "button_2_link": "",
         "small_print": "",
+        "product": "",
+        "circle_color": "#753189",
         "note": "",
         "doodle": "squiggle",
-        "doodle_color": "#FFF503",
+        "doodle_color": "#fff503",
         "doodle_position": "top-right",
         "doodle_2": "star",
-        "doodle_2_color": "#EA5D00",
+        "doodle_2_color": "#ea5d00",
         "bg": "#753189",
-        "fg": "#FFFFFF",
+        "fg": "#ffffff",
         "divider": "wave",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
+        "pad_top": 72,
         "pad_bottom": 56
       }
     },
     "story": {
       "type": "sm-image-text",
       "settings": {
+        "image": "shopify://shop_images/Doug_and_Jon_a4f5c3ee-188c-4e2c-99b9-9098d0ea14c1.webp",
+        "image_style": "cutout",
+        "image_side": "left",
+        "note": "",
+        "eyebrow": "",
         "heading": "How it started",
         "use_page_content": true,
-        "text": "<p>[Your origin story: who you are, why you started, what a Smidgen game feels like at the table.]</p><p>We're a two-person team. Every game is playtested with real families, classrooms and game-store regulars before it ships.</p>",
-        "note": "Doug, designer & co-owner",
-        "image_style": "cutout",
+        "text": "<p>Our founder Doug is an award winning game designr with over a decade of experience in UX design & a lifelong love for designing board games. He set out to address the frustrations of lengthy setups & complicated rulebooks.</p><p>At Smidgen Games, our mission is to develop games that bring people together through community-focused play, strategy, & fun. We believe that gaming should be inclusive, accessible, & replayable, making every game night a memorable experience, without the hassle. Whether you’re a casual gamer or a seasoned enthusiast, our games are designed to be easy to learn, quick to play, & full of strategic depth.</p><p>Looking ahead, we plan to expand our lineup with new & exciting games, including collaborations with other designers who share our vision.</p><p>We're a two-person team. Every game is playtested with real families, classrooms, & game store regulars before it ships.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "doodle": "none",
+        "doodle_color": "#ea5d00",
+        "bg": "#ffffff",
+        "fg": "#000000",
         "divider": "zigzag",
-        "divider_to": "#FFF503"
+        "divider_to": "#fff503",
+        "pad_top": 48,
+        "pad_bottom": 88
       }
     },
     "values": {
@@ -52,7 +69,7 @@
           "settings": {
             "label": "01",
             "color": "#753189",
-            "label_color": "#FFFFFF",
+            "label_color": "#ffffff",
             "title": "Teach in minutes",
             "text": "<p>Light on rules, heavy on choices. If it needs a long explanation, it isn't done yet.</p>"
           }
@@ -61,8 +78,8 @@
           "type": "card",
           "settings": {
             "label": "02",
-            "color": "#EA5D00",
-            "label_color": "#FFFFFF",
+            "color": "#ea5d00",
+            "label_color": "#ffffff",
             "title": "Nobody gets punished",
             "text": "<p>No sitting out, no runaway losers. Everyone stays in it until the last turn.</p>"
           }
@@ -71,7 +88,7 @@
           "type": "card",
           "settings": {
             "label": "03",
-            "color": "#20A4F3",
+            "color": "#20a4f3",
             "label_color": "#000000",
             "title": "Proven at real tables",
             "text": "<p>Playtest feedback decides what stays.</p>"
@@ -86,9 +103,13 @@
       "settings": {
         "heading": "What every Smidgen game has to do",
         "doodle": "none",
-        "bg": "#FFF503",
+        "doodle_color": "#fff503",
+        "bg": "#fff503",
+        "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF"
+        "divider_to": "#ffffff",
+        "pad_top": 64,
+        "pad_bottom": 88
       }
     },
     "timeline": {
@@ -99,7 +120,7 @@
           "settings": {
             "label": "2024",
             "color": "#753189",
-            "label_color": "#FFFFFF",
+            "label_color": "#ffffff",
             "title": "Smidgen is founded",
             "text": ""
           }
@@ -107,9 +128,9 @@
         "t2": {
           "type": "card",
           "settings": {
-            "label": "[Year]",
-            "color": "#EA5D00",
-            "label_color": "#FFFFFF",
+            "label": "Dec 2025",
+            "color": "#ea5d00",
+            "label_color": "#ffffff",
             "title": "CUNO launches",
             "text": ""
           }
@@ -117,8 +138,8 @@
         "t3": {
           "type": "card",
           "settings": {
-            "label": "2025",
-            "color": "#20A4F3",
+            "label": "Jan 2026",
+            "color": "#20a4f3",
             "label_color": "#000000",
             "title": "CUNO wins Strategy Game of the Year",
             "text": "<p>Sparks Play Award.</p>"
@@ -128,9 +149,9 @@
           "type": "card",
           "settings": {
             "label": "Today",
-            "color": "#FFF503",
+            "color": "#fff503",
             "label_color": "#000000",
-            "title": "In 14+ stores",
+            "title": "In 17+ stores",
             "text": "<p>With STACK5 and Going Bananas! on the way.</p>"
           }
         }
@@ -144,9 +165,13 @@
       "settings": {
         "heading": "The story so far",
         "doodle": "none",
-        "bg": "#FFFFFF",
+        "doodle_color": "#fff503",
+        "bg": "#ffffff",
+        "fg": "#000000",
         "divider": "scallop",
-        "divider_to": "#20A4F3"
+        "divider_to": "#20a4f3",
+        "pad_top": 64,
+        "pad_bottom": 88
       }
     },
     "stats": {
@@ -155,14 +180,14 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "number": "14+",
+            "number": "17+",
             "label": "retail stores"
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "2,000+",
+            "number": "4,000+",
             "label": "games shipped"
           }
         },
@@ -182,8 +207,15 @@
       "settings": {
         "heading": "Come play with us",
         "button_label": "See our games",
+        "button_link": "",
         "button_2_label": "Say hello",
-        "button_2_link": "/pages/contact"
+        "button_2_link": "/pages/contact",
+        "bg": "#20a4f3",
+        "fg": "#000000",
+        "divider": "none",
+        "divider_to": "#000000",
+        "pad_top": 48,
+        "pad_bottom": 88
       }
     }
   },
