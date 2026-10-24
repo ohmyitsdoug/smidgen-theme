@@ -86,6 +86,7 @@
           "settings": {
             "label": "Orders & Shipping",
             "link": "",
+            "icon_name": "package",
             "icon": "",
             "color": "#fff503",
             "icon_color": "#000000"
@@ -96,9 +97,10 @@
           "settings": {
             "label": "Rules & pieces",
             "link": "",
+            "icon_name": "book-open",
             "icon": "",
-            "color": "#EA5D00",
-            "icon_color": "#000000"
+            "color": "#ea5d00",
+            "icon_color": "{{ settings.color_palette.background }}"
           }
         },
         "link_QezKAP": {
@@ -106,9 +108,10 @@
           "settings": {
             "label": "Wholesale",
             "link": "",
+            "icon_name": "tag",
             "icon": "",
             "color": "#753189",
-            "icon_color": "#000000"
+            "icon_color": "{{ settings.color_palette.background }}"
           }
         },
         "link_H8Xw3E": {
@@ -116,8 +119,9 @@
           "settings": {
             "label": "Contact us",
             "link": "",
+            "icon_name": "envelope-simple",
             "icon": "",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "icon_color": "#000000"
           }
         },
@@ -126,8 +130,9 @@
           "settings": {
             "label": "Pitch us a game",
             "link": "",
+            "icon_name": "handshake",
             "icon": "",
-            "color": "#20A4F3",
+            "color": "#20a4f3",
             "icon_color": "#000000"
           }
         }
@@ -253,10 +258,12 @@
         "text": "Tell us which game and what's missing. We'll send a replacement, free.",
         "link_label": "Request a part →",
         "link": "",
+        "icon_name": "package",
         "icon": "star",
-        "icon_color": "#EA5D00",
-        "box_bg": "#FFF503",
-        "section_bg": "#FFFFFF",
+        "icon_color": "#ea5d00",
+        "icon_fg": "#ffffff",
+        "box_bg": "#fff503",
+        "section_bg": "#ffffff",
         "pad_top": 0,
         "pad_bottom": 72
       }
