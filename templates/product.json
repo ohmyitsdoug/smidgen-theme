@@ -12,6 +12,24 @@
     "main": {
       "type": "product-information",
       "blocks": {
+        "disclosures": {
+          "type": "disclosures",
+          "settings": {
+            "heading": "Disclosures",
+            "heading_preset": "h4",
+            "open_by_default": false,
+            "icon": "caret",
+            "disclosure_heading_preset": "h5",
+            "text_color": "",
+            "dividers": true,
+            "divider_color": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -25,6 +43,7 @@
             "slideshow_mobile_controls_style": "dots",
             "thumbnail_position": "bottom",
             "thumbnail_width": 44,
+            "thumbnail_radius": 0,
             "aspect_ratio": "1",
             "constrain_to_viewport": true,
             "media_fit": "contain",
@@ -53,11 +72,13 @@
             "gap": 20,
             "sticky_details_desktop": true,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 24,
             "padding-block-end": 24,
@@ -65,6 +86,17 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "sm_badges": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "badges",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
+              },
+              "blocks": {}
+            },
             "group_icgrde": {
               "type": "group",
               "name": "t:names.header",
@@ -84,6 +116,7 @@
                 "height": "fit",
                 "custom_height": 100,
                 "background_media": "none",
+                "background_color": "",
                 "video_position": "cover",
                 "background_image_position": "cover",
                 "toggle_overlay": false,
@@ -93,6 +126,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 0,
                 "link": "",
                 "open_in_new_tab": false,
@@ -118,6 +152,7 @@
                     "letter_spacing": "normal",
                     "case": "none",
                     "wrap": "pretty",
+                    "text_color": "",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
@@ -133,53 +168,27 @@
                 "text_xpVMaM"
               ]
             },
-            "variant_picker_R3rGDr": {
-              "type": "variant-picker",
+            "sm_tagline": {
+              "type": "sm-game-facts",
               "settings": {
-                "variant_style": "buttons",
-                "show_swatches": false,
-                "alignment": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "part": "tagline",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
               },
               "blocks": {}
             },
-            "buy_buttons_eYQEYi": {
-              "type": "buy-buttons",
+            "sm_specs": {
+              "type": "sm-game-facts",
               "settings": {
-                "stacking": true,
-                "show_pickup_availability": false,
-                "gift_card_form": true,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "part": "specs",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
               },
-              "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
-                  "settings": {
-                    "style_class": "button"
-                  },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                }
-              },
-              "block_order": []
+              "blocks": {}
             },
             "text_aEtTtq": {
               "type": "text",
@@ -196,6 +205,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -203,35 +213,6 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "sm_badges": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "badges"
-              },
-              "blocks": {}
-            },
-            "sm_tagline": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "tagline"
-              },
-              "blocks": {}
-            },
-            "sm_specs": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "specs",
-                "tile_color": "#FFF503"
-              },
-              "blocks": {}
-            },
-            "sm_bundle": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "bundle"
               },
               "blocks": {}
             },
@@ -249,10 +230,104 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+                "text_color": "",
                 "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "option_label_text_color": "",
+                "variant_style_class": "default",
+                "custom_variant_background": "{{ settings.color_palette.background }}",
+                "custom_variant_text": "{{ settings.color_palette.foreground }}",
+                "custom_variant_border": "{{ settings.color_palette.foreground }}",
+                "selected_variant_style_class": "default",
+                "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
+                "custom_selected_variant_text": "{{ settings.color_palette.background }}",
+                "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "text_color": "",
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "recipient_button_style": "default",
+                "recipient_button_background": "{{ settings.color_palette.background }}",
+                "recipient_button_text": "{{ settings.color_palette.foreground }}",
+                "recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_style": "default",
+                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {
+                    "input_style": "default",
+                    "input_background_color": "{{ settings.color_palette.background }}",
+                    "input_text_color": "{{ settings.color_palette.foreground }}",
+                    "input_border_color": "{{ settings.color_palette.foreground }}",
+                    "border_width": 1,
+                    "border_radius": 0
+                  },
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button",
+                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "{{ settings.color_palette.background }}"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "sm_bundle": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "bundle",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
               },
               "blocks": {}
             }
@@ -268,14 +343,6 @@
             "buy_buttons_eYQEYi",
             "sm_bundle"
           ]
-        },
-        "disclosures": {
-          "type": "disclosures",
-          "settings": {
-            "padding-block-start": 0,
-            "padding-block-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
@@ -287,34 +354,84 @@
         "equal_columns": true,
         "limit_details_width": false,
         "gap": 48,
+        "enable_sticky_add_to_cart": true,
+        "background_color": "",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
     "sm_learn": {
       "type": "sm-learn-to-play",
-      "settings": {}
+      "settings": {
+        "heading": "Learn to play",
+        "rules_label": "Download the rules (PDF)",
+        "bg": "#fff503",
+        "fg": "#000000",
+        "outer_color": "#ffffff",
+        "divider_shape": "wave",
+        "pad_top": 40,
+        "pad_bottom": 72
+      }
     },
     "sm_box": {
       "type": "sm-in-the-box",
-      "settings": {}
+      "settings": {
+        "heading": "What's in the box",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 48,
+        "pad_bottom": 24
+      }
     },
     "sm_faq": {
       "type": "sm-faq",
       "settings": {
+        "anchor": "faq",
         "heading": "Good questions",
         "use_product": true,
+        "open_first": false,
         "schema": true,
-        "pad_top": 24
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 24,
+        "pad_bottom": 72
       }
     },
     "sm_reviews": {
       "type": "sm-reviews",
-      "settings": {}
+      "settings": {
+        "heading": "Reviews",
+        "hide_empty": true,
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 24,
+        "pad_bottom": 80
+      }
     },
     "sm_related": {
       "type": "sm-related",
-      "settings": {}
+      "settings": {
+        "heading": "Play these next",
+        "intent": "complementary",
+        "limit": 4,
+        "fallback": "our-games",
+        "image_fit": "fill",
+        "card_bg_mode": "game",
+        "card_bg": "#753189",
+        "card_max": 320,
+        "more_label": "View game →",
+        "soon_label": "Get notified →",
+        "bg": "#20a4f3",
+        "fg": "#000000",
+        "divider_top": "zigzag",
+        "divider_from": "#ffffff",
+        "pad_top": 40,
+        "pad_bottom": 88
+      }
     }
   },
   "order": [
