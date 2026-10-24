@@ -78,6 +78,67 @@
         "padding-block-end": 0
       }
     },
+    "sm_help_hero_peMhm4": {
+      "type": "sm-help-hero",
+      "name": "Smidgen · Header + links",
+      "settings": {
+        "heading": "How can we help?",
+        "text": "",
+        "bg": "#20A4F3",
+        "fg": "#000000",
+        "divider": "wave",
+        "divider_to": "#FFFFFF",
+        "pad_top": 64,
+        "pad_bottom": 32
+      }
+    },
+    "sm_faq_dfgpUn": {
+      "type": "sm-faq",
+      "blocks": {
+        "question_pjJetz": {
+          "type": "question",
+          "settings": {
+            "question": "Test",
+            "answer": "<p>&nbsp;Test</p>"
+          }
+        },
+        "question_hjc4pR": {
+          "type": "question",
+          "settings": {
+            "question": "Test",
+            "answer": "<p>Test</p>"
+          }
+        },
+        "question_4grWep": {
+          "type": "question",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "question_pjJetz",
+        "question_hjc4pR",
+        "question_4grWep"
+      ],
+      "name": "Smidgen · FAQ",
+      "settings": {
+        "anchor": "faq",
+        "heading": "Order & shipping",
+        "use_product": true,
+        "open_first": false,
+        "schema": true,
+        "bg": "#FFFFFF",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#FFFFFF",
+        "divider": "none",
+        "divider_to": "#FFFFFF",
+        "pad_top": 48,
+        "pad_bottom": 72
+      }
+    },
     "sm_contact_6q7jFc": {
       "type": "sm-contact",
       "name": "Smidgen · Contact form",
@@ -86,7 +147,7 @@
         "heading": "Contact us",
         "text": "<p>We read every message and do our best to reply to everyone. We're a small team, so please give us a little time.</p><p>Game designer? <a href=\"#pitch\">See how to pitch us ↓</a></p>",
         "email": "",
-        "extra": "<p><strong>Social</strong><br/>@playsmidgen on Instagram, TikTok & YouTube</p>",
+        "extra": "<p><strong>Social</strong><br/>@playsmidgen on Instagram, Facebook & YouTube</p>",
         "topics": "An order\nRules question\nMissing piece\nWholesale\nPress or events\nSomething else",
         "show_order": true,
         "ph_name": "Shawn Spencer",
@@ -96,12 +157,12 @@
         "button_label": "Send message",
         "success": "Thanks! Your message is on its way. We'll get back to you as soon as we can.",
         "bg": "#753189",
-        "fg": "#FFFFFF",
-        "link_color": "#FFF503",
+        "fg": "#ffffff",
+        "link_color": "#fff503",
         "divider_top": "zigzag",
-        "divider_from": "#FFFFFF",
+        "divider_from": "#ffffff",
         "divider": "wave",
-        "divider_to": "#FFF503",
+        "divider_to": "#fff503",
         "pad_top": 48,
         "pad_bottom": 72
       }
@@ -183,10 +244,10 @@
         "response": "<p>We do our best to reply to everyone, but reviewing pitches takes time, so please be patient with us. If it's a fit, we'll ask for a prototype or a video call.</p>",
         "fits_heading": "What fits Smidgen",
         "fits": "Teaches in a few minutes\nMeaningful choices without heavy rules\nKeeps every player in the game\nSmall, portable component count",
-        "bg": "#FFF503",
+        "bg": "#fff503",
         "fg": "#000000",
         "divider": "none",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
         "pad_top": 40,
         "pad_bottom": 88
       }
@@ -194,8 +255,9 @@
   },
   "order": [
     "main",
+    "sm_help_hero_peMhm4",
+    "sm_faq_dfgpUn",
     "sm_contact_6q7jFc",
     "sm_pitch_ityV8w"
   ]
 }
-

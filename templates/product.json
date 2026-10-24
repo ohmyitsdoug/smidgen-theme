@@ -436,8 +436,6 @@
     },
     "sm_faq": {
       "type": "sm-faq",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading": "Good questions",
         "use_product": true,
@@ -447,8 +445,6 @@
     },
     "sm_reviews": {
       "type": "sm-reviews",
-      "blocks": {},
-      "block_order": [],
       "settings": {}
     }
   },
@@ -461,4 +457,3 @@
     "product_recommendations_qggXJq"
   ]
 }
-
