@@ -1483,3 +1483,17 @@ a.sm-hero__badge:hover {
 .sm-spec-acc__list > div { display: flex; gap: 12px; }
 .sm-spec-acc__list dt { font-weight: 700; min-width: 64px; }
 .sm-spec-acc__list dd { margin: 0; }
+
+/* Mobile: keep the product gallery inside the page margins (Horizon makes it
+   full-bleed), with room on the right for the hard shadow. */
+@media screen and (max-width: 749px) {
+  .product-information__media {
+    grid-column: 2 / 3 !important;
+    padding-right: 8px;
+    padding-top: 8px;
+    box-sizing: border-box;
+  }
+  .product-information__media slideshow-container {
+    border-radius: 24px;
+  }
+}
