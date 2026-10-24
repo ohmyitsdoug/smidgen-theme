@@ -28,7 +28,7 @@
         "image_fit": "fill",
         "card_bg_mode": "game",
         "card_bg": "#753189",
-        "card_max": 320,
+        "card_max": 280,
         "more_label": "View item→",
         "soon_label": "Get notified →",
         "hero_bg": "#fff503"
