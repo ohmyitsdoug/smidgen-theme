@@ -13,9 +13,11 @@
       "type": "sm-main-collection",
       "settings": {
         "intro": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight.",
-        "auto_tags": true,
+        "auto_tags": false,
         "exclude_tags": "custom.hide_tags",
-        "filter_tags": "family, 2-player, quick-play, coming-soon",
+        "show_tags_field": "custom.filter_tags",
+        "hide_tags_field": "custom.hide_tags",
+        "filter_tags": "Games,",
         "all_label": "All",
         "all_link": "",
         "item_word": "game",
