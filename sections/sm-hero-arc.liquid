@@ -1,0 +1,422 @@
+{%- liquid
+  assign s = section.settings
+  assign heading = s.heading | escape | newline_to_br
+  if s.highlight != blank
+    assign hl = s.highlight | escape
+    assign highlight_markup = '<span class="sm-hl">' | append: hl | append: '</span>'
+    assign heading = heading | replace: hl, highlight_markup
+  endif
+-%}
+<section
+  id="sm-{{ section.id }}"
+  class="sm-section sm-arc{% if s.image == blank %} sm-arc--empty{% endif %}"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --arc-circle: {{ s.circle_color }}; --arc-shadow: {{ s.shadow_color }}; --arc-h: {{ s.min_height }}px; --arc-cutout-w: {{ s.cutout_size }}px; --arc-cutout-r: {{ s.cutout_rotate }}deg;"
+  aria-labelledby="sm-{{ section.id }}-title"
+>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+      assign scale = b.size | divided_by: 100.0
+      assign d_style = 'left: ' | append: b.x | append: '%; top: ' | append: b.y | append: '%; transform: translate(-50%, -50%) rotate(' | append: b.rotate | append: 'deg) scale(' | append: scale | append: ');'
+      assign d_class = ''
+      if b.hide_mobile
+        assign d_class = 'sm-doodle--hide-mobile'
+      endif
+    -%}
+    {% render 'sm-doodle', shape: b.shape, color: b.color, style: d_style, extra_class: d_class, attrs: block.shopify_attributes %}
+  {%- endfor -%}
+  <div class="sm-container sm-arc__inner" style="--sm-pad-top: 72px; --sm-pad-bottom: 72px;">
+    <div class="sm-arc__copy">
+        {%- if s.eyebrow != blank -%}
+          <span class="sm-sticker">{{ s.eyebrow }}</span>
+        {%- endif -%}
+        <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</h1>
+        {%- if s.text != blank -%}
+          <div class="sm-lede">{{ s.text }}</div>
+        {%- endif -%}
+        {%- if s.button_label != blank -%}
+          <div class="sm-actions">
+            <a class="sm-btn " href="{{ s.button_link | default: routes.all_products_collection_url }}">{{ s.button_label }}</a>
+            {%- if s.button_2_label != blank -%}
+              <a class="sm-btn sm-btn--secondary" href="{{ s.button_2_link | default: routes.all_products_collection_url }}">{{ s.button_2_label }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {% render 'sm-store-rating', s: s %}
+    </div>
+    <div class="sm-arc__circle">
+      {%- if s.image != blank -%}
+        {%- assign focal = s.image.presentation.focal_point | default: '50% 50%' -%}
+        {%- assign focal_style = 'object-position: ' | append: focal -%}
+        {{ s.image | image_url: width: 2000 | image_tag: alt: s.image.alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 1180px, 130vw', widths: '800, 1200, 1600, 2000', style: focal_style }}
+      {%- elsif request.design_mode -%}
+        <span class="sm-arc__hint">Pick an image in this section's settings. Set its focal point in Shopify so the important part stays in view.</span>
+      {%- endif -%}
+    </div>
+    {%- if s.cutout != blank -%}
+      {{ s.cutout | image_url: width: 700 | image_tag: alt: s.cutout.alt, loading: 'eager', class: 'sm-arc__cutout', sizes: '320px' }}
+    {%- endif -%}
+  </div>
+</section>
+{%- if s.divider != 'none' -%}
+  {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Hero Big Arc",
+  "tag": "div",
+  "class": "sm-hero-arc-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sticker",
+      "default": "New from Smidgen"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Match colors. Win together."
+    },
+    {
+      "type": "text",
+      "id": "highlight",
+      "label": "Highlighted words",
+      "default": "Win together.",
+      "info": "Words from the heading to color"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight color",
+      "default": "#753189"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>MRBLS is a fun, cooperative game of color matching.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Second button",
+      "default": "See all games"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Second button link"
+    },
+    {
+      "type": "header",
+      "content": "Review score"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show store review score",
+      "default": true,
+      "info": "Judge.me total for the whole store"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Review score text",
+      "default": "★★★★★ [rating] from [count] reviews",
+      "info": "[rating] and [count] fill in automatically."
+    },
+    {
+      "type": "url",
+      "id": "rating_link",
+      "label": "Review score link"
+    },
+    {
+      "type": "text",
+      "id": "rating_override",
+      "label": "Rating override",
+      "info": "Optional, e.g. 4.9"
+    },
+    {
+      "type": "text",
+      "id": "count_override",
+      "label": "Review count override",
+      "info": "Optional, e.g. 120"
+    },
+    {
+      "type": "text",
+      "id": "small_print",
+      "label": "Small print",
+      "info": "Extra text after the review score"
+    },
+    {
+      "type": "header",
+      "content": "Circle image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Fills the big circle. Set a focal point on the image (Content → Files) to control the crop."
+    },
+    {
+      "type": "color",
+      "id": "circle_color",
+      "label": "Circle color (behind the image)",
+      "default": "#20A4F3"
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Circle shadow",
+      "default": "#753189"
+    },
+    {
+      "type": "image_picker",
+      "id": "cutout",
+      "label": "Floating product image",
+      "info": "Optional. A transparent PNG (like a game box) that overlaps the circle."
+    },
+    {
+      "type": "range",
+      "id": "cutout_size",
+      "label": "Floating image size",
+      "min": 120,
+      "max": 480,
+      "step": 10,
+      "default": 300,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "cutout_rotate",
+      "label": "Floating image tilt",
+      "min": -30,
+      "max": 30,
+      "step": 1,
+      "default": 8,
+      "unit": "°"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height (desktop)",
+      "min": 480,
+      "max": 960,
+      "step": 20,
+      "default": 760,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Hero Big Arc",
+      "blocks": [
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "squiggle",
+            "color": "#753189",
+            "x": 3,
+            "y": 10,
+            "size": 100,
+            "rotate": 0
+          }
+        },
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "star",
+            "color": "#EA5D00",
+            "x": 95,
+            "y": 14,
+            "size": 100,
+            "rotate": 0
+          }
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "doodle",
+      "name": "Doodle",
+      "settings": [
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            {
+              "value": "squiggle",
+              "label": "Squiggle"
+            },
+            {
+              "value": "spiral",
+              "label": "Spiral"
+            },
+            {
+              "value": "zigzag",
+              "label": "Zigzag"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "loop-arrow",
+              "label": "Loop arrow"
+            },
+            {
+              "value": "dot",
+              "label": "Dot"
+            },
+            {
+              "value": "ring",
+              "label": "Ring"
+            },
+            {
+              "value": "triangle",
+              "label": "Triangle"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            },
+            {
+              "value": "tile",
+              "label": "Tile"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#20A4F3"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Left to right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Top to bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "label": "Size",
+          "min": 30,
+          "max": 250,
+          "step": 10,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "rotate",
+          "label": "Rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide on phones",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

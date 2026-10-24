@@ -1,0 +1,462 @@
+{%- liquid
+  assign s = section.settings
+  assign heading = s.heading | escape | newline_to_br
+  if s.highlight != blank
+    assign hl = s.highlight | escape
+    assign highlight_markup = '<span class="sm-hl">' | append: hl | append: '</span>'
+    assign heading = heading | replace: hl, highlight_markup
+  endif
+-%}
+<section
+  id="sm-{{ section.id }}"
+  class="sm-section sm-sun"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --sun-color: {{ s.sun_color }}; --sun-ring: {{ s.ring_color }}; --sun-show: {{ s.sun_visible }};"
+  aria-labelledby="sm-{{ section.id }}-title"
+>
+  <div class="sm-sun__disc" aria-hidden="true">
+    <span class="sm-sun__fill"></span>
+    <svg viewBox="0 0 100 100" focusable="false"><path d="M99.40,50.00 L100.07,51.75 L100.52,53.53 L100.61,55.32 L100.30,57.07 L99.60,58.75 L98.63,60.34 L97.53,61.85 L96.48,63.33 L95.63,64.82 L95.03,66.39 L94.71,68.06 L94.57,69.84 L94.49,71.70 L94.32,73.57 L93.91,75.35 L93.16,76.97 L92.07,78.38 L90.68,79.55 L89.09,80.54 L87.45,81.42 L85.88,82.31 L84.49,83.31 L83.31,84.49 L82.31,85.88 L81.42,87.45 L80.54,89.09 L79.55,90.68 L78.38,92.07 L76.97,93.16 L75.35,93.91 L73.57,94.32 L71.70,94.49 L69.84,94.57 L68.06,94.71 L66.39,95.03 L64.82,95.63 L63.33,96.48 L61.85,97.53 L60.34,98.63 L58.75,99.60 L57.07,100.30 L55.32,100.61 L53.53,100.52 L51.75,100.07 L50.00,99.40 L48.30,98.67 L46.64,98.04 L44.99,97.65 L43.32,97.54 L41.59,97.70 L39.79,98.02 L37.95,98.33 L36.10,98.49 L34.29,98.34 L32.60,97.81 L31.05,96.90 L29.66,95.69 L28.39,94.31 L27.18,92.92 L25.95,91.66 L24.62,90.62 L23.13,89.84 L21.48,89.25 L19.71,88.76 L17.92,88.24 L16.20,87.54 L14.67,86.58 L13.42,85.33 L12.46,83.80 L11.76,82.08 L11.24,80.29 L10.75,78.52 L10.16,76.87 L9.38,75.38 L8.34,74.05 L7.08,72.82 L5.69,71.61 L4.31,70.34 L3.10,68.95 L2.19,67.40 L1.66,65.71 L1.51,63.90 L1.67,62.05 L1.98,60.21 L2.30,58.41 L2.46,56.68 L2.35,55.01 L1.96,53.36 L1.33,51.70 L0.60,50.00 L-0.07,48.25 L-0.52,46.47 L-0.61,44.68 L-0.30,42.93 L0.40,41.25 L1.37,39.66 L2.47,38.15 L3.52,36.67 L4.37,35.18 L4.97,33.61 L5.29,31.94 L5.43,30.16 L5.51,28.30 L5.68,26.43 L6.09,24.65 L6.84,23.03 L7.93,21.62 L9.32,20.45 L10.91,19.46 L12.55,18.58 L14.12,17.69 L15.51,16.69 L16.69,15.51 L17.69,14.12 L18.58,12.55 L19.46,10.91 L20.45,9.32 L21.62,7.93 L23.03,6.84 L24.65,6.09 L26.43,5.68 L28.30,5.51 L30.16,5.43 L31.94,5.29 L33.61,4.97 L35.18,4.37 L36.67,3.52 L38.15,2.47 L39.66,1.37 L41.25,0.40 L42.93,-0.30 L44.68,-0.61 L46.47,-0.52 L48.25,-0.07 L50.00,0.60 L51.70,1.33 L53.36,1.96 L55.01,2.35 L56.68,2.46 L58.41,2.30 L60.21,1.98 L62.05,1.67 L63.90,1.51 L65.71,1.66 L67.40,2.19 L68.95,3.10 L70.34,4.31 L71.61,5.69 L72.82,7.08 L74.05,8.34 L75.38,9.38 L76.87,10.16 L78.52,10.75 L80.29,11.24 L82.08,11.76 L83.80,12.46 L85.33,13.42 L86.58,14.67 L87.54,16.20 L88.24,17.92 L88.76,19.71 L89.25,21.48 L89.84,23.13 L90.62,24.62 L91.66,25.95 L92.92,27.18 L94.31,28.39 L95.69,29.66 L96.90,31.05 L97.81,32.60 L98.34,34.29 L98.49,36.10 L98.33,37.95 L98.02,39.79 L97.70,41.59 L97.54,43.32 L97.65,44.99 L98.04,46.64 L98.67,48.30 L99.40,50.00 Z" fill="none" stroke="#000" stroke-width="5" stroke-linejoin="round"/><path d="M99.40,50.00 L100.07,51.75 L100.52,53.53 L100.61,55.32 L100.30,57.07 L99.60,58.75 L98.63,60.34 L97.53,61.85 L96.48,63.33 L95.63,64.82 L95.03,66.39 L94.71,68.06 L94.57,69.84 L94.49,71.70 L94.32,73.57 L93.91,75.35 L93.16,76.97 L92.07,78.38 L90.68,79.55 L89.09,80.54 L87.45,81.42 L85.88,82.31 L84.49,83.31 L83.31,84.49 L82.31,85.88 L81.42,87.45 L80.54,89.09 L79.55,90.68 L78.38,92.07 L76.97,93.16 L75.35,93.91 L73.57,94.32 L71.70,94.49 L69.84,94.57 L68.06,94.71 L66.39,95.03 L64.82,95.63 L63.33,96.48 L61.85,97.53 L60.34,98.63 L58.75,99.60 L57.07,100.30 L55.32,100.61 L53.53,100.52 L51.75,100.07 L50.00,99.40 L48.30,98.67 L46.64,98.04 L44.99,97.65 L43.32,97.54 L41.59,97.70 L39.79,98.02 L37.95,98.33 L36.10,98.49 L34.29,98.34 L32.60,97.81 L31.05,96.90 L29.66,95.69 L28.39,94.31 L27.18,92.92 L25.95,91.66 L24.62,90.62 L23.13,89.84 L21.48,89.25 L19.71,88.76 L17.92,88.24 L16.20,87.54 L14.67,86.58 L13.42,85.33 L12.46,83.80 L11.76,82.08 L11.24,80.29 L10.75,78.52 L10.16,76.87 L9.38,75.38 L8.34,74.05 L7.08,72.82 L5.69,71.61 L4.31,70.34 L3.10,68.95 L2.19,67.40 L1.66,65.71 L1.51,63.90 L1.67,62.05 L1.98,60.21 L2.30,58.41 L2.46,56.68 L2.35,55.01 L1.96,53.36 L1.33,51.70 L0.60,50.00 L-0.07,48.25 L-0.52,46.47 L-0.61,44.68 L-0.30,42.93 L0.40,41.25 L1.37,39.66 L2.47,38.15 L3.52,36.67 L4.37,35.18 L4.97,33.61 L5.29,31.94 L5.43,30.16 L5.51,28.30 L5.68,26.43 L6.09,24.65 L6.84,23.03 L7.93,21.62 L9.32,20.45 L10.91,19.46 L12.55,18.58 L14.12,17.69 L15.51,16.69 L16.69,15.51 L17.69,14.12 L18.58,12.55 L19.46,10.91 L20.45,9.32 L21.62,7.93 L23.03,6.84 L24.65,6.09 L26.43,5.68 L28.30,5.51 L30.16,5.43 L31.94,5.29 L33.61,4.97 L35.18,4.37 L36.67,3.52 L38.15,2.47 L39.66,1.37 L41.25,0.40 L42.93,-0.30 L44.68,-0.61 L46.47,-0.52 L48.25,-0.07 L50.00,0.60 L51.70,1.33 L53.36,1.96 L55.01,2.35 L56.68,2.46 L58.41,2.30 L60.21,1.98 L62.05,1.67 L63.90,1.51 L65.71,1.66 L67.40,2.19 L68.95,3.10 L70.34,4.31 L71.61,5.69 L72.82,7.08 L74.05,8.34 L75.38,9.38 L76.87,10.16 L78.52,10.75 L80.29,11.24 L82.08,11.76 L83.80,12.46 L85.33,13.42 L86.58,14.67 L87.54,16.20 L88.24,17.92 L88.76,19.71 L89.25,21.48 L89.84,23.13 L90.62,24.62 L91.66,25.95 L92.92,27.18 L94.31,28.39 L95.69,29.66 L96.90,31.05 L97.81,32.60 L98.34,34.29 L98.49,36.10 L98.33,37.95 L98.02,39.79 L97.70,41.59 L97.54,43.32 L97.65,44.99 L98.04,46.64 L98.67,48.30 L99.40,50.00 Z" fill="none" stroke="var(--sun-ring)" stroke-width="3.6" stroke-linejoin="round"/></svg>
+  </div>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+      assign scale = b.size | divided_by: 100.0
+      assign d_style = 'left: ' | append: b.x | append: '%; top: ' | append: b.y | append: '%; transform: translate(-50%, -50%) rotate(' | append: b.rotate | append: 'deg) scale(' | append: scale | append: ');'
+      assign d_class = ''
+      if b.hide_mobile
+        assign d_class = 'sm-doodle--hide-mobile'
+      endif
+    -%}
+    {% render 'sm-doodle', shape: b.shape, color: b.color, style: d_style, extra_class: d_class, attrs: block.shopify_attributes %}
+  {%- endfor -%}
+  <div class="sm-container sm-sun__inner" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: 0px;">
+    {%- if s.eyebrow != blank -%}
+      <span class="sm-sun__pill">{{ s.eyebrow }}</span>
+    {%- endif -%}
+    <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</h1>
+    {%- if s.text != blank -%}
+      <div class="sm-lede">{{ s.text }}</div>
+    {%- endif -%}
+        {%- if s.button_label != blank -%}
+          <div class="sm-actions">
+            <a class="sm-btn " href="{{ s.button_link | default: routes.all_products_collection_url }}">{{ s.button_label }}</a>
+          </div>
+        {%- endif -%}
+    {% render 'sm-store-rating', s: s %}
+    {%- if s.image_1 != blank or s.image_2 != blank or s.image_3 != blank -%}
+      <div class="sm-sun__art">
+        {%- if s.image_2 != blank -%}
+          <span class="sm-sun__side sm-sun__side--left{% if s.side_style == 'card' %} sm-sun__side--card{% endif %}">{{ s.image_2 | image_url: width: 600 | image_tag: alt: s.image_2.alt, loading: 'eager', sizes: '240px' }}</span>
+        {%- endif -%}
+        {%- if s.image_1 != blank -%}
+          <span class="sm-sun__main">{{ s.image_1 | image_url: width: 900 | image_tag: alt: s.image_1.alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 750px) 360px, 45vw' }}</span>
+        {%- endif -%}
+        {%- if s.image_3 != blank -%}
+          <span class="sm-sun__side sm-sun__side--right{% if s.side_style == 'card' %} sm-sun__side--card{% endif %}">{{ s.image_3 | image_url: width: 600 | image_tag: alt: s.image_3.alt, loading: 'eager', sizes: '240px' }}</span>
+        {%- endif -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="sm-sun__hint">Add up to three images in this section's settings (center + two sides).</p>
+    {%- endif -%}
+  </div>
+  {%- if s.show_sticker and s.sticker_big != blank -%}
+    {%- if s.sticker_link != blank -%}<a href="{{ s.sticker_link }}" class="sm-sun__sticker" style="--st-bg: {{ s.sticker_color }};">{%- else -%}<span class="sm-sun__sticker" style="--st-bg: {{ s.sticker_color }};">{%- endif -%}
+      {%- if s.sticker_small != blank -%}<span class="sm-sun__sticker-small">{{ s.sticker_small }}</span>{%- endif -%}
+      <span class="sm-sun__sticker-big">{{ s.sticker_big }}</span>
+    {%- if s.sticker_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
+  {%- endif -%}
+</section>
+{%- if s.divider != 'none' -%}
+  {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Hero Rising Sun",
+  "tag": "div",
+  "class": "sm-hero-sun-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sticker",
+      "default": "Holiday promo"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three games. One bundle. Save 20%."
+    },
+    {
+      "type": "text",
+      "id": "highlight",
+      "label": "Highlighted words",
+      "default": "Save 20%.",
+      "info": "Words from the heading to color"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight color",
+      "default": "#EA5D00"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>A game for every mood: strategy, bluffing and teamwork.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button",
+      "default": "Get the bundle"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Review score"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show store review score",
+      "default": true,
+      "info": "Judge.me total for the whole store"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Review score text",
+      "default": "★★★★★ [rating] from [count] reviews",
+      "info": "[rating] and [count] fill in automatically."
+    },
+    {
+      "type": "url",
+      "id": "rating_link",
+      "label": "Review score link"
+    },
+    {
+      "type": "text",
+      "id": "rating_override",
+      "label": "Rating override",
+      "info": "Optional, e.g. 4.9"
+    },
+    {
+      "type": "text",
+      "id": "count_override",
+      "label": "Review count override",
+      "info": "Optional, e.g. 120"
+    },
+    {
+      "type": "text",
+      "id": "small_print",
+      "label": "Small print",
+      "info": "Extra text after the review score"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Center image",
+      "info": "Biggest. A transparent PNG of a game box works best."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Left image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Right image"
+    },
+    {
+      "type": "select",
+      "id": "side_style",
+      "label": "Side images",
+      "options": [
+        {
+          "value": "cutout",
+          "label": "Cutout (no frame)"
+        },
+        {
+          "value": "card",
+          "label": "White card with outline"
+        }
+      ],
+      "default": "cutout"
+    },
+    {
+      "type": "header",
+      "content": "Sticker"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticker",
+      "label": "Show sticker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticker_small",
+      "label": "Small text",
+      "default": "save"
+    },
+    {
+      "type": "text",
+      "id": "sticker_big",
+      "label": "Big text",
+      "default": "20%"
+    },
+    {
+      "type": "color",
+      "id": "sticker_color",
+      "label": "Sticker color",
+      "default": "#EA5D00"
+    },
+    {
+      "type": "url",
+      "id": "sticker_link",
+      "label": "Sticker link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "sun_color",
+      "label": "Half circle",
+      "default": "#753189"
+    },
+    {
+      "type": "color",
+      "id": "ring_color",
+      "label": "Wobbly ring",
+      "default": "#FFF503"
+    },
+    {
+      "type": "range",
+      "id": "sun_visible",
+      "label": "How much of the circle shows",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "default": 34,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Hero Rising Sun",
+      "blocks": [
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "ring",
+            "color": "#20A4F3",
+            "x": 9,
+            "y": 20,
+            "size": 100,
+            "rotate": 0
+          }
+        },
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "squiggle",
+            "color": "#EA5D00",
+            "x": 90,
+            "y": 14,
+            "size": 100,
+            "rotate": 0
+          }
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "doodle",
+      "name": "Doodle",
+      "settings": [
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            {
+              "value": "squiggle",
+              "label": "Squiggle"
+            },
+            {
+              "value": "spiral",
+              "label": "Spiral"
+            },
+            {
+              "value": "zigzag",
+              "label": "Zigzag"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "loop-arrow",
+              "label": "Loop arrow"
+            },
+            {
+              "value": "dot",
+              "label": "Dot"
+            },
+            {
+              "value": "ring",
+              "label": "Ring"
+            },
+            {
+              "value": "triangle",
+              "label": "Triangle"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            },
+            {
+              "value": "tile",
+              "label": "Tile"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#20A4F3"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Left to right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Top to bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "label": "Size",
+          "min": 30,
+          "max": 250,
+          "step": 10,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "rotate",
+          "label": "Rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide on phones",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

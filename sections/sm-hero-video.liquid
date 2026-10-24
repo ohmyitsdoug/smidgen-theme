@@ -1,0 +1,484 @@
+{%- liquid
+  assign s = section.settings
+  assign heading = s.heading | escape | newline_to_br
+  if s.highlight != blank
+    assign hl = s.highlight | escape
+    assign highlight_markup = '<span class="sm-hl">' | append: hl | append: '</span>'
+    assign heading = heading | replace: hl, highlight_markup
+  endif
+-%}
+{%- liquid
+  assign yt_id = blank
+  if s.video_url != blank
+    assign v = s.video_url | append: ''
+    if v contains 'youtu.be/'
+      assign yt_id = v | split: 'youtu.be/' | last | split: '?' | first
+    elsif v contains 'v='
+      assign yt_id = v | split: 'v=' | last | split: '&' | first
+    elsif v contains '/shorts/'
+      assign yt_id = v | split: '/shorts/' | last | split: '?' | first
+    elsif v contains '/embed/'
+      assign yt_id = v | split: '/embed/' | last | split: '?' | first
+    endif
+  endif
+-%}
+<section
+  id="sm-{{ section.id }}"
+  class="sm-section sm-vhero"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --vh-bubble: {{ s.bubble_color }}; --vh-tilt: {{ s.tilt }}deg;"
+  aria-labelledby="sm-{{ section.id }}-title"
+>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+      assign scale = b.size | divided_by: 100.0
+      assign d_style = 'left: ' | append: b.x | append: '%; top: ' | append: b.y | append: '%; transform: translate(-50%, -50%) rotate(' | append: b.rotate | append: 'deg) scale(' | append: scale | append: ');'
+      assign d_class = ''
+      if b.hide_mobile
+        assign d_class = 'sm-doodle--hide-mobile'
+      endif
+    -%}
+    {% render 'sm-doodle', shape: b.shape, color: b.color, style: d_style, extra_class: d_class, attrs: block.shopify_attributes %}
+  {%- endfor -%}
+  <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    <div class="sm-vhero__grid">
+      <div class="sm-vhero__copy">
+        {%- if s.eyebrow != blank -%}
+          <span class="sm-sticker">{{ s.eyebrow }}</span>
+        {%- endif -%}
+        <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</h1>
+        {%- if s.text != blank -%}
+          <div class="sm-lede">{{ s.text }}</div>
+        {%- endif -%}
+        {%- if s.button_label != blank -%}
+          <div class="sm-actions">
+            <a class="sm-btn sm-btn--yellow" href="{{ s.button_link | default: routes.all_products_collection_url }}">{{ s.button_label }}</a>
+          </div>
+        {%- endif -%}
+        {% render 'sm-store-rating', s: s %}
+      </div>
+      <div class="sm-vhero__stage">
+        <div class="sm-vhero__screen" data-sm-vhero>
+          {%- if s.video != blank -%}
+            {{ s.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1200x', class: 'sm-vhero__media' }}
+            <button type="button" class="sm-vhero__play" data-sm-vhero-sound aria-label="Play with sound"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+          {%- elsif yt_id != blank -%}
+            {%- if s.poster != blank -%}
+              {{ s.poster | image_url: width: 1400 | image_tag: alt: '', loading: 'eager', class: 'sm-vhero__media', sizes: '(min-width: 990px) 700px, 92vw' }}
+            {%- else -%}
+              <img class="sm-vhero__media" src="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg" alt="" loading="eager" width="480" height="360">
+            {%- endif -%}
+            <button type="button" class="sm-vhero__play" data-sm-vhero-yt="{{ yt_id }}" aria-label="Play video"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+          {%- elsif s.poster != blank -%}
+            {{ s.poster | image_url: width: 1400 | image_tag: alt: s.poster.alt, loading: 'eager', class: 'sm-vhero__media', sizes: '(min-width: 990px) 700px, 92vw' }}
+          {%- elsif request.design_mode -%}
+            <span class="sm-vhero__hint">Add a Shopify video or a YouTube link in this section's settings.</span>
+          {%- endif -%}
+        </div>
+        {%- if s.bubble_image != blank -%}
+          {%- if s.bubble_link != blank -%}<a href="{{ s.bubble_link }}" class="sm-vhero__bubble">{%- else -%}<span class="sm-vhero__bubble">{%- endif -%}
+            {{ s.bubble_image | image_url: width: 600 | image_tag: alt: s.bubble_image.alt, loading: 'eager', sizes: '240px' }}
+          {%- if s.bubble_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
+          {%- if s.show_arrow -%}
+            <svg class="sm-vhero__arrow" viewBox="0 0 190 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 70 C 30 30, 60 18, 82 34 C 98 46, 84 64, 70 56 C 56 48, 74 22, 108 24 C 140 26, 160 42, 176 64" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M156 62 L178 68 L174 46" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if s.tag != blank -%}
+          <span class="sm-vhero__tag">{{ s.tag }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var root = document.getElementById('sm-{{ section.id }}');
+      if (!root) return;
+      var yt = root.querySelector('[data-sm-vhero-yt]');
+      if (yt) yt.addEventListener('click', function () {
+        var screen = yt.closest('[data-sm-vhero]');
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + yt.getAttribute('data-sm-vhero-yt') + '?autoplay=1&rel=0&playsinline=1';
+        f.title = 'Video';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        f.className = 'sm-vhero__media';
+        screen.innerHTML = '';
+        screen.appendChild(f);
+      });
+      var snd = root.querySelector('[data-sm-vhero-sound]');
+      if (snd) snd.addEventListener('click', function () {
+        var vid = root.querySelector('video');
+        if (!vid) return;
+        vid.muted = false; vid.controls = true; vid.currentTime = 0; vid.play();
+        snd.remove();
+      });
+    })();
+  </script>
+</section>
+{%- if s.divider != 'none' -%}
+  {% render 'sm-divider', shape: s.divider, from: s.bg, to: s.divider_to %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Hero Video",
+  "tag": "div",
+  "class": "sm-hero-video-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sticker",
+      "default": "New game · Preorder now"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Monkey is hunting. Hide the Banana."
+    },
+    {
+      "type": "text",
+      "id": "highlight",
+      "label": "Highlighted words",
+      "default": "Hide the Banana.",
+      "info": "Words from the heading to color"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight color",
+      "default": "#FFF503"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Watch a round in under a minute.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button",
+      "default": "Preorder now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Review score"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show store review score",
+      "default": true,
+      "info": "Judge.me total for the whole store"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Review score text",
+      "default": "★★★★★ [rating] from [count] reviews",
+      "info": "[rating] and [count] fill in automatically."
+    },
+    {
+      "type": "url",
+      "id": "rating_link",
+      "label": "Review score link"
+    },
+    {
+      "type": "text",
+      "id": "rating_override",
+      "label": "Rating override",
+      "info": "Optional, e.g. 4.9"
+    },
+    {
+      "type": "text",
+      "id": "count_override",
+      "label": "Review count override",
+      "info": "Optional, e.g. 120"
+    },
+    {
+      "type": "text",
+      "id": "small_print",
+      "label": "Small print",
+      "info": "Extra text after the review score"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify video",
+      "info": "Plays muted on a loop; the play button turns the sound on."
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Or a YouTube link",
+      "info": "Used when no Shopify video is picked. Plays when clicked."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Cover image",
+      "info": "Optional. Shown before a YouTube video plays."
+    },
+    {
+      "type": "range",
+      "id": "tilt",
+      "label": "Screen tilt",
+      "min": -6,
+      "max": 6,
+      "step": 0.5,
+      "default": -2.5,
+      "unit": "°"
+    },
+    {
+      "type": "header",
+      "content": "Product bubble"
+    },
+    {
+      "type": "image_picker",
+      "id": "bubble_image",
+      "label": "Bubble image",
+      "info": "Sits in a circle over the screen's corner."
+    },
+    {
+      "type": "color",
+      "id": "bubble_color",
+      "label": "Bubble color",
+      "default": "#FFF503"
+    },
+    {
+      "type": "url",
+      "id": "bubble_link",
+      "label": "Bubble link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show squiggle arrow pointing at the bubble",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag on the screen",
+      "default": "Watch in 60 sec"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#753189"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 72,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Hero Video",
+      "blocks": [
+        {
+          "type": "doodle",
+          "settings": {
+            "shape": "ring",
+            "color": "#FFF503",
+            "x": 3,
+            "y": 92,
+            "size": 160,
+            "rotate": 0
+          }
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "doodle",
+      "name": "Doodle",
+      "settings": [
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            {
+              "value": "squiggle",
+              "label": "Squiggle"
+            },
+            {
+              "value": "spiral",
+              "label": "Spiral"
+            },
+            {
+              "value": "zigzag",
+              "label": "Zigzag"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "loop-arrow",
+              "label": "Loop arrow"
+            },
+            {
+              "value": "dot",
+              "label": "Dot"
+            },
+            {
+              "value": "ring",
+              "label": "Ring"
+            },
+            {
+              "value": "triangle",
+              "label": "Triangle"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            },
+            {
+              "value": "tile",
+              "label": "Tile"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#20A4F3"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Left to right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Top to bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "label": "Size",
+          "min": 30,
+          "max": 250,
+          "step": 10,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "rotate",
+          "label": "Rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide on phones",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}
