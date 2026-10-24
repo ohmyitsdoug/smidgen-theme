@@ -1,0 +1,66 @@
+{%- assign s = section.settings -%}
+{%- if s.heading != blank or s.text != blank -%}
+  <section class="sm-section" style="--sm-bg: {{ s.section_bg }}; --sm-fg: #000;">
+    <div class="sm-container sm-container--narrow" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+      {%- capture inner -%}
+        {%- if s.icon != 'none' -%}
+          <span style="flex: 0 0 auto; display: flex;" aria-hidden="true">
+            {%- case s.icon -%}
+              {%- when 'star' -%}
+                <svg width="64" height="64" viewBox="0 0 100 100" focusable="false"><path d="M50 4 L60 36 L94 30 L68 52 L88 82 L56 70 L44 96 L38 64 L6 70 L28 46 L8 20 L40 30 Z" fill="{{ s.icon_color }}" stroke="#000" stroke-width="5" stroke-linejoin="round"/></svg>
+              {%- when 'spiral' -%}
+                <svg width="64" height="64" viewBox="0 0 110 110" fill="none" focusable="false"><path d="M55 55 m-8 0 a8 8 0 1 1 16 0 a18 18 0 1 1 -36 0 a28 28 0 1 1 56 0" stroke="{{ s.icon_color }}" stroke-width="12" stroke-linecap="round"/></svg>
+              {%- when 'circle' -%}
+                <svg width="64" height="64" viewBox="0 0 64 64" focusable="false"><circle cx="32" cy="32" r="28" fill="{{ s.icon_color }}" stroke="#000" stroke-width="4"/></svg>
+            {%- endcase -%}
+          </span>
+        {%- endif -%}
+        <span style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 4px;">
+          {%- if s.heading != blank -%}
+            <strong style="font-family: var(--sm-font-display); font-weight: 900; font-size: 1.9rem; line-height: 1.05;">{{ s.heading }}</strong>
+          {%- endif -%}
+          {%- if s.text != blank -%}
+            <span style="font-size: 1rem; line-height: 1.5;">{{ s.text }}</span>
+          {%- endif -%}
+        </span>
+        {%- if s.link_label != blank -%}
+          <span style="color: var(--sm-purple); font-weight: 700;">{{ s.link_label }}</span>
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- assign box_style = 'display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: ' | append: s.box_bg | append: '; color: #000; border: var(--sm-outline); border-radius: var(--sm-radius); padding: 24px; text-decoration: none;' -%}
+      {%- if s.link != blank -%}
+        <a href="{{ s.link }}" class="sm-card" style="{{ box_style }} flex-direction: row;">{{ inner }}</a>
+      {%- else -%}
+        <div class="sm-box" style="{{ box_style }}">{{ inner }}</div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Callout",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Missing a piece?" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Tell us which game and what's missing. We'll send a replacement, free." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Request a part →" },
+    { "type": "url", "id": "link", "label": "Link", "info": "e.g. #contact to jump to the contact form on this page" },
+    {
+      "type": "select", "id": "icon", "label": "Icon",
+      "options": [
+        { "value": "star", "label": "Star" }, { "value": "spiral", "label": "Spiral" },
+        { "value": "circle", "label": "Circle" }, { "value": "none", "label": "None" }
+      ],
+      "default": "star"
+    },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#EA5D00" },
+    { "type": "color", "id": "box_bg", "label": "Box color", "default": "#FFF503" },
+    { "type": "color", "id": "section_bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 72 }
+  ],
+  "presets": [{ "name": "Smidgen · Callout" }]
+}
+{% endschema %}
