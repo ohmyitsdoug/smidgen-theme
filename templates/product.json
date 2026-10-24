@@ -326,16 +326,17 @@
               "settings": {
                 "box_label": "Box size & weight",
                 "size_row_label": "Size",
+                "length": "{{ closest.product.metafields.next_cart.length.value }}",
+                "width": "{{ closest.product.metafields.next_cart.width.value }}",
+                "height": "{{ closest.product.metafields.next_cart.height.value }}",
                 "box_unit": "in",
                 "weight_label": "Weight",
+                "weight": "{{ closest.product.metafields.custom.weight.value }}",
                 "testing_label": "Safety testing",
                 "testing_field": "custom.testing",
                 "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
                 "extra_label": "UPC",
-                "extra_field": "custom.upc",
-                "length": "{{ closest.product.metafields.next_cart.length.value }}",
-                "width": "{{ closest.product.metafields.next_cart.width.value }}",
-                "height": "{{ closest.product.metafields.next_cart.height.value }}"
+                "extra_field": "custom.upc"
               },
               "blocks": {}
             },
