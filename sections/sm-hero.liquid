@@ -68,6 +68,16 @@
           {%- if s.note != blank -%}
             <span class="sm-hero__note">{{ s.note }}</span>
           {%- endif -%}
+          {%- if s.show_badge and s.badge_image != blank -%}
+            {%- capture badge_img -%}
+              {{ s.badge_image | image_url: width: 480 | image_tag: alt: s.badge_image.alt, loading: 'eager', sizes: '240px', style: 'width: 100%; height: auto; display: block;' }}
+            {%- endcapture -%}
+            {%- if s.badge_link != blank -%}
+              <a class="sm-hero__badge" href="{{ s.badge_link }}" style="--sm-badge-w: {{ s.badge_size }}px; --sm-badge-r: {{ s.badge_rotate }}deg;">{{ badge_img }}</a>
+            {%- else -%}
+              <span class="sm-hero__badge" style="--sm-badge-w: {{ s.badge_size }}px; --sm-badge-r: {{ s.badge_rotate }}deg;">{{ badge_img }}</span>
+            {%- endif -%}
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
@@ -160,6 +170,48 @@
       "id": "note",
       "label": "Hand-written note",
       "default": "2025 Strategy Game of the Year!"
+    },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge image",
+      "info": "A transparent PNG or SVG works best, e.g. your award seal. Add alt text to the image so search engines and screen readers know what it says."
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge size",
+      "min": 80,
+      "max": 260,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "badge_rotate",
+      "label": "Badge tilt",
+      "min": -30,
+      "max": 30,
+      "step": 5,
+      "unit": "deg",
+      "default": 10
+    },
+    {
+      "type": "url",
+      "id": "badge_link",
+      "label": "Badge link",
+      "info": "Optional, e.g. the award page"
     },
     {
       "type": "header",

@@ -1184,3 +1184,24 @@ product-card.product-card,
     transform: scale(1.06);
   }
 }
+
+/* Hero badge (e.g. award seal) overlapping the top-right of the circle */
+.sm-hero__badge {
+  position: absolute;
+  top: -4%;
+  right: 2%;
+  z-index: 2;
+  width: var(--sm-badge-w, 160px);
+  max-width: 42%;
+  transform: rotate(var(--sm-badge-r, 10deg));
+  filter: drop-shadow(5px 6px 0 rgb(0 0 0 / 0.35));
+  transition: transform 0.18s ease;
+}
+
+a.sm-hero__badge:hover {
+  transform: rotate(var(--sm-badge-r, 10deg)) scale(1.05);
+}
+
+@media (max-width: 599px) {
+  .sm-hero__badge { top: -2%; right: 0; max-width: 38%; }
+}
