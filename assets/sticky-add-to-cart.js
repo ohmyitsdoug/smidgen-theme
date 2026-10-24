@@ -127,7 +127,7 @@ class StickyAddToCartComponent extends Component {
       if (!entry.isIntersecting && !this.#isStuck) {
         // Check if the element is above the viewport (scrolled past) or below (not yet reached)
         const rect = entry.target.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top < 0) {
+        if (rect.bottom < 0 || rect.top < 0 || window.matchMedia('(max-width: 749px)').matches) {
           if (this.#isChatActive()) return;
           this.#showStickyBar();
         }
@@ -151,7 +151,7 @@ class StickyAddToCartComponent extends Component {
           // Footer out of view - check if we should show sticky bar again
           const rect = buyButtonsBlock.getBoundingClientRect();
           // Only show if buy buttons are above the viewport (scrolled past)
-          if (rect.bottom < 0 || rect.top < 0) {
+          if (rect.bottom < 0 || rect.top < 0 || window.matchMedia('(max-width: 749px)').matches) {
             this.#hiddenByBottom = false;
             if (!this.#isChatActive()) {
               this.#showStickyBar();

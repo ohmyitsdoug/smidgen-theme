@@ -1497,3 +1497,15 @@ a.sm-hero__badge:hover {
     border-radius: 24px;
   }
 }
+
+/* Mobile: quick add-to-cart bar shows whenever the main buy button is off
+   screen (above or below), styled as a Smidgen card. */
+@media screen and (max-width: 749px) {
+  .sticky-add-to-cart__bar {
+    background: var(--sm-white) !important;
+    color: var(--sm-black) !important;
+    border-top: 3px solid var(--sm-black) !important;
+    box-shadow: 0 -4px 0 rgba(0, 0, 0, 0.08) !important;
+  }
+  .sticky-add-to-cart__title { font-weight: 700; }
+}
