@@ -11,12 +11,12 @@
   comment
     Box size and weight come from the product. Length / width / height are
     connected to the product's fields with the editor's database icon
-    (falls back to custom.length etc.). Weight uses the product's own
+    (falls back to next_cart.length, then custom.length). Weight uses the product's own
     shipping weight unless a weight field is connected.
   endcomment
-  assign bl = bs.length | default: p.metafields.custom.length.value
-  assign bw = bs.width | default: p.metafields.custom.width.value
-  assign bh = bs.height | default: p.metafields.custom.height.value
+  assign bl = bs.length | default: p.metafields.next_cart.length.value | default: p.metafields.custom.length.value
+  assign bw = bs.width | default: p.metafields.next_cart.width.value | default: p.metafields.custom.width.value
+  assign bh = bs.height | default: p.metafields.next_cart.height.value | default: p.metafields.custom.height.value
   assign dims = ''
   for d in (1..3)
     case d

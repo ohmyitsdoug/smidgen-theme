@@ -333,9 +333,9 @@
                 "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
                 "extra_label": "UPC",
                 "extra_field": "custom.upc",
-                "length": "{{ closest.product.metafields.custom.length.value }}",
-                "width": "{{ closest.product.metafields.custom.width.value }}",
-                "height": "{{ closest.product.metafields.custom.height.value }}"
+                "length": "{{ closest.product.metafields.next_cart.length.value }}",
+                "width": "{{ closest.product.metafields.next_cart.width.value }}",
+                "height": "{{ closest.product.metafields.next_cart.height.value }}"
               },
               "blocks": {}
             },
