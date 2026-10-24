@@ -1,0 +1,155 @@
+{%- doc -%}
+  Optional spec dropdowns for the product buy box: box size, weight,
+  safety testing, plus one extra row. Each row reads a product field and is
+  hidden when empty, so games without data show nothing.
+{%- enddoc -%}
+{%- liquid
+  assign bs = block.settings
+  assign p = closest.product | default: product
+  assign v = p.selected_or_first_available_variant
+
+  comment
+    Box size: one field, or separate length / width / height fields.
+  endcomment
+  assign box = blank
+  if bs.box_field != blank
+    assign kf = bs.box_field | strip | split: '.'
+    assign box = p.metafields[kf[0]][kf[1]].value
+  endif
+  if box == blank
+    assign lf = bs.length_field | strip | split: '.'
+    assign wf = bs.width_field | strip | split: '.'
+    assign hf = bs.height_field | strip | split: '.'
+    assign bl = p.metafields[lf[0]][lf[1]].value
+    assign bw = p.metafields[wf[0]][wf[1]].value
+    assign bh = p.metafields[hf[0]][hf[1]].value
+    assign dims = ''
+    for d in (1..3)
+      case d
+        when 1
+          assign dv = bl
+        when 2
+          assign dv = bw
+        when 3
+          assign dv = bh
+      endcase
+      if dv != blank
+        if dims != ''
+          assign dims = dims | append: ' × '
+        endif
+        assign dims = dims | append: dv
+      endif
+    endfor
+    if dims != ''
+      assign box = dims | append: ' ' | append: bs.box_unit | strip
+    endif
+  endif
+
+  assign weight = blank
+  if bs.weight_field != blank
+    assign wtf = bs.weight_field | strip | split: '.'
+    assign wmf = p.metafields[wtf[0]][wtf[1]]
+    if wmf.type == 'weight'
+      assign weight = wmf.value.value | append: ' ' | append: wmf.value.unit
+    else
+      assign weight = wmf.value
+    endif
+  endif
+  if weight == blank and bs.use_shipping_weight and v.weight > 0
+    assign weight = v.weight | weight_with_unit
+  endif
+
+  assign test_field = blank
+  if bs.testing_field != blank
+    assign tf = bs.testing_field | strip | split: '.'
+    assign test_field = p.metafields[tf[0]][tf[1]]
+  endif
+
+  assign extra_field = blank
+  if bs.extra_field != blank
+    assign ef = bs.extra_field | strip | split: '.'
+    assign extra_field = p.metafields[ef[0]][ef[1]]
+  endif
+
+  assign has_test = false
+  if test_field.value != blank or bs.testing_default != blank
+    assign has_test = true
+  endif
+-%}
+{%- if box != blank or weight != blank or has_test or extra_field.value != blank -%}
+  <div class="sm-spec-acc" {{ block.shopify_attributes }}>
+    {%- if box != blank -%}
+      <details>
+        <summary>{% render 'sm-icon', name: 'package', size: 22 %}<span>{{ bs.box_label }}</span></summary>
+        <div class="sm-spec-acc__body">{{ box }}</div>
+      </details>
+    {%- endif -%}
+    {%- if weight != blank -%}
+      <details>
+        <summary>{% render 'sm-icon', name: 'shopping-bag', size: 22 %}<span>{{ bs.weight_label }}</span></summary>
+        <div class="sm-spec-acc__body">{{ weight }}</div>
+      </details>
+    {%- endif -%}
+    {%- if has_test -%}
+      <details>
+        <summary>{% render 'sm-icon', name: 'shield-check', size: 22 %}<span>{{ bs.testing_label }}</span></summary>
+        <div class="sm-spec-acc__body">
+          {%- if test_field.value != blank -%}
+            {%- if test_field.type contains 'list.' -%}
+              <ul>{%- for t in test_field.value -%}<li>{{ t }}</li>{%- endfor -%}</ul>
+            {%- else -%}
+              {{ test_field | metafield_tag }}
+            {%- endif -%}
+          {%- else -%}
+            {{ bs.testing_default }}
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endif -%}
+    {%- if extra_field.value != blank -%}
+      <details>
+        <summary>{% render 'sm-icon', name: 'tag', size: 22 %}<span>{{ bs.extra_label }}</span></summary>
+        <div class="sm-spec-acc__body">
+          {%- if extra_field.type contains 'list.' -%}
+            <ul>{%- for t in extra_field.value -%}<li>{{ t }}</li>{%- endfor -%}</ul>
+          {%- else -%}
+            {{ extra_field | metafield_tag }}
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endif -%}
+  </div>
+{%- elsif request.design_mode -%}
+  <p style="margin: 0; padding: 12px; border: 3px dashed #000; border-radius: 14px; font-size: 0.85rem;" {{ block.shopify_attributes }}>
+    <strong>Spec dropdowns are hidden on this product</strong> (only you see this). Fill in its box size, weight or testing fields.
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Spec dropdowns",
+  "tag": null,
+  "settings": [
+    { "type": "paragraph", "content": "Each dropdown only shows when the product has that info. Fields are namespace.key from Settings → Custom data → Products." },
+    { "type": "header", "content": "Box size" },
+    { "type": "text", "id": "box_label", "label": "Label", "default": "Box size" },
+    { "type": "text", "id": "box_field", "label": "Single box size field", "info": "Optional, e.g. custom.box_size. Otherwise uses the 3 fields below." },
+    { "type": "text", "id": "length_field", "label": "Length field", "default": "custom.length" },
+    { "type": "text", "id": "width_field", "label": "Width field", "default": "custom.width" },
+    { "type": "text", "id": "height_field", "label": "Height field", "default": "custom.height" },
+    { "type": "text", "id": "box_unit", "label": "Unit after size", "default": "in", "info": "Leave empty if your fields already include units." },
+    { "type": "header", "content": "Weight" },
+    { "type": "text", "id": "weight_label", "label": "Label", "default": "Weight" },
+    { "type": "text", "id": "weight_field", "label": "Weight field", "default": "custom.weight" },
+    { "type": "checkbox", "id": "use_shipping_weight", "label": "Use shipping weight if field is empty", "default": true, "info": "The weight set on the product's variant." },
+    { "type": "header", "content": "Testing" },
+    { "type": "text", "id": "testing_label", "label": "Label", "default": "Safety testing" },
+    { "type": "text", "id": "testing_field", "label": "Testing field", "default": "custom.testing", "info": "Text, multi-line text or a list" },
+    { "type": "richtext", "id": "testing_default", "label": "Text when field is empty", "info": "Shown on every product without its own testing field. Leave empty to hide." },
+    { "type": "header", "content": "Extra dropdown" },
+    { "type": "text", "id": "extra_label", "label": "Label", "default": "UPC" },
+    { "type": "text", "id": "extra_field", "label": "Field", "info": "e.g. custom.upc. Leave empty to hide." }
+  ],
+  "presets": [{ "name": "Smidgen · Spec dropdowns" }]
+}
+{% endschema %}

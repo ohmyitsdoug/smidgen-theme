@@ -51,8 +51,45 @@
             {%- endif -%}
           </div>
         {%- endif -%}
-        {%- if s.small_print != blank -%}
-          <p style="margin: 0; font-weight: 700;">{{ s.small_print }}</p>
+        {%- liquid
+          assign rating_line = blank
+          if s.show_rating
+            assign r_avg = s.rating_override | default: shop.metafields.judgeme.all_reviews_rating.value | default: shop.metafields.judgeme.all_reviews_rating
+            assign r_count = s.count_override | default: shop.metafields.judgeme.all_reviews_count.value | default: shop.metafields.judgeme.all_reviews_count
+            if r_avg == blank or r_count == blank
+              assign r_sum = 0.0
+              assign r_total = 0
+              paginate collections.all.products by 250
+                for hp in collections.all.products
+                  assign r_c = hp.metafields.reviews.rating_count.value | default: 0
+                  if r_c > 0
+                    assign r_v = hp.metafields.reviews.rating.value.rating | times: r_c
+                    assign r_sum = r_sum | plus: r_v
+                    assign r_total = r_total | plus: r_c
+                  endif
+                endfor
+              endpaginate
+              if r_total > 0
+                assign agg_avg = r_sum | divided_by: r_total
+                assign r_count = r_count | default: r_total
+                assign r_avg = r_avg | default: agg_avg
+              endif
+            endif
+            if r_avg != blank and r_count != blank
+              assign r_avg_num = r_avg | times: 1.0 | round: 1 | append: ''
+              assign r_count_fmt = r_count | times: 1 | append: ''
+              assign rating_line = s.rating_text | default: '★★★★★ [rating] from [count] reviews' | replace: '[rating]', r_avg_num | replace: '[count]', r_count_fmt
+            endif
+          endif
+        -%}
+        {%- if rating_line != blank or s.small_print != blank -%}
+          <p class="sm-hero__small" style="margin: 0; font-weight: 700;">
+            {%- if rating_line != blank -%}
+              {%- if s.rating_link != blank -%}<a href="{{ s.rating_link }}" style="color: inherit;">{{ rating_line }}</a>{%- else -%}{{ rating_line }}{%- endif -%}
+              {%- if s.small_print != blank %} · {% endif -%}
+            {%- endif -%}
+            {{- s.small_print -}}
+          </p>
         {%- endif -%}
       </div>
 
@@ -139,10 +176,41 @@
       "label": "Second button link"
     },
     {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show store review score",
+      "default": true,
+      "info": "Judge.me's total for the whole store (product + store reviews)."
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Review score text",
+      "default": "★★★★★ [rating] from [count] reviews",
+      "info": "[rating] and [count] fill in automatically."
+    },
+    {
+      "type": "url",
+      "id": "rating_link",
+      "label": "Review score link"
+    },
+    {
+      "type": "text",
+      "id": "rating_override",
+      "label": "Rating override",
+      "info": "Optional, e.g. 4.9. Leave empty to use Judge.me."
+    },
+    {
+      "type": "text",
+      "id": "count_override",
+      "label": "Review count override",
+      "info": "Optional, e.g. 120."
+    },
+    {
       "type": "text",
       "id": "small_print",
       "label": "Small print",
-      "info": "e.g. your review score"
+      "info": "Extra text after the review score"
     },
     {
       "type": "header",

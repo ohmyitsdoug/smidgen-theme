@@ -1417,3 +1417,24 @@ a.sm-hero__badge:hover {
 .sm-reviews__apps { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .sm-reviews__empty { margin: 0; font-size: 1.05rem; }
 .sm-reviews__track[hidden], .sm-reviews__empty[hidden] { display: none; }
+
+/* Spec dropdowns (product buy box) */
+.sm-spec-acc { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.sm-spec-acc details {
+  border: var(--sm-outline); border-radius: 18px; background: var(--sm-white); color: var(--sm-black);
+  padding: 12px 18px; box-shadow: 3px 3px 0 var(--sm-black);
+}
+.sm-spec-acc summary {
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 1rem;
+}
+.sm-spec-acc summary::-webkit-details-marker { display: none; }
+.sm-spec-acc summary svg { color: var(--sm-purple); flex: 0 0 auto; }
+.sm-spec-acc summary span { flex: 1; }
+.sm-spec-acc summary::after {
+  content: '+'; font-family: var(--sm-font-display); font-size: 1.5rem; line-height: 1; color: var(--sm-purple);
+}
+.sm-spec-acc details[open] summary::after { content: '–'; }
+.sm-spec-acc__body { margin-top: 10px; padding-left: 32px; font-size: 1rem; line-height: 1.5; }
+.sm-spec-acc__body ul { margin: 0; padding-left: 18px; }
+.sm-spec-acc__body p { margin: 0 0 6px; }
