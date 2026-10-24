@@ -9,53 +9,39 @@
   assign v = p.selected_or_first_available_variant
 
   comment
-    Box size: one field, or separate length / width / height fields.
+    Box size and weight come from the product. Length / width / height are
+    connected to the product's fields with the editor's database icon
+    (falls back to custom.length etc.). Weight uses the product's own
+    shipping weight unless a weight field is connected.
   endcomment
-  assign box = blank
-  if bs.box_field != blank
-    assign kf = bs.box_field | strip | split: '.'
-    assign box = p.metafields[kf[0]][kf[1]].value
-  endif
-  if box == blank
-    assign lf = bs.length_field | strip | split: '.'
-    assign wf = bs.width_field | strip | split: '.'
-    assign hf = bs.height_field | strip | split: '.'
-    assign bl = p.metafields[lf[0]][lf[1]].value
-    assign bw = p.metafields[wf[0]][wf[1]].value
-    assign bh = p.metafields[hf[0]][hf[1]].value
-    assign dims = ''
-    for d in (1..3)
-      case d
-        when 1
-          assign dv = bl
-        when 2
-          assign dv = bw
-        when 3
-          assign dv = bh
-      endcase
-      if dv != blank
-        if dims != ''
-          assign dims = dims | append: ' × '
-        endif
-        assign dims = dims | append: dv
+  assign bl = bs.length | default: p.metafields.custom.length.value
+  assign bw = bs.width | default: p.metafields.custom.width.value
+  assign bh = bs.height | default: p.metafields.custom.height.value
+  assign dims = ''
+  for d in (1..3)
+    case d
+      when 1
+        assign dv = bl
+      when 2
+        assign dv = bw
+      when 3
+        assign dv = bh
+    endcase
+    assign dv = dv | strip
+    if dv != blank
+      if dims != ''
+        assign dims = dims | append: ' × '
       endif
-    endfor
-    if dims != ''
-      assign box = dims | append: ' ' | append: bs.box_unit | strip
+      assign dims = dims | append: dv
     endif
+  endfor
+  assign box = blank
+  if dims != ''
+    assign box = dims | append: ' ' | append: bs.box_unit | strip
   endif
 
-  assign weight = blank
-  if bs.weight_field != blank
-    assign wtf = bs.weight_field | strip | split: '.'
-    assign wmf = p.metafields[wtf[0]][wtf[1]]
-    if wmf.type == 'weight'
-      assign weight = wmf.value.value | append: ' ' | append: wmf.value.unit
-    else
-      assign weight = wmf.value
-    endif
-  endif
-  if weight == blank and bs.use_shipping_weight and v.weight > 0
+  assign weight = bs.weight | strip
+  if weight == blank and v.weight > 0
     assign weight = v.weight | weight_with_unit
   endif
 
@@ -133,14 +119,12 @@
     { "type": "header", "content": "Box size & weight" },
     { "type": "text", "id": "box_label", "label": "Dropdown label", "default": "Box size & weight" },
     { "type": "text", "id": "size_row_label", "label": "Size row label", "default": "Size" },
-    { "type": "text", "id": "box_field", "label": "Single box size field", "info": "Optional, e.g. custom.box_size. Otherwise uses the 3 fields below." },
-    { "type": "text", "id": "length_field", "label": "Length field", "default": "custom.length" },
-    { "type": "text", "id": "width_field", "label": "Width field", "default": "custom.width" },
-    { "type": "text", "id": "height_field", "label": "Height field", "default": "custom.height" },
+    { "type": "text", "id": "length", "label": "Length", "info": "Click the database icon → Product → Length" },
+    { "type": "text", "id": "width", "label": "Width", "info": "Database icon → Product → Width" },
+    { "type": "text", "id": "height", "label": "Height", "info": "Database icon → Product → Height" },
     { "type": "text", "id": "box_unit", "label": "Unit after size", "default": "in", "info": "Leave empty if your fields already include units." },
     { "type": "text", "id": "weight_label", "label": "Weight row label", "default": "Weight" },
-    { "type": "text", "id": "weight_field", "label": "Weight field", "default": "custom.weight" },
-    { "type": "checkbox", "id": "use_shipping_weight", "label": "Use shipping weight if field is empty", "default": true, "info": "The weight set on the product's variant." },
+    { "type": "text", "id": "weight", "label": "Weight", "info": "Leave empty to use the product's shipping weight (set under Shipping on the product)." },
     { "type": "header", "content": "Testing" },
     { "type": "text", "id": "testing_label", "label": "Label", "default": "Safety testing" },
     { "type": "text", "id": "testing_field", "label": "Testing field", "default": "custom.testing", "info": "Text, multi-line text or a list" },
