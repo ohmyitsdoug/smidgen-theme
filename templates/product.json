@@ -365,6 +365,7 @@
       "settings": {
         "heading": "Learn to play",
         "rules_label": "Download the rules (PDF)",
+        "video_link": "{{ product.metafields.custom.how_to_play_youtube.value }}",
         "video_field": "",
         "steps_field": "smidgen.howto_steps",
         "rules_field": "smidgen.rules_pdf",
