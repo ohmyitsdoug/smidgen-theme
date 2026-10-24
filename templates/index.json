@@ -82,7 +82,7 @@
             "x": 93,
             "y": 80,
             "size": 70,
-            "rotate": -12,
+            "rotate": -10,
             "hide_mobile": true
           }
         },
@@ -94,7 +94,7 @@
             "x": 88,
             "y": 10,
             "size": 70,
-            "rotate": -8,
+            "rotate": -10,
             "hide_mobile": true
           }
         },
@@ -105,8 +105,8 @@
             "color": "#753189",
             "x": 30,
             "y": 6,
-            "size": 55,
-            "rotate": 12,
+            "size": 60,
+            "rotate": 10,
             "hide_mobile": true
           }
         }
