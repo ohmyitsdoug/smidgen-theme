@@ -53,11 +53,37 @@
               assign pill_count = pill_count | plus: 1
             endif
           endfor
-          if pill_count == 0 and s.filter_tags != blank
-            assign pill_count = filter_tags.size
+          assign use_auto = false
+          if pill_count == 0 and s.auto_tags
+            assign use_auto = true
+            assign excluded = s.exclude_tags | downcase | split: ','
+            for tag in collection.all_tags
+              assign t_low = tag | downcase | strip
+              assign first_char = tag | slice: 0
+              unless excluded contains t_low or first_char == '_'
+                assign pill_count = pill_count | plus: 1
+              endunless
+            endfor
+          elsif pill_count == 0 and s.filter_tags != blank
+            for raw_tag in filter_tags
+              assign tag = raw_tag | strip
+              if collection.all_tags contains tag
+                assign pill_count = pill_count | plus: 1
+              endif
+            endfor
           endif
           assign all_url = s.all_link | default: base_url
         -%}
+        {%- if request.design_mode -%}
+          <p style="flex-basis: 100%; margin: 0; padding: 12px 16px; border: 3px dashed #000; border-radius: 16px; font-size: 0.9rem;">
+            <strong>Only you see this:</strong>
+            {% if collection.all_tags.size > 0 -%}
+              tags used in this collection: {{ collection.all_tags | join: ', ' }}. Add a Filter pill block for any of them, or turn on "Make a pill for every tag".
+            {%- else -%}
+              no products in this collection have tags yet. Add tags like game, merch or bundle to your products in Shopify admin.
+            {%- endif %}
+          </p>
+        {%- endif -%}
         {%- if pill_count > 0 -%}
           <nav aria-label="Filter">
             <ul class="sm-pills">
@@ -92,6 +118,21 @@
                   -%}
                   <li {{ block.shopify_attributes }}>
                     <a class="sm-pill" href="{{ pill_url | default: '#' }}" {% if active %}aria-current="page"{% endif %}>{{ b.label }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- elsif use_auto -%}
+                {%- for tag in collection.all_tags -%}
+                  {%- liquid
+                    assign t_low = tag | downcase | strip
+                    assign first_char = tag | slice: 0
+                    if excluded contains t_low or first_char == '_'
+                      continue
+                    endif
+                  -%}
+                  <li>
+                    <a class="sm-pill" href="{{ base_url }}/{{ tag | handle }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>
+                      {{- tag | replace: '-', ' ' | capitalize -}}
+                    </a>
                   </li>
                 {%- endfor -%}
               {%- else -%}
@@ -170,11 +211,26 @@
       "default": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight."
     },
     {
+      "type": "checkbox",
+      "id": "auto_tags",
+      "label": "Make a pill for every tag",
+      "info": "Used when no Filter pill blocks are added. Tags starting with _ are skipped.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "exclude_tags",
+      "label": "Tags to skip",
+      "info": "Comma-separated",
+      "visible_if": "{{ section.settings.auto_tags }}"
+    },
+    {
       "type": "text",
       "id": "filter_tags",
-      "label": "Quick filter tags (used when no Filter pill blocks are added)",
+      "label": "Pill tags (used when no Filter pill blocks are added)",
       "info": "Comma-separated product tags, e.g. family, 2-player, quick-play, coming-soon. Only tags used in this collection appear.",
-      "default": "family, 2-player, quick-play, coming-soon"
+      "default": "family, 2-player, quick-play, coming-soon",
+      "visible_if": "{{ section.settings.auto_tags == false }}"
     },
     {
       "type": "text",
