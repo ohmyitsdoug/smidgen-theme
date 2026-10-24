@@ -24,6 +24,10 @@
         "product": "",
         "circle_color": "#753189",
         "note": "",
+        "show_badge": false,
+        "badge_size": 160,
+        "badge_rotate": 10,
+        "badge_link": "",
         "doodle": "squiggle",
         "doodle_color": "#fff503",
         "doodle_position": "top-right",
@@ -67,7 +71,7 @@
         "v1": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "timer",
             "label": "01",
             "color": "#753189",
             "label_color": "#ffffff",
@@ -78,7 +82,7 @@
         "v2": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "trophy",
             "label": "02",
             "color": "#ea5d00",
             "label_color": "#ffffff",
@@ -89,7 +93,7 @@
         "v3": {
           "type": "card",
           "settings": {
-            "icon_name": "none",
+            "icon_name": "users-three",
             "label": "03",
             "color": "#20a4f3",
             "label_color": "#000000",
@@ -125,10 +129,10 @@
         "link": "shopify://pages/contact-us",
         "icon_name": "lightbulb",
         "icon": "star",
-        "icon_color": "#EA5D00",
-        "icon_fg": "#FFFFFF",
-        "box_bg": "#FFFFFF",
-        "section_bg": "#FFF503",
+        "icon_color": "#ea5d00",
+        "icon_fg": "#ffffff",
+        "box_bg": "#ffffff",
+        "section_bg": "#fff503",
         "pad_top": 16,
         "pad_bottom": 72
       }
@@ -206,21 +210,27 @@
           "type": "stat",
           "settings": {
             "number": "17+",
-            "label": "retail stores"
+            "label": "retail stores",
+            "bg": "#ffffff",
+            "fg": "#000000"
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
             "number": "4,000+",
-            "label": "games shipped"
+            "label": "games shipped",
+            "bg": "#ffffff",
+            "fg": "#000000"
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
             "number": "4.9/5",
-            "label": "average rating"
+            "label": "average rating",
+            "bg": "#ffffff",
+            "fg": "#000000"
           }
         }
       },
