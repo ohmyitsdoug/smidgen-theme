@@ -367,7 +367,7 @@
         "rules_label": "Download the rules (PDF)",
         "video_link": "{{ product.metafields.custom.how_to_play_youtube.value }}",
         "video_field": "",
-        "steps_field": "smidgen.howto_steps",
+        "steps_field": "{{ product.metafields.custom.how_to_steps.value.title.value }}",
         "rules_field": "smidgen.rules_pdf",
         "bg": "#fff503",
         "fg": "#000000",
@@ -381,7 +381,7 @@
       "type": "sm-in-the-box",
       "settings": {
         "heading": "What's in the box",
-        "components_field": "smidgen.components",
+        "components_field": "{{ product.metafields.custom.components | metafield_text }}",
         "bg": "#ffffff",
         "fg": "#000000",
         "pad_top": 48,
