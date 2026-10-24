@@ -131,8 +131,8 @@
     "newsletter": {
       "type": "sm-newsletter",
       "settings": {
-        "heading": "Join the game night crew",
-        "text": "<p>New games, preorder drops and events near you. No spam, just fun.</p>",
+        "heading": "Join the Smidgen family",
+        "text": "<p>New games, preorder drops, and events near you. No spam, just fun.</p>",
         "placeholder": "you@email.com",
         "button_label": "Sign me up",
         "success": "You're in! Watch your inbox.",
