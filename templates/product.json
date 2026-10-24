@@ -401,11 +401,36 @@
     },
     "sm_reviews": {
       "type": "sm-reviews",
+      "blocks": {
+        "judge_me_reviews_review_widget_eAmVHE": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        },
+        "judge_me_reviews_medals_cBUBfH": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_eAmVHE",
+        "judge_me_reviews_medals_cBUBfH"
+      ],
       "settings": {
         "heading": "Reviews",
+        "max_reviews": 12,
         "hide_empty": true,
         "bg": "#ffffff",
         "fg": "#000000",
+        "card_bg": "#ffffff",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#20a4f3",
         "pad_top": 24,
         "pad_bottom": 80
       }

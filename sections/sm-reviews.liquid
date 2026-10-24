@@ -151,11 +151,11 @@
           var verified = !!rev.querySelector('.jdgm-rev__buyer-badge, .jdgm--verified');
           var fig = document.createElement('figure');
           fig.className = 'sm-review-card';
-          var st = document.createElement('span');
-          st.className = 'sm-review-card__stars';
-          st.setAttribute('aria-label', score + ' out of 5 stars');
-          st.textContent = stars(score);
-          fig.appendChild(st);
+          var s = document.createElement('span');
+          s.className = 'sm-review-card__stars';
+          s.setAttribute('aria-label', score + ' out of 5 stars');
+          s.textContent = stars(score);
+          fig.appendChild(s);
           if (title) {
             var t = document.createElement('strong');
             t.className = 'sm-review-card__title';
@@ -179,11 +179,11 @@
       }
 
       nav.addEventListener('click', function (e) {
-        var btn = e.target.closest('button[data-dir]');
-        if (!btn) return;
+        var b = e.target.closest('button[data-dir]');
+        if (!b) return;
         var card = track.querySelector('.sm-review-card');
         var step = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-        track.scrollBy({ left: step * parseInt(btn.getAttribute('data-dir'), 10), behavior: 'smooth' });
+        track.scrollBy({ left: step * parseInt(b.getAttribute('data-dir'), 10), behavior: 'smooth' });
       });
       window.addEventListener('resize', updateNav);
 
