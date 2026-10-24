@@ -41,7 +41,11 @@
   endif
 
   assign weight = bs.weight | strip
-  if weight == blank and v.weight > 0
+  assign allow_ship_weight = true
+  if bs.weight_needs_size and box == blank
+    assign allow_ship_weight = false
+  endif
+  if weight == blank and allow_ship_weight and v.weight > 0
     comment
       variant.weight is always in grams.
     endcomment
@@ -148,6 +152,7 @@
       ],
       "default": "oz"
     },
+    { "type": "checkbox", "id": "weight_needs_size", "label": "Only show weight when box size is filled in", "default": true, "info": "Keeps shipping weight off merch like shirts, which have no box size." },
     { "type": "text", "id": "weight", "label": "Weight", "info": "Leave empty to use the product's shipping weight (set under Shipping on the product)." },
     { "type": "header", "content": "Testing" },
     { "type": "text", "id": "testing_label", "label": "Label", "default": "Safety testing" },
