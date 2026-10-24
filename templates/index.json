@@ -36,7 +36,89 @@
         "divider_to": "#ffffff",
         "pad_top": 72,
         "pad_bottom": 40
-      }
+      },
+      "blocks": {
+        "doodle_1": {
+          "type": "doodle",
+          "settings": {
+            "shape": "dot",
+            "color": "#EA5D00",
+            "x": 47,
+            "y": 12,
+            "size": 100,
+            "rotate": 0,
+            "hide_mobile": false
+          }
+        },
+        "doodle_2": {
+          "type": "doodle",
+          "settings": {
+            "shape": "ring",
+            "color": "#20A4F3",
+            "x": 5,
+            "y": 82,
+            "size": 90,
+            "rotate": 0,
+            "hide_mobile": false
+          }
+        },
+        "doodle_3": {
+          "type": "doodle",
+          "settings": {
+            "shape": "plus",
+            "color": "#753189",
+            "x": 42,
+            "y": 88,
+            "size": 80,
+            "rotate": 15,
+            "hide_mobile": false
+          }
+        },
+        "doodle_4": {
+          "type": "doodle",
+          "settings": {
+            "shape": "triangle",
+            "color": "#FFFFFF",
+            "x": 93,
+            "y": 80,
+            "size": 70,
+            "rotate": -12,
+            "hide_mobile": true
+          }
+        },
+        "doodle_5": {
+          "type": "doodle",
+          "settings": {
+            "shape": "zigzag",
+            "color": "#EA5D00",
+            "x": 88,
+            "y": 10,
+            "size": 70,
+            "rotate": -8,
+            "hide_mobile": true
+          }
+        },
+        "doodle_6": {
+          "type": "doodle",
+          "settings": {
+            "shape": "tile",
+            "color": "#753189",
+            "x": 30,
+            "y": 6,
+            "size": 55,
+            "rotate": 12,
+            "hide_mobile": true
+          }
+        }
+      },
+      "block_order": [
+        "doodle_1",
+        "doodle_2",
+        "doodle_3",
+        "doodle_4",
+        "doodle_5",
+        "doodle_6"
+      ]
     },
     "games": {
       "type": "sm-game-grid",
