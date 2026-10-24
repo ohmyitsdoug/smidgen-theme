@@ -12,7 +12,7 @@
   assign s = section.settings
   assign meta_faqs = blank
   if product and s.use_product
-    assign meta_faqs = product.metafields.smidgen.faqs.value
+    assign meta_faqs = product.metafields.smidgen.faqs.value | default: product.metafields.custom.faqs.value
   endif
 
   assign count = 0

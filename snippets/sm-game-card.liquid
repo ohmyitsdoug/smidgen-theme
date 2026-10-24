@@ -14,12 +14,20 @@
 {%- enddoc -%}
 {%- liquid
   assign m = product.metafields.smidgen
-  assign card_color = m.card_color.value | default: '#753189'
+  assign mc = product.metafields.custom
+  assign f_ages = m.ages.value | default: mc.ages.value
+  assign f_players = m.players.value | default: mc.players.value
+  assign f_play_time = m.play_time.value | default: mc.play_time.value
+  assign f_ship_date = m.ship_date.value | default: mc.ship_date.value
+  assign f_card_color = m.card_color.value | default: mc.card_color.value
+  assign f_badge = m.badge.value | default: mc.badge.value
+  assign f_hook = m.hook.value | default: mc.hook.value
+  assign card_color = f_card_color | default: '#753189'
   if bg != blank
     assign card_color = bg
   endif
 
-  assign badge = m.badge.value
+  assign badge = f_badge
   assign more = more_label | default: 'View game →'
   if product.tags contains 'coming-soon'
     assign badge = badge | default: 'Coming soon'
@@ -30,7 +38,7 @@
     assign badge = badge | default: 'Sale'
   endif
 
-  assign hook = m.hook.value | default: product.metafields.descriptors.subtitle.value
+  assign hook = f_hook | default: product.metafields.descriptors.subtitle.value
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0
   assign sizes = image_sizes | default: '(min-width: 1200px) 300px, (min-width: 600px) 45vw, 90vw'
@@ -53,11 +61,11 @@
     {%- if hook != blank -%}
       <span class="sm-card__hook">{{ hook }}</span>
     {%- endif -%}
-    {%- if m.players != blank or m.play_time != blank or m.ages != blank -%}
+    {%- if f_players != blank or f_play_time != blank or f_ages != blank -%}
       <span class="sm-chips">
-        {%- if m.ages != blank -%}<span class="sm-chip">{{ m.ages.value }}</span>{%- endif -%}
-        {%- if m.players != blank -%}<span class="sm-chip">{{ m.players.value }}</span>{%- endif -%}
-        {%- if m.play_time != blank -%}<span class="sm-chip">{{ m.play_time.value }}</span>{%- endif -%}
+        {%- if f_ages != blank -%}<span class="sm-chip">{{ f_ages }}</span>{%- endif -%}
+        {%- if f_players != blank -%}<span class="sm-chip">{{ f_players }}</span>{%- endif -%}
+        {%- if f_play_time != blank -%}<span class="sm-chip">{{ f_play_time }}</span>{%- endif -%}
       </span>
     {%- endif -%}
     {%- if rating_count > 0 -%}
@@ -66,8 +74,8 @@
         · {{ rating_count }}
         {{ rating_count | pluralize: 'review', 'reviews' }}</span
       >
-    {%- elsif m.ship_date != blank -%}
-      <span class="sm-card__rating">Ships {{ m.ship_date.value }}</span>
+    {%- elsif f_ship_date != blank -%}
+      <span class="sm-card__rating">Ships {{ f_ship_date }}</span>
     {%- endif -%}
     <span class="sm-card__foot">
       <span class="sm-card__price">

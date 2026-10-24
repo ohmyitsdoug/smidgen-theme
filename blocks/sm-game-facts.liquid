@@ -9,6 +9,14 @@
 {%- liquid
   assign p = closest.product | default: product
   assign m = p.metafields.smidgen
+  assign mc = p.metafields.custom
+  assign f_ages = m.ages.value | default: mc.ages.value
+  assign f_players = m.players.value | default: mc.players.value
+  assign f_play_time = m.play_time.value | default: mc.play_time.value
+  assign f_ship_date = m.ship_date.value | default: mc.ship_date.value
+  assign f_award = m.award.value | default: mc.award.value
+  assign f_card_color = m.card_color.value | default: mc.card_color.value
+  assign f_tagline = m.tagline.value | default: mc.tagline.value
   assign part = block.settings.part
   assign is_preorder = false
   if p.tags contains 'preorder'
@@ -16,25 +24,25 @@
   endif
   assign rating = p.metafields.reviews.rating.value
   assign rating_count = p.metafields.reviews.rating_count.value | default: 0
-  assign tagline = m.tagline.value | default: p.metafields.descriptors.subtitle.value
+  assign tagline = f_tagline | default: p.metafields.descriptors.subtitle.value
 -%}
 
 {%- case part -%}
   {%- when 'badges' -%}
-    {%- if m.card_color != blank -%}
+    {%- if f_card_color != blank -%}
       <style>
-        .product-information { --sm-product-color: {{ m.card_color.value }}; }
+        .product-information { --sm-product-color: {{ f_card_color }}; }
       </style>
     {%- endif -%}
-    {%- if m.award != blank or is_preorder -%}
+    {%- if f_award != blank or is_preorder -%}
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;" {{ block.shopify_attributes }}>
-        {%- if m.award != blank -%}
-          <span class="sm-sticker">{{ m.award.value }}</span>
+        {%- if f_award != blank -%}
+          <span class="sm-sticker">{{ f_award }}</span>
         {%- endif -%}
         {%- if is_preorder -%}
           <span class="sm-badge">
             Preorder
-            {%- if m.ship_date != blank %} · ships {{ m.ship_date.value }}{% endif -%}
+            {%- if f_ship_date != blank %} · ships {{ f_ship_date }}{% endif -%}
           </span>
         {%- endif -%}
       </div>
@@ -64,24 +72,24 @@
     {%- endif -%}
 
   {%- when 'specs' -%}
-    {%- if m.ages != blank or m.players != blank or m.play_time != blank -%}
+    {%- if f_ages != blank or f_players != blank or f_play_time != blank -%}
       <dl style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0;" {{ block.shopify_attributes }}>
-        {%- if m.ages != blank -%}
+        {%- if f_ages != blank -%}
           <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Ages</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.ages.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ f_ages }}</dd>
           </div>
         {%- endif -%}
-        {%- if m.players != blank -%}
+        {%- if f_players != blank -%}
           <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Players</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.players.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ f_players }}</dd>
           </div>
         {%- endif -%}
-        {%- if m.play_time != blank -%}
+        {%- if f_play_time != blank -%}
           <div style="display: flex; flex-direction: column-reverse; align-items: center; min-width: 88px; background: {{ block.settings.tile_color }}; border: var(--sm-outline); border-radius: 18px; padding: 8px 12px;">
             <dt style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Play time</dt>
-            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ m.play_time.value }}</dd>
+            <dd style="margin: 0; font-family: var(--sm-font-display); font-size: 1.7rem; line-height: 1;">{{ f_play_time }}</dd>
           </div>
         {%- endif -%}
       </dl>
