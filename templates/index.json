@@ -171,7 +171,7 @@
         "eyebrow": "Holiday promo",
         "heading": "Three games. One bundle. Save 20%.",
         "highlight": "Save 20%.",
-        "highlight_color": "#EA5D00",
+        "highlight_color": "#ea5d00",
         "text": "<p>A game for every mood: strategy, bluffing and teamwork.</p>",
         "button_label": "Get the bundle",
         "button_link": "",
@@ -188,16 +188,17 @@
         "show_sticker": true,
         "sticker_small": "save",
         "sticker_big": "20%",
-        "sticker_color": "#EA5D00",
+        "sticker_color": "#ea5d00",
         "sticker_link": "",
-        "bg": "#FFFFFF",
+        "bg": "#ffffff",
         "fg": "#000000",
         "sun_color": "#753189",
-        "ring_color": "#FFF503",
-        "sun_visible": 34,
+        "ring_color": "#fff503",
+        "sun_width": 200,
+        "sun_offset": 60,
         "pad_top": 64,
         "divider": "none",
-        "divider_to": "#FFFFFF"
+        "divider_to": "#ffffff"
       }
     },
     "games": {

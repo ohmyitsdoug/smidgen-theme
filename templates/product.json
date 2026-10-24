@@ -481,6 +481,17 @@
         "pad_top": 40,
         "pad_bottom": 88
       }
+    },
+    "custom_liquid_HVBTXD": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{% if product.handle == 'stack-5' %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How many people can play Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Stack5 is a two-player game for ages 8 and up. Most games take 10–15 minutes.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How do you win Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"The first player to build a stack of exactly 5 of their own chips wins immediately. Any placement that would make a stack taller than 5 isn't allowed, so timing matters.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is Stack5 like Connect 4?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Like Connect 4, you only ever place pieces, and it's easy to learn. The difference is that Stack5 is about height, not lines. Each placement automatically merges your nearby stacks and knocks chips off your opponent's, so every move changes the board.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Do pieces ever move in Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Not by choice. Your only action is placing a chip. When you do, your adjacent stacks move on top of it, and adjacent opponent stacks lose their top chip.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can younger kids play Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Stack5 is recommended for ages 8 and up. Because there's only one action per turn, younger kids can often pick it up quickly, especially playing alongside an adult.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What comes in the box?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"A 13.75 inch fabric game board with a 6x6 grid, 48 nesting chips (24 for each player), and a rule sheet.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"When will my preorder ship?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Preorders are open now. We'll announce the ship date as soon as production is approved. Sign up for our newsletter to get updates.\" }\n    }\n  ]\n}\n</script>\n{% endif %}",
+        "background_color": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -488,6 +499,7 @@
     "sm_learn",
     "sm_faq",
     "sm_reviews",
-    "sm_related"
+    "sm_related",
+    "custom_liquid_HVBTXD"
   ]
 }
