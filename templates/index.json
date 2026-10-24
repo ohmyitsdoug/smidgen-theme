@@ -134,73 +134,6 @@
         "pad_bottom": 40
       }
     },
-    "sm_hero_sun_XHt6kk": {
-      "type": "sm-hero-sun",
-      "blocks": {
-        "doodle_mr4iyf": {
-          "type": "doodle",
-          "settings": {
-            "shape": "ring",
-            "color": "#20a4f3",
-            "x": 9,
-            "y": 20,
-            "size": 100,
-            "rotate": 0,
-            "hide_mobile": false
-          }
-        },
-        "doodle_kfEmwb": {
-          "type": "doodle",
-          "settings": {
-            "shape": "squiggle",
-            "color": "#ea5d00",
-            "x": 90,
-            "y": 14,
-            "size": 100,
-            "rotate": 0,
-            "hide_mobile": false
-          }
-        }
-      },
-      "block_order": [
-        "doodle_mr4iyf",
-        "doodle_kfEmwb"
-      ],
-      "name": "Smidgen · Hero Rising Sun",
-      "settings": {
-        "eyebrow": "Holiday promo",
-        "heading": "Three games. One bundle. Save 20%.",
-        "highlight": "Save 20%.",
-        "highlight_color": "#ea5d00",
-        "text": "<p>A game for every mood: strategy, bluffing and teamwork.</p>",
-        "button_label": "Get the bundle",
-        "button_link": "",
-        "show_rating": true,
-        "rating_text": "★★★★★ [rating] from [count] reviews",
-        "rating_link": "",
-        "rating_override": "",
-        "count_override": "",
-        "small_print": "",
-        "image_1": "shopify://shop_images/CUNO_BOX.png",
-        "image_2": "shopify://shop_images/Front_f97f4fab-178f-4f78-8d25-e378d3666c80.png",
-        "image_3": "shopify://shop_images/MRBLS_Square.png",
-        "side_style": "cutout",
-        "show_sticker": true,
-        "sticker_small": "save",
-        "sticker_big": "20%",
-        "sticker_color": "#ea5d00",
-        "sticker_link": "",
-        "bg": "#ffffff",
-        "fg": "#000000",
-        "sun_color": "#753189",
-        "ring_color": "#fff503",
-        "sun_width": 200,
-        "sun_offset": 60,
-        "pad_top": 64,
-        "divider": "none",
-        "divider_to": "#ffffff"
-      }
-    },
     "games": {
       "type": "sm-game-grid",
       "settings": {
@@ -333,7 +266,6 @@
   },
   "order": [
     "hero",
-    "sm_hero_sun_XHt6kk",
     "games",
     "features",
     "sm_game_grid_n66cH9",
