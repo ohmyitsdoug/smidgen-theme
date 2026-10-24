@@ -1,0 +1,26 @@
+{%- comment -%} One how-to step card. Params: step (metaobject), n (number), num_color {%- endcomment -%}
+<li class="sm-box">
+  <span class="sm-step__num" style="--sm-num: {{ num_color }};" aria-hidden="true">{{ n }}</span>
+  <h3 class="sm-step__title">
+    <span class="sm-visually-hidden">Step {{ n }}:</span>
+    {{ step.title.value }}
+  </h3>
+  {%- liquid
+    assign step_desc = step.description
+    if step_desc.value == blank
+      assign step_desc = step.body
+    endif
+    if step_desc.value == blank
+      assign step_desc = step.details
+    endif
+    if step_desc.value == blank
+      assign step_desc = step.text
+    endif
+    if step_desc.value == blank
+      assign step_desc = step.content
+    endif
+  -%}
+  {%- if step_desc.value != blank -%}
+    <div style="font-size: 1.05rem; line-height: 1.5;">{{ step_desc | metafield_tag }}</div>
+  {%- endif -%}
+</li>

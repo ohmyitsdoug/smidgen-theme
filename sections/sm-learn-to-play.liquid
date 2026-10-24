@@ -48,16 +48,17 @@
   assign rules_url = rules.url | default: rules
 
   assign step_count = 0
-  for i in (1..steps_total)
-    if steps_single
-      assign step = steps
-    else
-      assign step = steps[forloop.index0]
+  if steps_single
+    if steps.title.value != blank
+      assign step_count = 1
     endif
-    if step.title.value != blank
-      assign step_count = step_count | plus: 1
-    endif
-  endfor
+  else
+    for step in steps
+      if step.title.value != blank
+        assign step_count = step_count | plus: 1
+      endif
+    endfor
+  endif
 
   assign yt_id = blank
   if video_url != blank
@@ -121,41 +122,28 @@
         </div>
       {%- endif -%}
 
+      {%- if step_count == 0 and steps_mf != blank and request.design_mode -%}
+        <p style="margin: 0; padding: 16px; border: 3px dashed #000; border-radius: 16px; background: #fff;">
+          <strong>Steps found but not showing</strong> (only you see this). {{ steps_total }} step(s) in {{ s.steps_field }} ({{ steps_mf.type }}), but no readable title.
+          Check Settings → Custom data → Metaobjects → Smidgen Step: turn on <em>Storefronts</em> access, make sure each step entry is <em>Active</em>, and the title field's key is <code>title</code>.
+        </p>
+      {%- endif -%}
       {%- if step_count > 0 -%}
         <ol class="sm-steps sm-grid" style="--sm-min: 250px;">
           {%- assign n = 0 -%}
-          {%- for i in (1..steps_total) -%}
-            {%- if steps_single -%}{%- assign step = steps -%}{%- else -%}{%- assign step = steps[forloop.index0] -%}{%- endif -%}
-            {%- if step.title.value != blank -%}
-              {%- assign color_index = n | modulo: 4 -%}
-              {%- assign n = n | plus: 1 -%}
-              <li class="sm-box">
-                <span class="sm-step__num" style="--sm-num: {{ num_colors[color_index] }};" aria-hidden="true">{{ n }}</span>
-                <h3 class="sm-step__title">
-                  <span class="sm-visually-hidden">Step {{ n }}:</span>
-                  {{ step.title.value }}
-                </h3>
-                {%- liquid
-                  assign step_desc = step.description
-                  if step_desc.value == blank
-                    assign step_desc = step.body
-                  endif
-                  if step_desc.value == blank
-                    assign step_desc = step.details
-                  endif
-                  if step_desc.value == blank
-                    assign step_desc = step.text
-                  endif
-                  if step_desc.value == blank
-                    assign step_desc = step.content
-                  endif
-                -%}
-                {%- if step_desc.value != blank -%}
-                  <div style="font-size: 1.05rem; line-height: 1.5;">{{ step_desc | metafield_tag }}</div>
-                {%- endif -%}
-              </li>
+          {%- if steps_single -%}
+            {%- if steps.title.value != blank -%}
+              {% render 'sm-step-card', step: steps, n: 1, num_color: num_colors[0] %}
             {%- endif -%}
-          {%- endfor -%}
+          {%- else -%}
+            {%- for step in steps -%}
+              {%- if step.title.value != blank -%}
+                {%- assign color_index = n | modulo: 4 -%}
+                {%- assign n = n | plus: 1 -%}
+                {% render 'sm-step-card', step: step, n: n, num_color: num_colors[color_index] %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
         </ol>
       {%- endif -%}
 
