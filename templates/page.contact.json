@@ -80,14 +80,73 @@
     },
     "sm_help_hero_peMhm4": {
       "type": "sm-help-hero",
+      "blocks": {
+        "link_fJ89i4": {
+          "type": "link",
+          "settings": {
+            "label": "Orders & Shipping",
+            "link": "",
+            "icon": "",
+            "color": "#fff503",
+            "icon_color": "#000000"
+          }
+        },
+        "link_UgqebW": {
+          "type": "link",
+          "settings": {
+            "label": "Rules & pieces",
+            "link": "",
+            "icon": "",
+            "color": "#EA5D00",
+            "icon_color": "#000000"
+          }
+        },
+        "link_QezKAP": {
+          "type": "link",
+          "settings": {
+            "label": "Wholesale",
+            "link": "",
+            "icon": "",
+            "color": "#753189",
+            "icon_color": "#000000"
+          }
+        },
+        "link_H8Xw3E": {
+          "type": "link",
+          "settings": {
+            "label": "Contact us",
+            "link": "",
+            "icon": "",
+            "color": "#FFFFFF",
+            "icon_color": "#000000"
+          }
+        },
+        "link_DKMa8d": {
+          "type": "link",
+          "settings": {
+            "label": "Pitch us a game",
+            "link": "",
+            "icon": "",
+            "color": "#20A4F3",
+            "icon_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "link_fJ89i4",
+        "link_UgqebW",
+        "link_QezKAP",
+        "link_H8Xw3E",
+        "link_DKMa8d"
+      ],
       "name": "Smidgen · Header + links",
       "settings": {
         "heading": "How can we help?",
         "text": "",
-        "bg": "#20A4F3",
+        "bg": "#20a4f3",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
         "pad_top": 64,
         "pad_bottom": 32
       }
@@ -129,13 +188,76 @@
         "use_product": true,
         "open_first": false,
         "schema": true,
-        "bg": "#FFFFFF",
+        "bg": "#ffffff",
         "fg": "#000000",
         "divider_top": "none",
-        "divider_from": "#FFFFFF",
+        "divider_from": "#ffffff",
         "divider": "none",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
         "pad_top": 48,
+        "pad_bottom": 72
+      }
+    },
+    "sm_faq_8Vp9pA": {
+      "type": "sm-faq",
+      "blocks": {
+        "question_fp4XDH": {
+          "type": "question",
+          "settings": {
+            "question": "Test",
+            "answer": "<p>&nbsp;Test</p>"
+          }
+        },
+        "question_Hjt3Fq": {
+          "type": "question",
+          "settings": {
+            "question": "Test",
+            "answer": "<p>Test</p>"
+          }
+        },
+        "question_4bY6A6": {
+          "type": "question",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "question_fp4XDH",
+        "question_Hjt3Fq",
+        "question_4bY6A6"
+      ],
+      "name": "Smidgen · FAQ",
+      "settings": {
+        "anchor": "faq",
+        "heading": "Order & shipping",
+        "use_product": true,
+        "open_first": false,
+        "schema": true,
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 0,
+        "pad_bottom": 72
+      }
+    },
+    "sm_callout_EFUYiq": {
+      "type": "sm-callout",
+      "name": "Smidgen · Callout",
+      "settings": {
+        "heading": "Missing a piece?",
+        "text": "Tell us which game and what's missing. We'll send a replacement, free.",
+        "link_label": "Request a part →",
+        "link": "",
+        "icon": "star",
+        "icon_color": "#EA5D00",
+        "box_bg": "#FFF503",
+        "section_bg": "#FFFFFF",
+        "pad_top": 0,
         "pad_bottom": 72
       }
     },
@@ -238,7 +360,7 @@
         "list_heading": "What to include in your email",
         "note": "<p>Links beat big attachments. Please don't mail physical prototypes unless we ask for one.</p>",
         "cta_heading": "Send your pitch",
-        "email": "",
+        "email": "pitches@playsmidgen.com",
         "subject": "Pitch:",
         "button_label": "Email your pitch",
         "response": "<p>We do our best to reply to everyone, but reviewing pitches takes time, so please be patient with us. If it's a fit, we'll ask for a prototype or a video call.</p>",
@@ -257,6 +379,8 @@
     "main",
     "sm_help_hero_peMhm4",
     "sm_faq_dfgpUn",
+    "sm_faq_8Vp9pA",
+    "sm_callout_EFUYiq",
     "sm_contact_6q7jFc",
     "sm_pitch_ityV8w"
   ]
