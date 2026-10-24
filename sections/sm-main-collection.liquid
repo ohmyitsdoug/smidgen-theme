@@ -8,6 +8,48 @@
   assign s = section.settings
   assign filter_tags = s.filter_tags | split: ','
   assign base_url = collection.url
+
+  comment
+    Per-collection tag control (collection fields, set on each collection):
+    - show field: only these tags become pills on this collection
+    - hide field: these tags never become pills on this collection
+  endcomment
+  assign show_key = s.show_tags_field | default: 'custom.filter_tags' | strip | split: '.'
+  assign hide_key = s.hide_tags_field | default: 'custom.hide_tags' | strip | split: '.'
+  assign c_show_mf = collection.metafields[show_key[0]][show_key[1]]
+  assign c_hide_mf = collection.metafields[hide_key[0]][hide_key[1]]
+  if c_show_mf.type contains 'list.'
+    assign c_show = c_show_mf.value
+  else
+    assign c_show = c_show_mf.value | newline_to_br | replace: '<br />', ',' | split: ','
+  endif
+  if c_hide_mf.type contains 'list.'
+    assign c_hide_arr = c_hide_mf.value
+  else
+    assign c_hide_arr = c_hide_mf.value | newline_to_br | replace: '<br />', ',' | split: ','
+  endif
+  assign hidden_str = '|'
+  for h in c_hide_arr
+    assign h_low = h | strip | downcase
+    if h_low != blank
+      assign hidden_str = hidden_str | append: h_low | append: '|'
+    endif
+  endfor
+  assign global_ex = s.exclude_tags | downcase | split: ','
+  for h in global_ex
+    assign h_low = h | strip
+    if h_low != blank and s.auto_tags
+      assign hidden_str = hidden_str | append: h_low | append: '|'
+    endif
+  endfor
+  assign has_c_show = false
+  for t in c_show
+    assign t_s = t | strip
+    if t_s != blank
+      assign has_c_show = true
+      break
+    endif
+  endfor
 -%}
 <section class="sm-section" style="--sm-bg: {{ s.hero_bg }}; --sm-fg: #000;" aria-labelledby="sm-{{ section.id }}-title">
   {% render 'sm-doodle', shape: 'squiggle', color: '#753189', position: 'top-right' %}
@@ -48,29 +90,46 @@
       <div class="sm-filter-bar">
         {%- liquid
           assign pill_count = 0
-          for block in section.blocks
-            if block.settings.label != blank
-              assign pill_count = pill_count | plus: 1
-            endif
-          endfor
-          assign use_auto = false
-          if pill_count == 0 and s.auto_tags
-            assign use_auto = true
-            assign excluded = s.exclude_tags | downcase | split: ','
-            for tag in collection.all_tags
-              assign t_low = tag | downcase | strip
-              assign first_char = tag | slice: 0
-              unless excluded contains t_low or first_char == '_'
-                assign pill_count = pill_count | plus: 1
-              endunless
-            endfor
-          elsif pill_count == 0 and s.filter_tags != blank
-            for raw_tag in filter_tags
-              assign tag = raw_tag | strip
-              if collection.all_tags contains tag
+          assign mode = 'list'
+          if has_c_show
+            assign mode = 'collection'
+            for t in c_show
+              assign t_s = t | strip
+              if t_s != blank
                 assign pill_count = pill_count | plus: 1
               endif
             endfor
+          else
+            for block in section.blocks
+              if block.settings.label != blank
+                assign bt = '|' | append: block.settings.tag | strip | downcase | append: '|'
+                unless block.settings.kind == 'tag' and hidden_str contains bt
+                  assign pill_count = pill_count | plus: 1
+                endunless
+              endif
+            endfor
+            if section.blocks.size > 0
+              assign mode = 'blocks'
+            elsif s.auto_tags
+              assign mode = 'auto'
+              for tag in collection.all_tags
+                assign key = '|' | append: tag | downcase | append: '|'
+                assign first_char = tag | slice: 0
+                unless hidden_str contains key or first_char == '_'
+                  assign pill_count = pill_count | plus: 1
+                endunless
+              endfor
+            elsif s.filter_tags != blank
+              for raw_tag in filter_tags
+                assign tag = raw_tag | strip
+                assign key = '|' | append: tag | downcase | append: '|'
+                if collection.all_tags contains tag
+                  unless hidden_str contains key
+                    assign pill_count = pill_count | plus: 1
+                  endunless
+                endif
+              endfor
+            endif
           endif
           assign all_url = s.all_link | default: base_url
         -%}
@@ -78,7 +137,7 @@
           <p style="flex-basis: 100%; margin: 0; padding: 12px 16px; border: 3px dashed #000; border-radius: 16px; font-size: 0.9rem;">
             <strong>Only you see this:</strong>
             {% if collection.all_tags.size > 0 -%}
-              tags used in this collection: {{ collection.all_tags | join: ', ' }}. Add a Filter pill block for any of them, or turn on "Make a pill for every tag".
+              tags used in this collection: {{ collection.all_tags | join: ', ' }}. Add a Filter pill block for any of them, or turn on "Make a pill for every tag". To choose tags for just this collection, fill in its Filter tags / Hidden tags fields.
             {%- else -%}
               no products in this collection have tags yet. Add tags like game, merch or bundle to your products in Shopify admin.
             {%- endif %}
@@ -92,11 +151,26 @@
                   <a class="sm-pill" href="{{ all_url }}" {% if current_tags == blank and collection.url == all_url %}aria-current="page"{% endif %}>{{ s.all_label }}</a>
                 </li>
               {%- endif -%}
-              {%- if section.blocks.size > 0 -%}
+              {%- if mode == 'collection' -%}
+                {%- for t in c_show -%}
+                  {%- assign tag = t | strip -%}
+                  {%- if tag != blank -%}
+                    <li>
+                      <a class="sm-pill" href="{{ base_url }}/{{ tag | handle }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>
+                        {{- tag | replace: '-', ' ' | capitalize -}}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- elsif mode == 'blocks' -%}
                 {%- for block in section.blocks -%}
                   {%- liquid
                     assign b = block.settings
                     if b.label == blank
+                      continue
+                    endif
+                    assign bt = '|' | append: b.tag | strip | downcase | append: '|'
+                    if b.kind == 'tag' and hidden_str contains bt
                       continue
                     endif
                     assign active = false
@@ -120,12 +194,12 @@
                     <a class="sm-pill" href="{{ pill_url | default: '#' }}" {% if active %}aria-current="page"{% endif %}>{{ b.label }}</a>
                   </li>
                 {%- endfor -%}
-              {%- elsif use_auto -%}
+              {%- elsif mode == 'auto' -%}
                 {%- for tag in collection.all_tags -%}
                   {%- liquid
-                    assign t_low = tag | downcase | strip
+                    assign key = '|' | append: tag | downcase | append: '|'
                     assign first_char = tag | slice: 0
-                    if excluded contains t_low or first_char == '_'
+                    if hidden_str contains key or first_char == '_'
                       continue
                     endif
                   -%}
@@ -138,12 +212,15 @@
               {%- else -%}
                 {%- for raw_tag in filter_tags -%}
                   {%- assign tag = raw_tag | strip -%}
+                  {%- assign key = '|' | append: tag | downcase | append: '|' -%}
                   {%- if collection.all_tags contains tag -%}
-                    <li>
-                      <a class="sm-pill" href="{{ base_url }}/{{ tag | handle }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>
-                        {{- tag | replace: '-', ' ' | capitalize -}}
-                      </a>
-                    </li>
+                    {%- unless hidden_str contains key -%}
+                      <li>
+                        <a class="sm-pill" href="{{ base_url }}/{{ tag | handle }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>
+                          {{- tag | replace: '-', ' ' | capitalize -}}
+                        </a>
+                      </li>
+                    {%- endunless -%}
                   {%- endif -%}
                 {%- endfor -%}
               {%- endif -%}
@@ -223,6 +300,20 @@
       "label": "Tags to skip",
       "info": "Comma-separated",
       "visible_if": "{{ section.settings.auto_tags }}"
+    },
+    {
+      "type": "text",
+      "id": "show_tags_field",
+      "label": "Collection field: tags to show",
+      "default": "custom.filter_tags",
+      "info": "Set on each collection. When filled, only these tags show as pills there."
+    },
+    {
+      "type": "text",
+      "id": "hide_tags_field",
+      "label": "Collection field: tags to hide",
+      "default": "custom.hide_tags",
+      "info": "Set on each collection. These tags never show as pills there."
     },
     {
       "type": "text",
