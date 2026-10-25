@@ -34,16 +34,21 @@
         .product-information { --sm-product-color: {{ f_card_color }}; }
       </style>
     {%- endif -%}
-    {%- if f_award != blank or is_preorder -%}
+    {%- capture status -%}{%- render 'sm-status-badge', product: p -%}{%- endcapture -%}
+    {%- assign status = status | strip -%}
+    {%- if status == 'Sale' -%}{%- assign status = '' -%}{%- endif -%}
+    {%- if f_award != blank or is_preorder or status != blank -%}
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;" {{ block.shopify_attributes }}>
         {%- if f_award != blank -%}
           <span class="sm-sticker">{{ f_award }}</span>
         {%- endif -%}
-        {%- if is_preorder -%}
+        {%- if is_preorder and status == 'Preorder' -%}
           <span class="sm-badge">
             Preorder
             {%- if f_ship_date != blank %} · ships {{ f_ship_date }}{% endif -%}
           </span>
+        {%- elsif status != blank -%}
+          <span class="sm-badge{% if status == 'Out of stock' %} sm-badge--muted{% endif %}">{{ status }}</span>
         {%- endif -%}
       </div>
     {%- endif -%}

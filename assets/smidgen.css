@@ -1742,3 +1742,6 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
 .product-information .sticky-content--desktop {
   transition: top .25s ease;
 }
+
+/* Out of stock badge: black instead of orange */
+.sm-badge--muted, .sm-card .sm-badge[data-status='Out of stock'] { background: var(--sm-black) !important; color: #fff !important; }

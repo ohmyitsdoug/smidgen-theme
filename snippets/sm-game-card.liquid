@@ -27,15 +27,13 @@
     assign card_color = bg
   endif
 
-  assign badge = f_badge
+  capture badge
+    render 'sm-status-badge', product: product
+  endcapture
+  assign badge = badge | strip
   assign more = more_label | default: 'View game →'
   if product.tags contains 'coming-soon'
-    assign badge = badge | default: 'Coming soon'
     assign more = soon_label | default: 'Get notified →'
-  elsif product.tags contains 'preorder'
-    assign badge = badge | default: 'Preorder'
-  elsif product.compare_at_price > product.price
-    assign badge = badge | default: 'Sale'
   endif
 
   assign hook = f_hook | default: product.metafields.descriptors.subtitle.value
@@ -53,7 +51,7 @@
       }}
     {%- endif -%}
     {%- if badge != blank -%}
-      <span class="sm-badge">{{ badge }}</span>
+      <span class="sm-badge" data-status="{{ badge }}">{{ badge }}</span>
     {%- endif -%}
   </span>
   <span class="sm-card__body">

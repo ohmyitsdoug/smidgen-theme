@@ -1,0 +1,37 @@
+{%- doc -%}
+  Outputs the status badge TEXT for a product (no markup), or nothing.
+  Order: custom Badge field > coming-soon tag > preorder tag > Out of stock
+  > New release (within `days` of the Launch date field) > Sale.
+
+  @param {product} product
+  @param {number} [days] - how long "New release" shows (default 30)
+{%- enddoc -%}
+{%- liquid
+  assign m = product.metafields.smidgen
+  assign mc = product.metafields.custom
+  assign out = m.badge.value | default: mc.badge.value
+  if out == blank
+    if product.tags contains 'coming-soon'
+      assign out = 'Coming soon'
+    elsif product.tags contains 'preorder'
+      assign out = 'Preorder'
+    elsif product.available == false
+      assign out = 'Out of stock'
+    else
+      assign launch = m.launch_date.value | default: mc.launch_date.value | default: mc.release_date.value
+      if launch != blank
+        assign window = days | default: 30 | times: 86400
+        assign now_s = 'now' | date: '%s' | plus: 0
+        assign launch_s = launch | date: '%s' | plus: 0
+        assign age = now_s | minus: launch_s
+        if age >= 0 and age < window
+          assign out = 'New release'
+        endif
+      endif
+      if out == blank and product.compare_at_price > product.price
+        assign out = 'Sale'
+      endif
+    endif
+  endif
+  echo out
+-%}
