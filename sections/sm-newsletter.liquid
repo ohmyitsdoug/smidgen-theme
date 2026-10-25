@@ -5,7 +5,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   {% render 'sm-doodle', shape: 'zigzag', color: '#EA5D00', position: 'bottom-left' %}
@@ -42,28 +42,144 @@
   "name": "Smidgen · Newsletter",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the game night crew" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>New games, preorder drops and events near you. No spam, just fun.</p>" },
-    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "you@email.com" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Sign me up" },
-    { "type": "text", "id": "success", "label": "Success message", "default": "You're in! Watch your inbox." },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join the game night crew"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>New games, preorder drops and events near you. No spam, just fun.</p>"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder",
+      "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Sign me up"
+    },
+    {
+      "type": "text",
+      "id": "success",
+      "label": "Success message",
+      "default": "You're in! Watch your inbox."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        }
       ],
       "default": "none"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#000000", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 56 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 80 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#000000",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
   ],
-  "presets": [{ "name": "Smidgen · Newsletter" }]
+  "presets": [
+    {
+      "name": "Smidgen · Newsletter"
+    }
+  ]
 }
 {% endschema %}

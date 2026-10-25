@@ -14,7 +14,7 @@
   assign keep = 100 | minus: pct
   assign login_url = routes.account_login_url | append: '?return_url=' | append: request.path
 -%}
-<section id="sm-{{ section.id }}" class="sm-section sm-ws" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+<section id="sm-{{ section.id }}" class="sm-section sm-ws" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     {%- if is_ws == 'true' -%}
@@ -209,36 +209,216 @@
   "name": "Smidgen · Wholesale shop",
   "tag": "div",
   "settings": [
-    { "type": "paragraph", "content": "Only customers with the wholesale tag (Theme settings → Smidgen · Wholesale) see products and prices. Everyone else sees a log-in or 'not approved' message." },
-    { "type": "collection", "id": "collection", "label": "Wholesale collection" },
-    { "type": "range", "id": "percent", "label": "Wholesale discount shown", "min": 10, "max": 70, "step": 5, "unit": "%", "default": 50 },
-    { "type": "text", "id": "discount_code", "label": "Wholesale discount code", "info": "Applied automatically for wholesale customers on this page. Create it in Discounts with Customer eligibility = your wholesale customers so nobody else can use it." },
-    { "type": "range", "id": "qty_step", "label": "Quantity step", "min": 1, "max": 24, "step": 1, "default": 1, "info": "e.g. 6 to order in cases of 6" },
-    { "type": "checkbox", "id": "show_sku", "label": "Show SKUs", "default": true },
-    { "type": "header", "content": "Wholesale view" },
-    { "type": "text", "id": "eyebrow", "label": "Sticker", "default": "Retailer portal" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Wholesale shop" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p>" },
-    { "type": "text", "id": "perk_1", "label": "Perk 1", "default": "50% off MSRP on every game" },
-    { "type": "text", "id": "perk_2", "label": "Perk 2", "default": "Tax-exempt checkout on approved accounts" },
-    { "type": "text", "id": "perk_3", "label": "Perk 3", "default": "Retailer-only POP displays" },
-    { "type": "text", "id": "button_label", "label": "Order button", "default": "Add to order" },
-    { "type": "text", "id": "min_note", "label": "Order note", "info": "e.g. $150 opening order minimum" },
-    { "type": "richtext", "id": "footnote", "label": "Footnote" },
-    { "type": "header", "content": "Logged out" },
-    { "type": "text", "id": "login_heading", "label": "Heading", "default": "Retailers, log in to shop" },
-    { "type": "richtext", "id": "login_text", "label": "Text", "default": "<p>Log in with your retailer account to see wholesale pricing and place an order.</p>" },
-    { "type": "header", "content": "Logged in, not approved" },
-    { "type": "text", "id": "not_approved_heading", "label": "Heading", "default": "This page is for approved retailers" },
-    { "type": "richtext", "id": "not_approved_text", "label": "Text", "default": "<p>Want to carry Smidgen games? Apply for a wholesale account and we'll get back to you within a few days.</p>" },
-    { "type": "url", "id": "apply_link", "label": "Apply link" },
-    { "type": "text", "id": "apply_label", "label": "Apply button", "default": "Apply for wholesale" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 56 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+    {
+      "type": "paragraph",
+      "content": "Only customers with the wholesale tag (Theme settings → Smidgen · Wholesale) see products and prices. Everyone else sees a log-in or 'not approved' message."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Wholesale collection"
+    },
+    {
+      "type": "range",
+      "id": "percent",
+      "label": "Wholesale discount shown",
+      "min": 10,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Wholesale discount code",
+      "info": "Applied automatically for wholesale customers on this page. Create it in Discounts with Customer eligibility = your wholesale customers so nobody else can use it."
+    },
+    {
+      "type": "range",
+      "id": "qty_step",
+      "label": "Quantity step",
+      "min": 1,
+      "max": 24,
+      "step": 1,
+      "default": 1,
+      "info": "e.g. 6 to order in cases of 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show SKUs",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Wholesale view"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sticker",
+      "default": "Retailer portal"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wholesale shop"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p>"
+    },
+    {
+      "type": "text",
+      "id": "perk_1",
+      "label": "Perk 1",
+      "default": "50% off MSRP on every game"
+    },
+    {
+      "type": "text",
+      "id": "perk_2",
+      "label": "Perk 2",
+      "default": "Tax-exempt checkout on approved accounts"
+    },
+    {
+      "type": "text",
+      "id": "perk_3",
+      "label": "Perk 3",
+      "default": "Retailer-only POP displays"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Order button",
+      "default": "Add to order"
+    },
+    {
+      "type": "text",
+      "id": "min_note",
+      "label": "Order note",
+      "info": "e.g. $150 opening order minimum"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Footnote"
+    },
+    {
+      "type": "header",
+      "content": "Logged out"
+    },
+    {
+      "type": "text",
+      "id": "login_heading",
+      "label": "Heading",
+      "default": "Retailers, log in to shop"
+    },
+    {
+      "type": "richtext",
+      "id": "login_text",
+      "label": "Text",
+      "default": "<p>Log in with your retailer account to see wholesale pricing and place an order.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Logged in, not approved"
+    },
+    {
+      "type": "text",
+      "id": "not_approved_heading",
+      "label": "Heading",
+      "default": "This page is for approved retailers"
+    },
+    {
+      "type": "richtext",
+      "id": "not_approved_text",
+      "label": "Text",
+      "default": "<p>Want to carry Smidgen games? Apply for a wholesale account and we'll get back to you within a few days.</p>"
+    },
+    {
+      "type": "url",
+      "id": "apply_link",
+      "label": "Apply link"
+    },
+    {
+      "type": "text",
+      "id": "apply_label",
+      "label": "Apply button",
+      "default": "Apply for wholesale"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    }
   ],
-  "presets": [{ "name": "Smidgen · Wholesale shop" }]
+  "presets": [
+    {
+      "name": "Smidgen · Wholesale shop"
+    }
+  ]
 }
 {% endschema %}

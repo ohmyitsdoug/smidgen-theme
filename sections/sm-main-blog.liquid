@@ -9,7 +9,7 @@
     assign card_bg = s.card_bg
   endif
 -%}
-<section class="sm-section sm-blog" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+<section class="sm-section sm-blog" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
   {% render 'sm-doodle', shape: 'star', color: '#20A4F3', position: 'bottom-left' %}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
@@ -80,31 +80,210 @@
 {
   "name": "Smidgen · Blog posts",
   "tag": "div",
-  "enabled_on": { "templates": ["blog"] },
+  "enabled_on": {
+    "templates": [
+      "blog"
+    ]
+  },
   "settings": [
-    { "type": "checkbox", "id": "show_date", "label": "Show post dates", "default": false },
-    { "type": "header", "content": "Featured post" },
-    { "type": "checkbox", "id": "feature_first", "label": "Feature the newest post", "default": true },
-    { "type": "text", "id": "feature_label", "label": "Featured sticker", "default": "Fresh off the press" },
-    { "type": "text", "id": "read_label", "label": "Featured button", "default": "Read it" },
-    { "type": "range", "id": "tilt", "label": "Tilt", "min": -4, "max": 4, "step": 0.5, "unit": "°", "default": -1.5 },
-    { "type": "color", "id": "feature_color", "label": "Featured card color", "default": "#753189" },
-    { "type": "header", "content": "Cards" },
-    { "type": "range", "id": "per_page", "label": "Posts per page", "min": 6, "max": 30, "step": 3, "default": 12 },
-    { "type": "select", "id": "image_fit", "label": "Card images", "options": [{ "value": "fill", "label": "Fill" }, { "value": "fit", "label": "Fit" }], "default": "fill" },
-    { "type": "select", "id": "card_bg_mode", "label": "Card image background", "options": [{ "value": "default", "label": "Yellow" }, { "value": "custom", "label": "Custom" }], "default": "default" },
-    { "type": "color", "id": "card_bg", "label": "Custom card background", "default": "#20A4F3", "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}" },
-    { "type": "range", "id": "card_max", "label": "Max card width", "min": 260, "max": 460, "step": 10, "unit": "px", "default": 380 },
-    { "type": "text", "id": "more_label", "label": "Card link text", "default": "Read more →" },
-    { "type": "header", "content": "Topic pills" },
-    { "type": "checkbox", "id": "show_tags", "label": "Show a pill for each post tag", "default": true },
-    { "type": "text", "id": "all_label", "label": "'All' pill text", "default": "All posts" },
-    { "type": "text", "id": "empty_text", "label": "Text when there are no posts", "default": "No posts here yet. Check back soon!" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show post dates",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Featured post"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_first",
+      "label": "Feature the newest post",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "label": "Featured sticker",
+      "default": "Fresh off the press"
+    },
+    {
+      "type": "text",
+      "id": "read_label",
+      "label": "Featured button",
+      "default": "Read it"
+    },
+    {
+      "type": "range",
+      "id": "tilt",
+      "label": "Tilt",
+      "min": -4,
+      "max": 4,
+      "step": 0.5,
+      "unit": "°",
+      "default": -1.5
+    },
+    {
+      "type": "color",
+      "id": "feature_color",
+      "label": "Featured card color",
+      "default": "#753189"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Posts per page",
+      "min": 6,
+      "max": 30,
+      "step": 3,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Card images",
+      "options": [
+        {
+          "value": "fill",
+          "label": "Fill"
+        },
+        {
+          "value": "fit",
+          "label": "Fit"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "select",
+      "id": "card_bg_mode",
+      "label": "Card image background",
+      "options": [
+        {
+          "value": "default",
+          "label": "Yellow"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Custom card background",
+      "default": "#20A4F3",
+      "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "card_max",
+      "label": "Max card width",
+      "min": 260,
+      "max": 460,
+      "step": 10,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Card link text",
+      "default": "Read more →"
+    },
+    {
+      "type": "header",
+      "content": "Topic pills"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show a pill for each post tag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "'All' pill text",
+      "default": "All posts"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Text when there are no posts",
+      "default": "No posts here yet. Check back soon!"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    }
   ]
 }
 {% endschema %}

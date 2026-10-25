@@ -11,7 +11,7 @@
   assign shop_url = s.shop_url | default: settings.sm_wholesale_url | default: '/pages/wholesale-shop'
   assign login_url = routes.account_login_url | append: '?return_url=' | append: shop_url
 -%}
-<section class="sm-section sm-rlogin" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+<section class="sm-section sm-rlogin" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     <div class="sm-rlogin__card" style="--sm-rlogin-card: {{ s.card_color }};">
       <span class="sm-rlogin__icon" aria-hidden="true">{% render 'sm-icon', name: 'storefront', size: 34 %}</span>
@@ -46,28 +46,163 @@
   "name": "Smidgen · Retailer login",
   "tag": "div",
   "settings": [
-    { "type": "paragraph", "content": "Changes with who's looking: logged out, approved wholesale customer, or logged in but not approved yet." },
-    { "type": "text", "id": "shop_url", "label": "Wholesale shop address", "info": "Leave empty to use Theme settings → Smidgen · Wholesale." },
-    { "type": "header", "content": "Logged out" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Already a Smidgen retailer?" },
-    { "type": "text", "id": "text", "label": "Text", "default": "Log in to see wholesale pricing and place your order." },
-    { "type": "text", "id": "login_button", "label": "Log in button", "default": "Retailer log in" },
-    { "type": "header", "content": "Approved wholesale customer" },
-    { "type": "text", "id": "ws_heading", "label": "Heading", "default": "Welcome back, [name]!", "info": "[name] is their first name" },
-    { "type": "text", "id": "ws_text", "label": "Text", "default": "Your wholesale pricing is ready." },
-    { "type": "text", "id": "ws_button", "label": "Button", "default": "Go to the wholesale shop" },
-    { "type": "header", "content": "Logged in, not approved yet" },
-    { "type": "text", "id": "pending_heading", "label": "Heading", "default": "Want to carry Smidgen games?" },
-    { "type": "text", "id": "pending_text", "label": "Text", "default": "Apply for a wholesale account and we'll set you up." },
-    { "type": "url", "id": "apply_link", "label": "Apply link" },
-    { "type": "text", "id": "apply_label", "label": "Apply button", "default": "Apply for wholesale" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "card_color", "label": "Card", "default": "#FFF503" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 32 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 32 }
+    {
+      "type": "paragraph",
+      "content": "Changes with who's looking: logged out, approved wholesale customer, or logged in but not approved yet."
+    },
+    {
+      "type": "text",
+      "id": "shop_url",
+      "label": "Wholesale shop address",
+      "info": "Leave empty to use Theme settings → Smidgen · Wholesale."
+    },
+    {
+      "type": "header",
+      "content": "Logged out"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Already a Smidgen retailer?"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Log in to see wholesale pricing and place your order."
+    },
+    {
+      "type": "text",
+      "id": "login_button",
+      "label": "Log in button",
+      "default": "Retailer log in"
+    },
+    {
+      "type": "header",
+      "content": "Approved wholesale customer"
+    },
+    {
+      "type": "text",
+      "id": "ws_heading",
+      "label": "Heading",
+      "default": "Welcome back, [name]!",
+      "info": "[name] is their first name"
+    },
+    {
+      "type": "text",
+      "id": "ws_text",
+      "label": "Text",
+      "default": "Your wholesale pricing is ready."
+    },
+    {
+      "type": "text",
+      "id": "ws_button",
+      "label": "Button",
+      "default": "Go to the wholesale shop"
+    },
+    {
+      "type": "header",
+      "content": "Logged in, not approved yet"
+    },
+    {
+      "type": "text",
+      "id": "pending_heading",
+      "label": "Heading",
+      "default": "Want to carry Smidgen games?"
+    },
+    {
+      "type": "text",
+      "id": "pending_text",
+      "label": "Text",
+      "default": "Apply for a wholesale account and we'll set you up."
+    },
+    {
+      "type": "url",
+      "id": "apply_link",
+      "label": "Apply link"
+    },
+    {
+      "type": "text",
+      "id": "apply_label",
+      "label": "Apply button",
+      "default": "Apply for wholesale"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 32
+    }
   ],
-  "presets": [{ "name": "Smidgen · Retailer login" }]
+  "presets": [
+    {
+      "name": "Smidgen · Retailer login"
+    }
+  ]
 }
 {% endschema %}

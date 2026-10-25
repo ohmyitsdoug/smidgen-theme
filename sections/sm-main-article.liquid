@@ -6,7 +6,7 @@
   assign s = section.settings
   assign img_alt = article.image.alt | default: article.title
 -%}
-<section class="sm-section sm-article" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+<section class="sm-section sm-article" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   {%- if s.show_doodles -%}
     <div class="sm-article__doodles" aria-hidden="true">
       {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', style: 'left: 4%; top: 340px;' %}
@@ -172,6 +172,34 @@
       "id": "more_heading",
       "label": "More posts heading",
       "default": "More from the blog"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

@@ -185,8 +185,8 @@ html .button-secondary:hover {
   gap: 8px;
   min-height: 56px;
   padding: 0 28px;
-  background: var(--sm-purple);
-  color: var(--sm-white);
+  background: var(--sm-btn-bg, var(--sm-btn-bg-default, var(--sm-purple)));
+  color: var(--sm-btn-fg, var(--sm-btn-fg-default, var(--sm-white)));
   border: var(--sm-outline);
   border-radius: 999px;
   box-shadow: 4px 4px 0 var(--sm-black);
@@ -199,7 +199,7 @@ html .button-secondary:hover {
 }
 
 .sm-btn:hover {
-  color: var(--sm-white);
+  color: var(--sm-btn-fg, var(--sm-btn-fg-default, var(--sm-white)));
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 var(--sm-black);
 }
@@ -211,8 +211,8 @@ html .button-secondary:hover {
 
 .sm-btn--secondary,
 .sm-btn--secondary:hover {
-  background: var(--sm-white);
-  color: var(--sm-purple);
+  background: var(--sm-btn2-bg, var(--sm-white));
+  color: var(--sm-btn2-fg, var(--sm-purple));
 }
 
 .sm-btn:focus-visible,
@@ -1527,7 +1527,7 @@ a.sm-hero__badge:hover {
    Hero variants: Big Arc, Rising Sun, Video
    ========================================================================== */
 .sm-hl { color: var(--sm-hl, var(--sm-purple)); }
-.sm-btn--yellow, .sm-btn--yellow:hover { background: var(--sm-yellow) !important; color: var(--sm-black) !important; }
+.sm-btn--yellow { --sm-btn-bg-default: var(--sm-yellow); --sm-btn-fg-default: var(--sm-black); }
 
 /* Big Arc: oversized photo circle bleeding off the right edge */
 .sm-arc__inner { min-height: var(--arc-h, 760px); justify-content: center; box-sizing: border-box; }
@@ -1778,7 +1778,7 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
   background: var(--sm-purple); color: #fff; border: var(--sm-outline); border-radius: 999px; box-shadow: 6px 6px 0 #000; padding: 10px 10px 10px 24px; margin-top: 10px;
 }
 .sm-ws__total { margin-right: auto; font-size: 1.1rem; }
-.sm-ws__bar .sm-btn { background: var(--sm-yellow) !important; color: #000 !important; }
+.sm-ws__bar .sm-btn { --sm-btn-bg-default: var(--sm-yellow); --sm-btn-fg-default: #000; }
 .sm-ws__bar .sm-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 .sm-ws__min { font-size: 0.9rem; opacity: 0.9; }
 .sm-ws__status { margin: 0; min-height: 1.4em; font-weight: 700; }

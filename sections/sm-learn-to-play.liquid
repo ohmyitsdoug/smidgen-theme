@@ -83,7 +83,7 @@
   <section
     id="how-to-play"
     class="sm-section"
-    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
     aria-labelledby="sm-{{ section.id }}-title"
   >
     {% render 'sm-doodle', shape: 'zigzag', color: '#753189', position: 'top-right' %}
@@ -226,6 +226,34 @@
       "label": "Rules PDF field",
       "default": "smidgen.rules_pdf",
       "info": "File or URL"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

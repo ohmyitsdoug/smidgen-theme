@@ -10,7 +10,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
@@ -51,37 +51,180 @@
   "name": "Smidgen · Game spotlight",
   "tag": "div",
   "settings": [
-    { "type": "product", "id": "product", "label": "Game" },
-    { "type": "text", "id": "eyebrow", "label": "Badge", "default": "Now on preorder" },
-    { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the game name." },
-    { "type": "checkbox", "id": "outlined", "label": "Outlined title", "default": true },
-    { "type": "text", "id": "text", "label": "Text", "info": "Leave empty to use the game's hook field." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "See the game" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "image_picker", "id": "image", "label": "Lifestyle image", "info": "Optional. Falls back to the game's main image." },
     {
-      "type": "select", "id": "image_side", "label": "Image side",
-      "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }],
+      "type": "product",
+      "id": "product",
+      "label": "Game"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Badge",
+      "default": "Now on preorder"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Leave empty to use the game name."
+    },
+    {
+      "type": "checkbox",
+      "id": "outlined",
+      "label": "Outlined title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "info": "Leave empty to use the game's hook field."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "See the game"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Lifestyle image",
+      "info": "Optional. Falls back to the game's main image."
+    },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "Image side",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
       "default": "left"
     },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#EA5D00" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#EA5D00"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" },
-        { "value": "straight", "label": "Straight line" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
       ],
       "default": "scallop"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 56 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 88
+    }
   ],
-  "presets": [{ "name": "Smidgen · Game spotlight" }]
+  "presets": [
+    {
+      "name": "Smidgen · Game spotlight"
+    }
+  ]
 }
 {% endschema %}

@@ -2,7 +2,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   {% if s.heading != blank %}aria-labelledby="sm-{{ section.id }}-title"{% endif %}
 >
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
@@ -72,6 +72,34 @@
       "type": "url",
       "id": "button_2_link",
       "label": "Second button link"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

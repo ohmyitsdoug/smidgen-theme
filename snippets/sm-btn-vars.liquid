@@ -1,0 +1,8 @@
+{%- doc -%}
+  Outputs CSS variables for a section's button color settings (only the ones set).
+  @param {object} s - section.settings (btn_bg, btn_fg, btn2_bg, btn2_fg)
+{%- enddoc -%}
+{%- if s.btn_bg != blank %} --sm-btn-bg: {{ s.btn_bg }};{% endif -%}
+{%- if s.btn_fg != blank %} --sm-btn-fg: {{ s.btn_fg }};{% endif -%}
+{%- if s.btn2_bg != blank %} --sm-btn2-bg: {{ s.btn2_bg }};{% endif -%}
+{%- if s.btn2_fg != blank %} --sm-btn2-fg: {{ s.btn2_fg }};{% endif -%}

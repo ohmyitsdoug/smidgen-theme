@@ -10,7 +10,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section sm-arc{% if s.image == blank %} sm-arc--empty{% endif %}"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --arc-circle: {{ s.circle_color }}; --arc-shadow: {{ s.shadow_color }}; --arc-h: {{ s.min_height }}px; --arc-cutout-w: {{ s.cutout_size }}px; --arc-cutout-r: {{ s.cutout_rotate }}deg;"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %} --arc-circle: {{ s.circle_color }}; --arc-shadow: {{ s.shadow_color }}; --arc-h: {{ s.min_height }}px; --arc-cutout-w: {{ s.cutout_size }}px; --arc-cutout-r: {{ s.cutout_rotate }}deg;"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   {%- for block in section.blocks -%}
@@ -213,6 +213,34 @@
       "step": 1,
       "default": 8,
       "unit": "°"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

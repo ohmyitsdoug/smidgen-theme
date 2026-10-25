@@ -25,7 +25,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section sm-vhero"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --vh-bubble: {{ s.bubble_color }}; --vh-tilt: {{ s.tilt }}deg;"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %} --vh-bubble: {{ s.bubble_color }}; --vh-tilt: {{ s.tilt }}deg;"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   {%- for block in section.blocks -%}
@@ -278,6 +278,34 @@
       "id": "tag",
       "label": "Tag on the screen",
       "default": "Watch in 60 sec"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

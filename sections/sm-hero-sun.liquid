@@ -10,7 +10,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section sm-sun"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }}; --sun-color: {{ s.sun_color }}; --sun-ring: {{ s.ring_color }}; --sun-top: {{ s.sun_offset }}px; --sun-w: {{ s.sun_width }}vw;"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %} --sun-color: {{ s.sun_color }}; --sun-ring: {{ s.ring_color }}; --sun-top: {{ s.sun_offset }}px; --sun-w: {{ s.sun_width }}vw;"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   {%- for block in section.blocks -%}
@@ -228,6 +228,34 @@
       "type": "url",
       "id": "sticker_link",
       "label": "Sticker link"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

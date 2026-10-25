@@ -10,7 +10,7 @@
 <section
   id="sm-{{ section.id }}"
   class="sm-section sm-hero"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   {% render 'sm-doodle', shape: s.doodle, color: s.doodle_color, position: s.doodle_position %}
@@ -385,6 +385,34 @@
       "id": "doodle_2_color",
       "label": "Second doodle color",
       "default": "#20A4F3"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",

@@ -9,7 +9,7 @@
   <section
     id="sm-{{ section.id }}"
     class="sm-section{% assign fg_b = s.fg | color_brightness %}{% if fg_b > 150 %} sm-on-dark{% endif %}"
-    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+    style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
     {% if s.heading != blank %}aria-labelledby="sm-{{ section.id }}-title"{% endif %}
   >
     {% render 'sm-doodle', shape: s.doodle, color: s.doodle_color, position: 'top-right' %}
@@ -52,57 +52,243 @@
   "name": "Smidgen · Image + text",
   "tag": "div",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image" },
     {
-      "type": "select", "id": "image_style", "label": "Image style",
-      "options": [{ "value": "framed", "label": "Outlined frame" }, { "value": "cutout", "label": "Cut-out (no frame)" }],
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_style",
+      "label": "Image style",
+      "options": [
+        {
+          "value": "framed",
+          "label": "Outlined frame"
+        },
+        {
+          "value": "cutout",
+          "label": "Cut-out (no frame)"
+        }
+      ],
       "default": "cutout"
     },
     {
-      "type": "select", "id": "image_side", "label": "Image side",
-      "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }],
+      "type": "select",
+      "id": "image_side",
+      "label": "Image side",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
       "default": "left"
     },
-    { "type": "text", "id": "note", "label": "Hand-written note on image" },
-    { "type": "text", "id": "eyebrow", "label": "Badge" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "How it started" },
-    { "type": "checkbox", "id": "use_page_content", "label": "Use the page's own content", "info": "Shows the text you wrote in Online Store → Pages. Falls back to the text below.", "default": false },
-    { "type": "richtext", "id": "text", "label": "Text" },
-    { "type": "text", "id": "button_label", "label": "Button label" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
     {
-      "type": "select", "id": "button_style", "label": "Button style",
-      "options": [{ "value": "primary", "label": "Purple" }, { "value": "secondary", "label": "White" }],
+      "type": "text",
+      "id": "note",
+      "label": "Hand-written note on image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How it started"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_page_content",
+      "label": "Use the page's own content",
+      "info": "Shows the text you wrote in Online Store → Pages. Falls back to the text below.",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Purple"
+        },
+        {
+          "value": "secondary",
+          "label": "White"
+        }
+      ],
       "default": "primary"
     },
     {
-      "type": "select", "id": "doodle", "label": "Doodle",
+      "type": "select",
+      "id": "doodle",
+      "label": "Doodle",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "squiggle", "label": "Squiggle" },
-        { "value": "spiral", "label": "Spiral" }, { "value": "zigzag", "label": "Zigzag" },
-        { "value": "star", "label": "Star" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "squiggle",
+          "label": "Squiggle"
+        },
+        {
+          "value": "spiral",
+          "label": "Spiral"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        }
       ],
       "default": "none"
     },
-    { "type": "color", "id": "doodle_color", "label": "Doodle color", "default": "#EA5D00" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "color",
+      "id": "doodle_color",
+      "label": "Doodle color",
+      "default": "#EA5D00"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" },
-        { "value": "straight", "label": "Straight line" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
       ],
       "default": "none"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFF503", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 88 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFF503",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 88
+    }
   ],
-  "presets": [{ "name": "Smidgen · Image + text" }]
+  "presets": [
+    {
+      "name": "Smidgen · Image + text"
+    }
+  ]
 }
 {% endschema %}

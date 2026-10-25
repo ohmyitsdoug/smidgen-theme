@@ -9,7 +9,7 @@
 <section
   id="{{ s.anchor | default: 'contact' }}"
   class="sm-section{% assign fg_b = s.fg | color_brightness %}{% if fg_b > 150 %} sm-on-dark{% endif %}"
-  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
+  style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   aria-labelledby="sm-{{ section.id }}-title"
 >
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
@@ -81,48 +81,236 @@
   "name": "Smidgen · Contact form",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "anchor", "label": "Link anchor", "default": "contact" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>We read every message and do our best to reply to everyone. We're a small team, so please give us a little time.</p><p>Game designer? <a href=\"#pitch\">See how to pitch us ↓</a></p>" },
-    { "type": "text", "id": "email", "label": "Email address" },
-    { "type": "richtext", "id": "extra", "label": "Extra info", "default": "<p><strong>Social</strong><br>@playsmidgen on Instagram, TikTok &amp; YouTube</p>" },
-    { "type": "header", "content": "Form" },
-    { "type": "textarea", "id": "topics", "label": "Topics (one per line)", "default": "An order\nRules question\nMissing piece\nWholesale\nPress or events\nSomething else" },
-    { "type": "checkbox", "id": "show_order", "label": "Show order number field", "default": true },
-    { "type": "text", "id": "ph_name", "label": "Name placeholder", "default": "Shawn Spencer" },
-    { "type": "text", "id": "ph_email", "label": "Email placeholder", "default": "shawn@psych-santabarbara.example" },
-    { "type": "text", "id": "ph_order", "label": "Order # placeholder", "default": "#1042" },
-    { "type": "textarea", "id": "ph_message", "label": "Message placeholder", "default": "Hey! My dad, a very hard man to impress, absolutely loved CUNO at game night. Where can I grab a copy for my best friend, Ghee Buttersnaps (a.k.a. Gus)? He'd be all over it.\n\nPineapple-ly yours,\nShawn Spencer, Head Psychic" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send message" },
-    { "type": "text", "id": "success", "label": "Success message", "default": "Thanks! Your message is on its way. We'll get back to you as soon as we can." },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#753189" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" },
-    { "type": "color", "id": "link_color", "label": "Link color", "default": "#FFF503" },
-    { "type": "header", "content": "Divider above" },
     {
-      "type": "select", "id": "divider_top", "label": "Shape",
+      "type": "text",
+      "id": "anchor",
+      "label": "Link anchor",
+      "default": "contact"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact us"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>We read every message and do our best to reply to everyone. We're a small team, so please give us a little time.</p><p>Game designer? <a href=\"#pitch\">See how to pitch us ↓</a></p>"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address"
+    },
+    {
+      "type": "richtext",
+      "id": "extra",
+      "label": "Extra info",
+      "default": "<p><strong>Social</strong><br>@playsmidgen on Instagram, TikTok &amp; YouTube</p>"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "textarea",
+      "id": "topics",
+      "label": "Topics (one per line)",
+      "default": "An order\nRules question\nMissing piece\nWholesale\nPress or events\nSomething else"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_order",
+      "label": "Show order number field",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "ph_name",
+      "label": "Name placeholder",
+      "default": "Shawn Spencer"
+    },
+    {
+      "type": "text",
+      "id": "ph_email",
+      "label": "Email placeholder",
+      "default": "shawn@psych-santabarbara.example"
+    },
+    {
+      "type": "text",
+      "id": "ph_order",
+      "label": "Order # placeholder",
+      "default": "#1042"
+    },
+    {
+      "type": "textarea",
+      "id": "ph_message",
+      "label": "Message placeholder",
+      "default": "Hey! My dad, a very hard man to impress, absolutely loved CUNO at game night. Where can I grab a copy for my best friend, Ghee Buttersnaps (a.k.a. Gus)? He'd be all over it.\n\nPineapple-ly yours,\nShawn Spencer, Head Psychic"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send message"
+    },
+    {
+      "type": "text",
+      "id": "success",
+      "label": "Success message",
+      "default": "Thanks! Your message is on its way. We'll get back to you as soon as we can."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#753189"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#FFF503"
+    },
+    {
+      "type": "header",
+      "content": "Divider above"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        }
       ],
       "default": "zigzag"
     },
-    { "type": "color", "id": "divider_from", "label": "Previous section color", "default": "#FFFFFF", "visible_if": "{{ section.settings.divider_top != 'none' }}" },
-    { "type": "header", "content": "Divider below" },
     {
-      "type": "select", "id": "divider", "label": "Shape",
+      "type": "color",
+      "id": "divider_from",
+      "label": "Previous section color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_top != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Divider below"
+    },
+    {
+      "type": "select",
+      "id": "divider",
+      "label": "Shape",
       "options": [
-        { "value": "none", "label": "None" }, { "value": "wave", "label": "Wave" },
-        { "value": "zigzag", "label": "Zigzag" }, { "value": "scallop", "label": "Scallop" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        }
       ],
       "default": "wave"
     },
-    { "type": "color", "id": "divider_to", "label": "Next section color", "default": "#FFF503", "visible_if": "{{ section.settings.divider != 'none' }}" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 72 }
+    {
+      "type": "color",
+      "id": "divider_to",
+      "label": "Next section color",
+      "default": "#FFF503",
+      "visible_if": "{{ section.settings.divider != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 72
+    }
   ],
-  "presets": [{ "name": "Smidgen · Contact form" }]
+  "presets": [
+    {
+      "name": "Smidgen · Contact form"
+    }
+  ]
 }
 {% endschema %}

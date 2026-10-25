@@ -5,7 +5,7 @@
 {%- if s.divider_top != 'none' -%}
   {% render 'sm-divider', shape: s.divider_top, from: s.divider_from, to: s.bg %}
 {%- endif -%}
-<footer class="sm-section sm-footer" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+<footer class="sm-section sm-footer" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: 28px;">
     <div class="sm-footer__top">
       <div class="sm-footer__brand">
@@ -159,6 +159,34 @@
       "id": "tagline",
       "label": "Text after copyright",
       "placeholder": "Made just outside Baltimore, MD"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave empty for the standard purple button and white second button."
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button color"
+    },
+    {
+      "type": "color",
+      "id": "btn_fg",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Second button color"
+    },
+    {
+      "type": "color",
+      "id": "btn2_fg",
+      "label": "Second button text"
     },
     {
       "type": "header",
