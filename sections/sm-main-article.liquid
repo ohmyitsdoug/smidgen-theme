@@ -42,7 +42,7 @@
     </header>
 
     {%- if article.image -%}
-      <figure class="sm-article__image" style="--sm-frame-shadow: {{ s.image_shadow }};">
+      <figure class="sm-article__image">
         {{ article.image | image_url: width: 2000 | image_tag: alt: img_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 1100px) 1000px, 92vw', widths: '600, 900, 1200, 1600, 2000' }}
       </figure>
     {%- endif -%}
@@ -154,12 +154,6 @@
       "id": "show_doodles",
       "label": "Doodles in the background",
       "default": true
-    },
-    {
-      "type": "color",
-      "id": "image_shadow",
-      "label": "Image shadow color",
-      "default": "#753189"
     },
     {
       "type": "checkbox",

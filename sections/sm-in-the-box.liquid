@@ -30,7 +30,7 @@
       <h2 id="sm-{{ section.id }}-title" class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem);">
         {{- s.heading -}}
       </h2>
-      <ul class="sm-checklist sm-box" style="box-shadow: 6px 6px 0 var(--sm-blue);">
+      <ul class="sm-checklist sm-box" style="box-shadow: var(--sm-shadow);">
         {%- for item in items -%}
           {%- assign item_text = item | strip -%}
           {%- if item_text != blank -%}<li>{{ item_text }}</li>{%- endif -%}

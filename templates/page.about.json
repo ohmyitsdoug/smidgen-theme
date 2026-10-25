@@ -54,7 +54,7 @@
       "type": "sm-image-text",
       "settings": {
         "image": "shopify://shop_images/Doug_and_Jon_a4f5c3ee-188c-4e2c-99b9-9098d0ea14c1.webp",
-        "image_style": "cutout",
+        "image_style": "framed",
         "image_side": "left",
         "note": "",
         "eyebrow": "",

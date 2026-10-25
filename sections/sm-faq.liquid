@@ -61,7 +61,7 @@
       {%- if box_count > 0 -%}
         <div id="in-the-box" class="sm-faq-split__box">
           <h2 class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem);">{{ s.box_heading }}</h2>
-          <ul class="sm-checklist sm-box" style="box-shadow: 6px 6px 0 var(--sm-blue);">
+          <ul class="sm-checklist sm-box" style="box-shadow: var(--sm-shadow);">
             {%- for item in box_items -%}
               {%- assign item_text = item | strip -%}
               {%- if item_text != blank -%}<li>{{ item_text }}</li>{%- endif -%}
