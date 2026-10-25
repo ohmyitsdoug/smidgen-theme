@@ -4,6 +4,7 @@
   @param {number} keep - percent of price to charge (e.g. 50)
   @param {number} qty_step
   @param {boolean} show_sku
+  @param {boolean} [show_stock]
 {%- enddoc -%}
             {%- liquid
               assign v = product.selected_or_first_available_variant
@@ -30,11 +31,16 @@
                   <label class="sm-visually-hidden" for="ws-v-{{ product.id }}">Option for {{ product.title }}</label>
                   <select id="ws-v-{{ product.id }}" class="sm-select sm-ws__variant" data-sm-ws-variant>
                     {%- for variant in product.variants -%}
-                      <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %} {% if variant.id == v.id %}selected{% endif %}>{{ variant.title }}{% unless variant.available %} (sold out){% endunless %}</option>
+                      <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-stock="{% if variant.inventory_management == 'shopify' %}{{ variant.inventory_quantity }}{% endif %}" {% unless variant.available %}disabled{% endunless %} {% if variant.id == v.id %}selected{% endif %}>{{ variant.title }}{% unless variant.available %} (sold out){% endunless %}</option>
                     {%- endfor -%}
                   </select>
                 {%- endif -%}
                 {%- if v.sku != blank and show_sku -%}<span class="sm-ws__sku">SKU {{ v.sku }}</span>{%- endif -%}
+                {%- if show_stock and v.inventory_management == 'shopify' -%}
+                  <span class="sm-ws__stock{% if v.inventory_quantity <= 0 %} is-out{% endif %}" data-sm-ws-stock>
+                    {%- if v.inventory_quantity > 0 -%}{{ v.inventory_quantity }} available{%- else -%}None in stock{% if v.inventory_policy == 'continue' %} · backorder OK{% endif %}{%- endif -%}
+                  </span>
+                {%- endif -%}
               </div>
               <div class="sm-ws__price">
                 {%- if is_ws_only -%}

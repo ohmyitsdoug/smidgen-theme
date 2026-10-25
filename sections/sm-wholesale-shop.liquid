@@ -48,14 +48,14 @@
             {%- for product in s.collection.products limit: 100 -%}
               {%- assign ws_seen = ws_seen | append: product.id | append: '|' -%}
               {%- assign ws_rows = ws_rows | plus: 1 -%}
-              {% render 'sm-ws-row', product: product, keep: keep, qty_step: s.qty_step, show_sku: s.show_sku %}
+              {% render 'sm-ws-row', product: product, keep: keep, qty_step: s.qty_step, show_sku: s.show_sku, show_stock: s.show_stock %}
             {%- endfor -%}
           {%- endif -%}
           {%- for product in s.extra_products -%}
             {%- assign pid = '|' | append: product.id | append: '|' -%}
             {%- if ws_seen contains pid -%}{%- continue -%}{%- endif -%}
             {%- assign ws_rows = ws_rows | plus: 1 -%}
-            {% render 'sm-ws-row', product: product, keep: keep, qty_step: s.qty_step, show_sku: s.show_sku %}
+            {% render 'sm-ws-row', product: product, keep: keep, qty_step: s.qty_step, show_sku: s.show_sku, show_stock: s.show_stock %}
           {%- endfor -%}
           {%- if ws_rows == 0 -%}
             <p class="sm-ws__empty">No products in the wholesale collection yet.</p>
@@ -102,6 +102,12 @@
               var keep = parseInt(row.getAttribute('data-keep'), 10);
               var p = parseInt(sel.options[sel.selectedIndex].getAttribute('data-price'), 10);
               var each = Math.floor(p * keep / 100);
+              var st = row.querySelector('[data-sm-ws-stock]');
+              var sv = sel.options[sel.selectedIndex].getAttribute('data-stock');
+              if (st) {
+                if (sv === '' || sv === null) { st.hidden = true; }
+                else { var n = parseInt(sv, 10); st.hidden = false; st.textContent = n > 0 ? n + ' available' : 'None in stock'; st.classList.toggle('is-out', n <= 0); }
+              }
               var ms = row.querySelector('[data-sm-ws-msrp]');
               if (ms) ms.textContent = 'MSRP ' + money(p);
               now.textContent = money(each);
@@ -250,6 +256,13 @@
       "id": "show_sku",
       "label": "Show SKUs",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Show quantity available",
+      "default": false,
+      "info": "Shows each item's stock count under its name (products with tracked inventory only)."
     },
     {
       "type": "header",

@@ -1807,3 +1807,6 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
 .sm-rlogin__text p { margin: 0; font-size: 1.05rem; }
 .sm-rlogin__actions { flex: 0 0 auto; }
 @media (max-width: 749px) { .sm-rlogin__actions { flex: 1 1 100%; } .sm-rlogin__icon { display: none; } }
+
+.sm-ws__stock { font-size: 0.85rem; font-weight: 700; color: #1f7a3a; }
+.sm-ws__stock.is-out { color: #a33; }
