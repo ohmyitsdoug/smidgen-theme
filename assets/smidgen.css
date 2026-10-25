@@ -1721,3 +1721,6 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
 @media (prefers-reduced-motion: reduce) {
   .sm-burger, .sm-burger i, .menu-drawer { transition: none !important; }
 }
+
+.sm-article__more { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
+.sm-article__more .sm-grid { justify-content: flex-start; }

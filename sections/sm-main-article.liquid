@@ -51,6 +51,23 @@
       {{ article.content }}
     </article>
 
+    {%- if s.show_more -%}
+      {%- assign more_count = 0 -%}
+      {%- capture more_cards -%}
+        {%- for a in blog.articles limit: 4 -%}
+          {%- if a.id == article.id or more_count >= 3 -%}{%- continue -%}{%- endif -%}
+          {%- assign more_count = more_count | plus: 1 -%}
+          {% render 'sm-article-card', article: a, image_fit: 'fill', show_date: s.show_date %}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if more_count > 0 -%}
+        <div class="sm-article__more">
+          <h2 class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem); margin: 0;">{{ s.more_heading }}</h2>
+          <div class="sm-grid sm-grid--cards" style="--sm-min: 240px; --sm-max: 340px;">{{ more_cards }}</div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
     <div class="sm-article__foot">
       <a class="sm-btn sm-btn--secondary" href="{{ blog.url }}">← {{ s.back_label | default: blog.title }}</a>
     </div>
@@ -102,19 +119,96 @@
 {
   "name": "Smidgen · Blog post",
   "tag": "div",
-  "enabled_on": { "templates": ["article"] },
+  "enabled_on": {
+    "templates": [
+      "article"
+    ]
+  },
   "settings": [
-    { "type": "checkbox", "id": "show_date", "label": "Show date", "default": false },
-    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
-    { "type": "checkbox", "id": "show_tags", "label": "Show tags", "default": true },
-    { "type": "text", "id": "back_label", "label": "Back link text", "default": "Back to the blog" },
-    { "type": "checkbox", "id": "show_doodles", "label": "Doodles in the background", "default": true },
-    { "type": "color", "id": "image_shadow", "label": "Image shadow color", "default": "#753189" },
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
-    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
-    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
-    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Back link text",
+      "default": "Back to the blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_doodles",
+      "label": "Doodles in the background",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "image_shadow",
+      "label": "Image shadow color",
+      "default": "#753189"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_more",
+      "label": "Show more posts at the bottom",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "more_heading",
+      "label": "More posts heading",
+      "default": "More from the blog"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFF503"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    }
   ]
 }
 {% endschema %}
