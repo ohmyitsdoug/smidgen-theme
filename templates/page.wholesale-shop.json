@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "sm-wholesale-shop",
+      "settings": {
+        "percent": 50,
+        "qty_step": 1
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
