@@ -222,10 +222,15 @@
         "pad_top": 48,
         "pad_bottom": 72
       }
+    },
+    "retailer_login": {
+      "type": "sm-retailer-login",
+      "settings": {}
     }
   },
   "order": [
     "sm_help_hero_LVjR4h",
+    "retailer_login",
     "hero",
     "why",
     "quotes",
