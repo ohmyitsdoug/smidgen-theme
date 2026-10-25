@@ -9,6 +9,20 @@
  */
 {
   "sections": {
+    "sm_help_hero_LVjR4h": {
+      "type": "sm-help-hero",
+      "name": "Smidgen · Header + links",
+      "settings": {
+        "heading": "How can we help?",
+        "text": "",
+        "bg": "#20A4F3",
+        "fg": "#000000",
+        "divider": "wave",
+        "divider_to": "#FFFFFF",
+        "pad_top": 64,
+        "pad_bottom": 32
+      }
+    },
     "hero": {
       "type": "sm-hero",
       "settings": {
@@ -20,10 +34,19 @@
         "button_link": "",
         "button_2_label": "Apply for wholesale",
         "button_2_link": "shopify://pages/wholesale",
+        "show_rating": true,
+        "rating_text": "★★★★★ [rating] from [count] reviews",
+        "rating_link": "",
+        "rating_override": "",
+        "count_override": "",
         "small_print": "You can also order our games through PSI distribution. Contact your rep today.",
         "product": "",
         "circle_color": "#20a4f3",
         "note": "",
+        "show_badge": false,
+        "badge_size": 160,
+        "badge_rotate": 10,
+        "badge_link": "",
         "doodle": "zigzag",
         "doodle_color": "#753189",
         "doodle_position": "top-left",
@@ -43,6 +66,7 @@
         "w1": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "★",
             "color": "#753189",
             "label_color": "#ffffff",
@@ -53,6 +77,7 @@
         "w2": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "[ ]",
             "color": "#ea5d00",
             "label_color": "#ffffff",
@@ -63,6 +88,7 @@
         "w3": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "<2m",
             "color": "#20a4f3",
             "label_color": "#000000",
@@ -73,6 +99,7 @@
         "w4": {
           "type": "card",
           "settings": {
+            "icon_name": "none",
             "label": "♥",
             "color": "#fff503",
             "label_color": "#000000",
@@ -183,6 +210,9 @@
         "use_product": false,
         "open_first": false,
         "schema": true,
+        "show_box": false,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider_top": "none",
@@ -195,6 +225,7 @@
     }
   },
   "order": [
+    "sm_help_hero_LVjR4h",
     "hero",
     "why",
     "quotes",

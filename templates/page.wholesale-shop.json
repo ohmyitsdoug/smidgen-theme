@@ -1,10 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "sm-wholesale-shop",
       "settings": {
+        "collection": "",
         "percent": 50,
-        "qty_step": 1
+        "discount_code": "SMIDGEN-RETAIL-50",
+        "qty_step": 1,
+        "show_sku": true,
+        "eyebrow": "Retailer portal",
+        "heading": "Wholesale shop",
+        "text": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p>",
+        "perk_1": "50% off MSRP on every game",
+        "perk_2": "Tax-exempt checkout on approved accounts",
+        "perk_3": "Retailer-only POP displays",
+        "button_label": "Add to order",
+        "min_note": "",
+        "footnote": "",
+        "login_heading": "Retailers, log in to shop",
+        "login_text": "<p>Log in with your retailer account to see wholesale pricing and place an order.</p>",
+        "not_approved_heading": "This page is for approved retailers",
+        "not_approved_text": "<p>Want to carry Smidgen games? Apply for a wholesale account and we'll get back to you within a few days.</p>",
+        "apply_link": "",
+        "apply_label": "Apply for wholesale",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 56,
+        "pad_bottom": 96
       }
     }
   },
