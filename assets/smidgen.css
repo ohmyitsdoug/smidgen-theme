@@ -1891,9 +1891,13 @@ main a:not([class]):focus-visible { outline: 3px solid var(--sm-link); outline-o
 .sm-steps > li { display: flex; flex-direction: column; gap: 10px; }
 
 /* Anchor links (#faq, #reviews, #in-the-box…) stop below the sticky header
-   with breathing room, instead of tucking the section's top under it. */
-html {
-  scroll-padding-top: calc(var(--header-height, 80px) + 40px);
-  scroll-behavior: smooth;
+   with breathing room. On desktop Horizon scrolls .page-wrapper, not the page,
+   so the offset lives on the targets themselves (works in any scroller). */
+html, .page-wrapper {
+  scroll-padding-top: max(calc(var(--header-height, 72px) + 48px), 120px);
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+main [id], .shopify-section[id], section[id] {
+  scroll-margin-top: max(calc(var(--header-height, 72px) + 48px), 120px);
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html, .page-wrapper { scroll-behavior: auto !important; } }
