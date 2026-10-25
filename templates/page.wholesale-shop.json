@@ -14,13 +14,18 @@
       "settings": {
         "preview_as": "wholesale",
         "collection": "wholesale",
+        "extra_products": [
+          "mrbls-small-retail-display-box-5-copies",
+          "mrbls-retail-case-30-copies",
+          "cuno-retail"
+        ],
         "percent": 50,
         "discount_code": "SMIDGEN-RETAIL-50",
         "qty_step": 1,
         "show_sku": true,
         "eyebrow": "Retailer portal",
         "heading": "Wholesale shop",
-        "text": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p>",
+        "text": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p><p>If you have any questions, please feel free to email us at <a href=\"mailto:info@playsmidgen.com\" title=\"mailto:info@playsmidgen.com\">info@playsmidgen.com.</a></p>",
         "perk_1": "50% off MSRP on every game",
         "perk_2": "Tax-exempt checkout on approved accounts",
         "perk_3": "Retailer-only POP displays",
