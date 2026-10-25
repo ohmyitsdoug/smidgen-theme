@@ -1,0 +1,110 @@
+{%- comment -%}
+  Blog landing page: a tilted "featured" card for the newest post, then
+  Smidgen cards for the rest, with optional tag pills and pagination.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign card_bg = blank
+  if s.card_bg_mode == 'custom'
+    assign card_bg = s.card_bg
+  endif
+-%}
+<section class="sm-section sm-blog" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+  {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
+  {% render 'sm-doodle', shape: 'star', color: '#20A4F3', position: 'bottom-left' %}
+  <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    {%- if s.show_tags and blog.all_tags.size > 0 -%}
+      <nav aria-label="Blog topics">
+        <ul class="sm-pills">
+          <li><a class="sm-pill" href="{{ blog.url }}" {% if current_tags == blank %}aria-current="page"{% endif %}>{{ s.all_label }}</a></li>
+          {%- for tag in blog.all_tags -%}
+            <li><a class="sm-pill" href="{{ blog.url }}/tagged/{{ tag | handle }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>{{ tag }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- paginate blog.articles by s.per_page -%}
+      {%- assign show_feature = false -%}
+      {%- if s.feature_first and paginate.current_page == 1 and current_tags == blank and blog.articles.size > 0 -%}
+        {%- assign show_feature = true -%}
+      {%- endif -%}
+
+      {%- if show_feature -%}
+        {%- assign f = blog.articles.first -%}
+        {%- assign f_excerpt = f.excerpt | default: f.content | strip_html | truncatewords: 40 -%}
+        {%- assign f_alt = f.image.alt | default: f.title -%}
+        <a href="{{ f.url }}" class="sm-blog__feature" style="--sm-tilt: {{ s.tilt }}deg; --sm-feature-color: {{ s.feature_color }};">
+          <span class="sm-blog__feature-media">
+            {%- if f.image -%}
+              {{ f.image | image_url: width: 1400 | image_tag: alt: f_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 640px, 92vw', widths: '600, 900, 1200, 1400' }}
+            {%- endif -%}
+          </span>
+          <span class="sm-blog__feature-body">
+            <span class="sm-sticker">{{ s.feature_label }}</span>
+            <span class="sm-blog__feature-title">{{ f.title }}</span>
+            {%- if f_excerpt != blank -%}<span class="sm-blog__feature-excerpt">{{ f_excerpt }}</span>{%- endif -%}
+            {%- if s.show_date -%}<span class="sm-blog__date">{{ f.published_at | date: format: 'date' }}</span>{%- endif -%}
+            <span class="sm-btn">{{ s.read_label }}</span>
+          </span>
+        </a>
+      {%- endif -%}
+
+      <div class="sm-grid sm-grid--cards" style="--sm-min: 260px; --sm-max: {{ s.card_max }}px;">
+        {%- for article in blog.articles -%}
+          {%- if show_feature and forloop.first -%}{%- continue -%}{%- endif -%}
+          {% render 'sm-article-card', article: article, image_fit: s.image_fit, bg: card_bg, more_label: s.more_label, show_date: s.show_date %}
+        {%- else -%}
+          <p style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 3px dashed #000; border-radius: 26px;">{{ s.empty_text }}</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="sm-pagination" aria-label="Pages">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span {% if part.title == paginate.current_page %}class="is-current" aria-current="page"{% endif %}>{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Next page">→</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Smidgen · Blog posts",
+  "tag": "div",
+  "enabled_on": { "templates": ["blog"] },
+  "settings": [
+    { "type": "checkbox", "id": "show_date", "label": "Show post dates", "default": false },
+    { "type": "header", "content": "Featured post" },
+    { "type": "checkbox", "id": "feature_first", "label": "Feature the newest post", "default": true },
+    { "type": "text", "id": "feature_label", "label": "Featured sticker", "default": "Fresh off the press" },
+    { "type": "text", "id": "read_label", "label": "Featured button", "default": "Read it" },
+    { "type": "range", "id": "tilt", "label": "Tilt", "min": -4, "max": 4, "step": 0.5, "unit": "°", "default": -1.5 },
+    { "type": "color", "id": "feature_color", "label": "Featured card color", "default": "#753189" },
+    { "type": "header", "content": "Cards" },
+    { "type": "range", "id": "per_page", "label": "Posts per page", "min": 6, "max": 30, "step": 3, "default": 12 },
+    { "type": "select", "id": "image_fit", "label": "Card images", "options": [{ "value": "fill", "label": "Fill" }, { "value": "fit", "label": "Fit" }], "default": "fill" },
+    { "type": "select", "id": "card_bg_mode", "label": "Card image background", "options": [{ "value": "default", "label": "Yellow" }, { "value": "custom", "label": "Custom" }], "default": "default" },
+    { "type": "color", "id": "card_bg", "label": "Custom card background", "default": "#20A4F3", "visible_if": "{{ section.settings.card_bg_mode == 'custom' }}" },
+    { "type": "range", "id": "card_max", "label": "Max card width", "min": 260, "max": 460, "step": 10, "unit": "px", "default": 380 },
+    { "type": "text", "id": "more_label", "label": "Card link text", "default": "Read more →" },
+    { "type": "header", "content": "Topic pills" },
+    { "type": "checkbox", "id": "show_tags", "label": "Show a pill for each post tag", "default": true },
+    { "type": "text", "id": "all_label", "label": "'All' pill text", "default": "All posts" },
+    { "type": "text", "id": "empty_text", "label": "Text when there are no posts", "default": "No posts here yet. Check back soon!" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+  ]
+}
+{% endschema %}

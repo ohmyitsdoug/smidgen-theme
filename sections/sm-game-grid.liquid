@@ -43,7 +43,7 @@
     <div class="sm-grid sm-grid--cards" style="--sm-min: {{ s.card_min }}px; --sm-max: {{ s.card_max }}px;">
       {%- if s.source == 'blog' -%}
         {%- for article in s.blog.articles limit: s.limit -%}
-          {% render 'sm-article-card', article: article, image_fit: s.image_fit, bg: card_bg, more_label: s.article_label %}
+          {% render 'sm-article-card', article: article, image_fit: s.image_fit, bg: card_bg, more_label: s.article_label, show_date: s.show_date %}
         {%- else -%}
           <p>Pick a blog for this section in the theme editor.</p>
         {%- endfor -%}
@@ -215,6 +215,12 @@
       "label": "Card link text",
       "default": "Read more →",
       "visible_if": "{{ section.settings.source == 'blog' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show post dates",
+      "default": false
     },
     {
       "type": "select",

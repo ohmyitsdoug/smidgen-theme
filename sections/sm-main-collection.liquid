@@ -256,7 +256,33 @@
             assign use_groups = true
           endif
           assign done_ids = '|'
+          assign show_pins = false
+          if s.pinned != blank and collection.sort_by == blank and current_tags == blank and paginate.current_page == 1
+            assign show_pins = true
+          endif
         -%}
+        {%- if show_pins -%}
+          {%- for product in s.pinned -%}
+            {%- liquid
+              assign in_coll = false
+              if collection.handle == 'all'
+                assign in_coll = true
+              else
+                for c in product.collections
+                  if c.id == collection.id
+                    assign in_coll = true
+                    break
+                  endif
+                endfor
+              endif
+              unless in_coll
+                continue
+              endunless
+              assign done_ids = done_ids | append: product.id | append: '|'
+            -%}
+            {% render 'sm-game-card', product: product, image_fit: section.settings.image_fit, bg: card_bg, more_label: section.settings.more_label, soon_label: section.settings.soon_label %}
+          {%- endfor -%}
+        {%- endif -%}
         {%- if use_groups -%}
           {%- for g in groups -%}
             {%- assign g_s = g | strip -%}
@@ -419,6 +445,13 @@
         }
       ],
       "default": "title-ascending"
+    },
+    {
+      "type": "product_list",
+      "id": "pinned",
+      "label": "Pin to the top",
+      "limit": 12,
+      "info": "These show first, in this order, on any collection they belong to. Applies until a shopper picks a sort or filter."
     },
     {
       "type": "text",

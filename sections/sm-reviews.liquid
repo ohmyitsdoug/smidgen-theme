@@ -69,8 +69,24 @@
           {%- for block in section.blocks -%}
             {%- if block.type == '@app' -%}
               {%- capture one_app -%}{% render block %}{%- endcapture -%}
-              {%- assign probe = one_app | downcase -%}
-              {%- if probe contains 'medal' -%}
+              {%- liquid
+                assign probe = one_app | downcase
+                assign is_widget = false
+                if block.settings.review_data != blank or block.settings.empty_state != blank
+                  assign is_widget = true
+                elsif probe contains 'review-widget' or probe contains 'review_widget' or probe contains 'jdgm-rev-widg' or probe contains 'reviewwidget'
+                  assign is_widget = true
+                endif
+                assign app_len = one_app | size
+                if app_len > 6000
+                  assign is_widget = true
+                endif
+                assign is_side = false
+                if is_widget == false and probe contains 'medal'
+                  assign is_side = true
+                endif
+              -%}
+              {%- if is_side -%}
                 {%- capture app_side -%}{{ app_side }}{{ one_app }}{%- endcapture -%}
               {%- else -%}
                 {%- capture app_panel -%}{{ app_panel }}{{ one_app }}{%- endcapture -%}
@@ -117,9 +133,7 @@
 
       {%- if app_panel != blank -%}
         <div class="sm-reviews__panel{% unless s.show_all_toggle %} sm-reviews__panel--quiet{% endunless %}" id="sm-reviews-all-{{ section.id }}" data-sm-reviews-panel>
-          {%- if s.show_all_toggle -%}
-            <button type="button" class="sm-reviews__panel-toggle" data-sm-reviews-toggle aria-expanded="false">{{ s.all_label }}</button>
-          {%- endif -%}
+          <button type="button" class="sm-reviews__panel-toggle" data-sm-reviews-toggle aria-expanded="false">{{ s.all_label }}</button>
           <div class="sm-reviews__panel-body">{{ app_panel }}</div>
         </div>
       {%- endif -%}
@@ -219,7 +233,7 @@
         mo.observe(root, { childList: true, subtree: true });
         setTimeout(function () {
           mo.disconnect();
-          if (!refresh() && panel) setOpen(true);
+          if (!refresh() && panel) panel.classList.add('sm-reviews__panel--needs-toggle');
         }, 4000);
       }
 

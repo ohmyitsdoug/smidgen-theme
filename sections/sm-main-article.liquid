@@ -1,0 +1,120 @@
+{%- comment -%}
+  Blog post page: title area, featured image in a rounded drop-shadow frame,
+  and the post itself in one long card on desktop, with doodles behind it.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign img_alt = article.image.alt | default: article.title
+-%}
+<section class="sm-section sm-article" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+  {%- if s.show_doodles -%}
+    <div class="sm-article__doodles" aria-hidden="true">
+      {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', style: 'left: 4%; top: 340px;' %}
+      {% render 'sm-doodle', shape: 'star', color: '#20A4F3', style: 'right: 6%; top: 620px;' %}
+      {% render 'sm-doodle', shape: 'spiral', color: '#753189', style: 'left: 6%; top: 1100px;' %}
+      {% render 'sm-doodle', shape: 'zigzag', color: '#753189', style: 'right: 5%; top: 1500px;' %}
+      {% render 'sm-doodle', shape: 'loop-arrow', color: '#000000', style: 'left: 3%; top: 1950px;' %}
+      {% render 'sm-doodle', shape: 'squiggle', color: '#20A4F3', style: 'right: 4%; top: 2400px;' %}
+      {% render 'sm-doodle', shape: 'star', color: '#EA5D00', style: 'left: 7%; top: 2850px;' %}
+    </div>
+  {%- endif -%}
+
+  <div class="sm-container sm-article__wrap" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    <header class="sm-article__head">
+      <nav aria-label="Breadcrumb" class="sm-article__crumbs">
+        <a href="{{ blog.url }}">{{ s.back_label | default: blog.title }}</a>
+      </nav>
+      {%- if s.show_tags and article.tags.size > 0 -%}
+        <ul class="sm-article__tags">
+          {%- for tag in article.tags -%}
+            <li><a class="sm-badge" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <h1 class="sm-display sm-article__title">{{ article.title }}</h1>
+      {%- if s.show_date or s.show_author -%}
+        <p class="sm-article__meta">
+          {%- if s.show_author %}By {{ article.author }}{% endif -%}
+          {%- if s.show_author and s.show_date %} · {% endif -%}
+          {%- if s.show_date -%}{{ article.published_at | time_tag: format: 'date' }}{%- endif -%}
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image -%}
+      <figure class="sm-article__image" style="--sm-frame-shadow: {{ s.image_shadow }};">
+        {{ article.image | image_url: width: 2000 | image_tag: alt: img_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 1100px) 1000px, 92vw', widths: '600, 900, 1200, 1600, 2000' }}
+      </figure>
+    {%- endif -%}
+
+    <article class="sm-article__card sm-rte">
+      {{ article.content }}
+    </article>
+
+    <div class="sm-article__foot">
+      <a class="sm-btn sm-btn--secondary" href="{{ blog.url }}">← {{ s.back_label | default: blog.title }}</a>
+    </div>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="sm-article__card sm-article__comments">
+        <h2 class="sm-display" style="font-size: 2.2rem;">Comments ({{ article.comments_count }})</h2>
+        {%- paginate article.comments by 10 -%}
+          {%- for comment in article.comments -%}
+            <div class="sm-article__comment">
+              <div class="sm-rte">{{ comment.content }}</div>
+              <p class="sm-article__meta"><strong>{{ comment.author }}</strong>{% if s.show_date %} · {{ comment.created_at | time_tag: format: 'date' }}{% endif %}</p>
+            </div>
+          {%- endfor -%}
+        {%- endpaginate -%}
+        {%- form 'new_comment', article, class: 'sm-article__form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="sm-form-message" role="status">{% if blog.moderated? %}Thanks! Your comment will show once it's approved.{% else %}Thanks for commenting!{% endif %}</p>
+          {%- endif -%}
+          {%- if form.errors -%}<div class="sm-form-message" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+          <label for="sm-c-name">Name</label>
+          <input id="sm-c-name" class="sm-input" type="text" name="comment[author]" value="{{ form.author }}" required autocomplete="name">
+          <label for="sm-c-email">Email</label>
+          <input id="sm-c-email" class="sm-input" type="email" name="comment[email]" value="{{ form.email }}" required autocomplete="email">
+          <label for="sm-c-body">Comment</label>
+          <textarea id="sm-c-body" class="sm-input" name="comment[body]" rows="5" required>{{ form.body }}</textarea>
+          <button type="submit" class="sm-btn">Post comment</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "author": { "@type": "Organization", "name": {{ shop.name | json }} },
+    "publisher": { "@type": "Organization", "name": {{ shop.name | json }} },
+    {%- if article.image %}"image": {{ article.image | image_url: width: 1600 | prepend: 'https:' | json }},{% endif %}
+    "mainEntityOfPage": {{ canonical_url | json }}
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Smidgen · Blog post",
+  "tag": "div",
+  "enabled_on": { "templates": ["article"] },
+  "settings": [
+    { "type": "checkbox", "id": "show_date", "label": "Show date", "default": false },
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
+    { "type": "checkbox", "id": "show_tags", "label": "Show tags", "default": true },
+    { "type": "text", "id": "back_label", "label": "Back link text", "default": "Back to the blog" },
+    { "type": "checkbox", "id": "show_doodles", "label": "Doodles in the background", "default": true },
+    { "type": "color", "id": "image_shadow", "label": "Image shadow color", "default": "#753189" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF503" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 48 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+  ]
+}
+{% endschema %}
