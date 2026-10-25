@@ -62,7 +62,7 @@
         "ws_button": "Go to the wholesale shop",
         "pending_heading": "Want to carry Smidgen games?",
         "pending_text": "Apply for a wholesale account and we'll set you up.",
-        "apply_link": "",
+        "apply_link": "shopify://pages/contact-us",
         "apply_label": "Apply for wholesale",
         "btn_bg": "#FFFFFF",
         "btn_fg": "#753189",
