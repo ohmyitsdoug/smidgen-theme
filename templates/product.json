@@ -326,7 +326,7 @@
               "settings": {
                 "label": "Also available on Amazon!",
                 "icon": "shopify://shop_images/amazon-white-icon.svg",
-                "link_field": "custom.amazon_url",
+                "link_field": "custom.amazon_link",
                 "fallback_link": "",
                 "tag": "smidgengames-20",
                 "ga_event": "amazon_click",

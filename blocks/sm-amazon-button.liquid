@@ -1,6 +1,6 @@
 {%- doc -%}
   "Also available on Amazon!" button for the product buy box.
-  Link comes from the product's Amazon link field (default custom.amazon_url);
+  Link comes from the product's Amazon link field (default custom.amazon_link);
   the Associates tag is added automatically. Hidden when the product has no link.
   Clicks are sent to Google Analytics (gtag / GTM dataLayer) and to Shopify's
   customer events as "amazon_click".
@@ -8,8 +8,8 @@
 {%- liquid
   assign bs = block.settings
   assign p = closest.product | default: product
-  assign key = bs.link_field | default: 'custom.amazon_url' | strip | split: '.'
-  assign amz = p.metafields[key[0]][key[1]].value | default: bs.fallback_link
+  assign key = bs.link_field | default: 'custom.amazon_link' | strip | split: '.'
+  assign amz = p.metafields[key[0]][key[1]].value | default: p.metafields.custom.amazon_link.value | default: p.metafields.custom.amazon_url.value | default: bs.fallback_link
   assign amz = amz | append: '' | strip
   if amz != blank and bs.tag != blank
     assign tag = bs.tag | strip
@@ -62,7 +62,7 @@
   </script>
 {%- elsif request.design_mode -%}
   <p style="margin: 0; padding: 12px; border: 3px dashed #000; border-radius: 14px; font-size: 0.85rem;" {{ block.shopify_attributes }}>
-    <strong>Amazon button is hidden on this product</strong> (only you see this). Add its Amazon link in the product's {{ bs.link_field | default: 'custom.amazon_url' }} field.
+    <strong>Amazon button is hidden on this product</strong> (only you see this). Add its Amazon link in the product's {{ bs.link_field | default: 'custom.amazon_link' }} field.
   </p>
 {%- endif -%}
 
@@ -74,7 +74,7 @@
     { "type": "paragraph", "content": "Shows on products that have an Amazon link. Clicks are tracked in Google Analytics as the event below." },
     { "type": "text", "id": "label", "label": "Button text", "default": "Also available on Amazon!" },
     { "type": "image_picker", "id": "icon", "label": "Logo icon", "info": "Upload the Amazon logo (PNG or SVG). Shown at 24px tall." },
-    { "type": "text", "id": "link_field", "label": "Product field with the Amazon link", "default": "custom.amazon_url", "info": "namespace.key of a URL field on each product" },
+    { "type": "text", "id": "link_field", "label": "Product field with the Amazon link", "default": "custom.amazon_link", "info": "namespace.key of a URL field on each product" },
     { "type": "url", "id": "fallback_link", "label": "Fallback link", "info": "Optional. Used for products without their own link, e.g. your Amazon storefront." },
     { "type": "text", "id": "tag", "label": "Amazon Associates tag", "info": "e.g. smidgen-20. Added to every link as ?tag=… unless the link already has one." },
     { "type": "text", "id": "ga_event", "label": "Analytics event name", "default": "amazon_click" },
