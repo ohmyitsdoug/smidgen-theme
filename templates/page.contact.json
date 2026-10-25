@@ -186,13 +186,21 @@
             "question": "Do you ship internationally?",
             "answer": "<p>No currently</p>"
           }
+        },
+        "question_DE6hLc": {
+          "type": "question",
+          "settings": {
+            "question": "Do you sell to stores?",
+            "answer": "<p>Yes! Retailers can order through Faire or apply for a wholesale account on our Wholesale page in the footer of our site.</p>"
+          }
         }
       },
       "block_order": [
         "question_pjJetz",
         "question_hjc4pR",
         "question_4grWep",
-        "question_4U9Gb6"
+        "question_4U9Gb6",
+        "question_DE6hLc"
       ],
       "name": "Smidgen · FAQ",
       "settings": {
