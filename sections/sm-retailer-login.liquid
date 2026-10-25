@@ -26,7 +26,7 @@
       <span class="sm-rlogin__icon" aria-hidden="true">{% render 'sm-icon', name: 'storefront', size: 34 %}</span>
       <div class="sm-rlogin__text">
         {%- if view == 'wholesale' -%}
-          <h2 class="sm-display">{{ s.ws_heading | replace: '[name]', customer.first_name | default: 'there' }}</h2>
+          <h2 class="sm-display">{%- assign fname = customer.first_name | default: 'there' -%}{{ s.ws_heading | replace: '[name]', fname }}</h2>
           {%- if s.ws_text != blank -%}<p>{{ s.ws_text }}</p>{%- endif -%}
         {%- elsif view == 'pending' -%}
           <h2 class="sm-display">{{ s.pending_heading }}</h2>
