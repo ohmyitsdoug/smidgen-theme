@@ -277,7 +277,7 @@
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 0,
-        "pad_bottom": 72
+        "pad_bottom": 56
       }
     },
     "sm_callout_EFUYiq": {
@@ -294,7 +294,7 @@
         "icon_fg": "#ffffff",
         "box_bg": "#fff503",
         "section_bg": "#ffffff",
-        "pad_top": 0,
+        "pad_top": 16,
         "pad_bottom": 72
       }
     },
