@@ -18,17 +18,19 @@
             "label": "Shop our games",
             "link": "shopify://collections/all",
             "icon_name": "dice-five",
-            "color": "#FFF503",
+            "icon": "",
+            "color": "#fff503",
             "icon_color": "#000000"
           }
         },
         "link_rules": {
           "type": "link",
           "settings": {
-            "label": "How to play",
-            "link": "shopify://collections/all",
-            "icon_name": "book-open",
-            "color": "#FFFFFF",
+            "label": "Contact us",
+            "link": "shopify://pages/contact-us",
+            "icon_name": "chat-circle-dots",
+            "icon": "",
+            "color": "#ffffff",
             "icon_color": "#000000"
           }
         }
@@ -40,10 +42,10 @@
       "settings": {
         "heading": "The Smidgen Blog",
         "text": "<p>Game night ideas, behind-the-scenes design notes and how-to-play tips.</p>",
-        "bg": "#20A4F3",
+        "bg": "#20a4f3",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
         "pad_top": 64,
         "pad_bottom": 32
       }
@@ -51,7 +53,29 @@
     "main": {
       "type": "sm-main-blog",
       "settings": {
-        "show_date": false
+        "show_date": false,
+        "feature_first": true,
+        "feature_label": "Fresh off the press",
+        "read_label": "Read it",
+        "tilt": -1.5,
+        "feature_color": "#753189",
+        "per_page": 12,
+        "image_fit": "fill",
+        "card_bg_mode": "default",
+        "card_bg": "#20a4f3",
+        "card_max": 380,
+        "more_label": "Read more →",
+        "show_tags": true,
+        "all_label": "All posts",
+        "empty_text": "No posts here yet. Check back soon!",
+        "btn_bg": "#FFF503",
+        "btn_fg": "{{ settings.color_palette.foreground }}",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 40,
+        "pad_bottom": 96
       }
     }
   },
