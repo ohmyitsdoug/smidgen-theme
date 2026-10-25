@@ -330,8 +330,8 @@
                 "fallback_link": "",
                 "tag": "smidgengames-20",
                 "ga_event": "amazon_click",
-                "bg": "#ffffff",
-                "fg": "#000000"
+                "bg": "#EA5D00",
+                "fg": "#FFFFFF"
               },
               "blocks": {}
             },
