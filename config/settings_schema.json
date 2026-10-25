@@ -2116,5 +2116,39 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Smidgen · Wholesale",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Customers with this tag see the Wholesale menu link, wholesale prices on the wholesale shop page, and retailer-only products."
+      },
+      {
+        "type": "text",
+        "id": "sm_wholesale_tag",
+        "label": "Wholesale customer tag",
+        "default": "wholesale"
+      },
+      {
+        "type": "text",
+        "id": "sm_wholesale_label",
+        "label": "Menu link text",
+        "default": "Wholesale"
+      },
+      {
+        "type": "text",
+        "id": "sm_wholesale_url",
+        "label": "Menu link address",
+        "default": "/pages/wholesale-shop"
+      },
+      {
+        "type": "text",
+        "id": "sm_wholesale_only_tag",
+        "label": "Retailer-only product tag",
+        "default": "wholesale-only",
+        "info": "Products with this tag (like POP displays) are hidden from everyone except wholesale customers."
+      }
+    ]
   }
 ]

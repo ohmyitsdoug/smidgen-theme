@@ -29,6 +29,16 @@
 
 {%- case part -%}
   {%- when 'badges' -%}
+    {%- assign ws_only_tag = settings.sm_wholesale_only_tag | default: 'wholesale-only' -%}
+    {%- if p.tags contains ws_only_tag -%}
+      {%- capture sm_ws -%}{%- render 'sm-is-wholesale' -%}{%- endcapture -%}
+      {%- if sm_ws != 'true' -%}
+        <style>
+          .product-information .buy-buttons-block, .product-information variant-picker, .product-information .price, .sticky-add-to-cart { display: none !important; }
+        </style>
+        <p class="sm-ws-only-note">This item is available to approved retailers only. <a href="{{ routes.account_login_url }}">Log in</a> with your retailer account to order.</p>
+      {%- endif -%}
+    {%- endif -%}
     {%- if f_card_color != blank -%}
       <style>
         .product-information { --sm-product-color: {{ f_card_color }}; }

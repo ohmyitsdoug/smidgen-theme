@@ -1,0 +1,244 @@
+{%- comment -%}
+  Wholesale shop: only for logged-in customers with the wholesale tag
+  (Theme settings → Smidgen · Wholesale). Lists a collection with MSRP crossed
+  out and the wholesale price, quick quantity ordering, and quietly applies a
+  wholesale-only discount code so checkout charges the wholesale price.
+  The code must be set up in Shopify (Discounts) limited to wholesale customers.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  capture is_ws
+    render 'sm-is-wholesale'
+  endcapture
+  assign pct = s.percent | default: 50
+  assign keep = 100 | minus: pct
+  assign login_url = routes.account_login_url | append: '?return_url=' | append: request.path
+-%}
+<section id="sm-{{ section.id }}" class="sm-section sm-ws" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};">
+  {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
+  <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
+    {%- if is_ws == 'true' -%}
+      <div class="sm-ws__head">
+        <div class="sm-ws__intro">
+          <span class="sm-sticker">{{ s.eyebrow }}</span>
+          <h1 class="sm-display sm-display--xl">{{ s.heading }}</h1>
+          {%- if s.text != blank -%}<div class="sm-lede">{{ s.text }}</div>{%- endif -%}
+        </div>
+        <ul class="sm-ws__perks">
+          {%- if s.perk_1 != blank -%}<li>{% render 'sm-icon', name: 'tag', size: 22 %}<span>{{ s.perk_1 }}</span></li>{%- endif -%}
+          {%- if s.perk_2 != blank -%}<li>{% render 'sm-icon', name: 'seal-check', size: 22 %}<span>{{ s.perk_2 }}</span></li>{%- endif -%}
+          {%- if s.perk_3 != blank -%}<li>{% render 'sm-icon', name: 'storefront', size: 22 %}<span>{{ s.perk_3 }}</span></li>{%- endif -%}
+        </ul>
+      </div>
+
+      {%- if s.collection != blank -%}
+        <form class="sm-ws__list" data-sm-ws-form action="{{ routes.cart_add_url }}" method="post">
+          {%- for product in s.collection.products limit: 100 -%}
+            {%- liquid
+              assign v = product.selected_or_first_available_variant
+              assign row_keep = keep
+              assign ws_only_tag = settings.sm_wholesale_only_tag | default: 'wholesale-only'
+              assign is_ws_only = false
+              if product.tags contains ws_only_tag
+                assign row_keep = 100
+                assign is_ws_only = true
+              endif
+              assign ws_price = v.price | times: row_keep | divided_by: 100
+            -%}
+            <div class="sm-ws__row{% unless product.available %} is-soldout{% endunless %}" data-sm-ws-row data-keep="{{ row_keep }}">
+              <a href="{{ product.url }}" class="sm-ws__img" tabindex="-1" aria-hidden="true">
+                {%- if product.featured_media -%}
+                  {{ product.featured_media | image_url: width: 240 | image_tag: alt: '', loading: 'lazy', sizes: '96px' }}
+                {%- endif -%}
+              </a>
+              <div class="sm-ws__info">
+                <a href="{{ product.url }}" class="sm-ws__title">{{ product.title }}</a>
+                {%- if product.has_only_default_variant -%}
+                  <input type="hidden" name="id" value="{{ v.id }}" data-sm-ws-variant>
+                {%- else -%}
+                  <label class="sm-visually-hidden" for="ws-v-{{ product.id }}">Option for {{ product.title }}</label>
+                  <select id="ws-v-{{ product.id }}" class="sm-select sm-ws__variant" data-sm-ws-variant>
+                    {%- for variant in product.variants -%}
+                      <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %} {% if variant.id == v.id %}selected{% endif %}>{{ variant.title }}{% unless variant.available %} (sold out){% endunless %}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+                {%- if v.sku != blank and s.show_sku -%}<span class="sm-ws__sku">SKU {{ v.sku }}</span>{%- endif -%}
+              </div>
+              <div class="sm-ws__price">
+                {%- if is_ws_only -%}
+                  <span class="sm-ws__msrp" data-sm-ws-msrp-static>Retailer only</span>
+                {%- else -%}
+                  <s class="sm-ws__msrp" data-sm-ws-msrp>MSRP {{ v.price | money }}</s>
+                {%- endif -%}
+                <strong class="sm-ws__now" data-sm-ws-now data-cents="{{ ws_price }}">{{ ws_price | money }}</strong>
+              </div>
+              <div class="sm-ws__qty">
+                {%- if product.available -%}
+                  <label class="sm-visually-hidden" for="ws-q-{{ product.id }}">Quantity of {{ product.title }}</label>
+                  <button type="button" class="sm-ws__step" data-step="-{{ s.qty_step }}" aria-label="Fewer">−</button>
+                  <input id="ws-q-{{ product.id }}" class="sm-input" type="number" inputmode="numeric" min="0" step="{{ s.qty_step }}" value="0" data-sm-ws-qty>
+                  <button type="button" class="sm-ws__step" data-step="{{ s.qty_step }}" aria-label="More">+</button>
+                {%- else -%}
+                  <span class="sm-badge sm-badge--muted" style="position: static;">Out of stock</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- else -%}
+            <p class="sm-ws__empty">No products in the wholesale collection yet.</p>
+          {%- endfor -%}
+
+          <div class="sm-ws__bar">
+            <span class="sm-ws__total" aria-live="polite"><span data-sm-ws-count>0</span> items · <strong data-sm-ws-total>{{ 0 | money }}</strong></span>
+            {%- if s.min_note != blank -%}<span class="sm-ws__min">{{ s.min_note }}</span>{%- endif -%}
+            <button type="submit" class="sm-btn" data-sm-ws-submit disabled>{{ s.button_label }}</button>
+          </div>
+          <p class="sm-ws__status" data-sm-ws-status role="status"></p>
+        </form>
+      {%- elsif request.design_mode -%}
+        <p class="sm-ws__empty">Pick your wholesale collection in this section's settings.</p>
+      {%- endif -%}
+
+      {%- if s.footnote != blank -%}<div class="sm-ws__foot sm-rte">{{ s.footnote }}</div>{%- endif -%}
+
+      <script>
+        (function () {
+          var root = document.getElementById('sm-{{ section.id }}');
+          if (!root) return;
+          var code = {{ s.discount_code | strip | json }};
+          // Quietly apply the wholesale-only discount code once per session.
+          try {
+            if (code && sessionStorage.getItem('sm-ws-code') !== code) {
+              fetch('/discount/' + encodeURIComponent(code) + '?redirect=/cart.js', { credentials: 'same-origin' })
+                .then(function () { sessionStorage.setItem('sm-ws-code', code); })
+                .catch(function () {});
+            }
+          } catch (e) {}
+
+          var form = root.querySelector('[data-sm-ws-form]');
+          if (!form) return;
+          var fmt = {{ shop.money_format | json }};
+          function money(cents) {
+            var v = (cents / 100).toFixed(2);
+            return fmt.replace(/\{\{\s*\w+\s*\}\}/, v.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+          }
+          function rowPrice(row) {
+            var now = row.querySelector('[data-sm-ws-now]');
+            var sel = row.querySelector('select[data-sm-ws-variant]');
+            if (sel) {
+              var keep = parseInt(row.getAttribute('data-keep'), 10);
+              var p = parseInt(sel.options[sel.selectedIndex].getAttribute('data-price'), 10);
+              var each = Math.floor(p * keep / 100);
+              var ms = row.querySelector('[data-sm-ws-msrp]');
+              if (ms) ms.textContent = 'MSRP ' + money(p);
+              now.textContent = money(each);
+              now.setAttribute('data-cents', each);
+            }
+            return parseInt(now.getAttribute('data-cents') || '0', 10);
+          }
+          function total() {
+            var count = 0, sum = 0;
+            form.querySelectorAll('[data-sm-ws-row]').forEach(function (row) {
+              var q = row.querySelector('[data-sm-ws-qty]');
+              var each = rowPrice(row);
+              if (!q) return;
+              var n = Math.max(0, parseInt(q.value, 10) || 0);
+              count += n; sum += n * each;
+            });
+            form.querySelector('[data-sm-ws-count]').textContent = count;
+            form.querySelector('[data-sm-ws-total]').textContent = money(sum);
+            form.querySelector('[data-sm-ws-submit]').disabled = count === 0;
+          }
+          form.addEventListener('click', function (e) {
+            var b = e.target.closest('[data-step]');
+            if (!b) return;
+            var q = b.parentNode.querySelector('[data-sm-ws-qty]');
+            q.value = Math.max(0, (parseInt(q.value, 10) || 0) + parseInt(b.getAttribute('data-step'), 10));
+            total();
+          });
+          form.addEventListener('input', total);
+          form.addEventListener('change', total);
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var items = [];
+            form.querySelectorAll('[data-sm-ws-row]').forEach(function (row) {
+              var q = row.querySelector('[data-sm-ws-qty]');
+              var v = row.querySelector('[data-sm-ws-variant]');
+              var n = q ? parseInt(q.value, 10) || 0 : 0;
+              if (n > 0 && v) items.push({ id: parseInt(v.value, 10), quantity: n });
+            });
+            if (!items.length) return;
+            var status = form.querySelector('[data-sm-ws-status]');
+            status.textContent = 'Adding to your order…';
+            fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ items: items })
+            }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+              .then(function (res) {
+                if (!res.ok) { status.textContent = res.j.description || 'Something went wrong. Please try again.'; return; }
+                window.location.href = {{ routes.cart_url | json }};
+              })
+              .catch(function () { status.textContent = 'Something went wrong. Please try again.'; });
+          });
+          total();
+        })();
+      </script>
+
+    {%- elsif customer -%}
+      <div class="sm-ws__gate">
+        <h1 class="sm-display">{{ s.not_approved_heading }}</h1>
+        {%- if s.not_approved_text != blank -%}<div class="sm-lede">{{ s.not_approved_text }}</div>{%- endif -%}
+        {%- if s.apply_link != blank -%}<a class="sm-btn" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="sm-ws__gate">
+        <h1 class="sm-display">{{ s.login_heading }}</h1>
+        {%- if s.login_text != blank -%}<div class="sm-lede">{{ s.login_text }}</div>{%- endif -%}
+        <div class="sm-actions" style="justify-content: center;">
+          <a class="sm-btn" href="{{ login_url }}">Log in</a>
+          {%- if s.apply_link != blank -%}<a class="sm-btn sm-btn--secondary" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Smidgen · Wholesale shop",
+  "tag": "div",
+  "settings": [
+    { "type": "paragraph", "content": "Only customers with the wholesale tag (Theme settings → Smidgen · Wholesale) see products and prices. Everyone else sees a log-in or 'not approved' message." },
+    { "type": "collection", "id": "collection", "label": "Wholesale collection" },
+    { "type": "range", "id": "percent", "label": "Wholesale discount shown", "min": 10, "max": 70, "step": 5, "unit": "%", "default": 50 },
+    { "type": "text", "id": "discount_code", "label": "Wholesale discount code", "info": "Applied automatically for wholesale customers on this page. Create it in Discounts with Customer eligibility = your wholesale customers so nobody else can use it." },
+    { "type": "range", "id": "qty_step", "label": "Quantity step", "min": 1, "max": 24, "step": 1, "default": 1, "info": "e.g. 6 to order in cases of 6" },
+    { "type": "checkbox", "id": "show_sku", "label": "Show SKUs", "default": true },
+    { "type": "header", "content": "Wholesale view" },
+    { "type": "text", "id": "eyebrow", "label": "Sticker", "default": "Retailer portal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wholesale shop" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p>" },
+    { "type": "text", "id": "perk_1", "label": "Perk 1", "default": "50% off MSRP on every game" },
+    { "type": "text", "id": "perk_2", "label": "Perk 2", "default": "Tax-exempt checkout on approved accounts" },
+    { "type": "text", "id": "perk_3", "label": "Perk 3", "default": "Retailer-only POP displays" },
+    { "type": "text", "id": "button_label", "label": "Order button", "default": "Add to order" },
+    { "type": "text", "id": "min_note", "label": "Order note", "info": "e.g. $150 opening order minimum" },
+    { "type": "richtext", "id": "footnote", "label": "Footnote" },
+    { "type": "header", "content": "Logged out" },
+    { "type": "text", "id": "login_heading", "label": "Heading", "default": "Retailers, log in to shop" },
+    { "type": "richtext", "id": "login_text", "label": "Text", "default": "<p>Log in with your retailer account to see wholesale pricing and place an order.</p>" },
+    { "type": "header", "content": "Logged in, not approved" },
+    { "type": "text", "id": "not_approved_heading", "label": "Heading", "default": "This page is for approved retailers" },
+    { "type": "richtext", "id": "not_approved_text", "label": "Text", "default": "<p>Want to carry Smidgen games? Apply for a wholesale account and we'll get back to you within a few days.</p>" },
+    { "type": "url", "id": "apply_link", "label": "Apply link" },
+    { "type": "text", "id": "apply_label", "label": "Apply button", "default": "Apply for wholesale" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#000000" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 56 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 96 }
+  ],
+  "presets": [{ "name": "Smidgen · Wholesale shop" }]
+}
+{% endschema %}

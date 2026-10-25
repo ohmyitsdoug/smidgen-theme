@@ -1,0 +1,13 @@
+{%- doc -%}
+  Outputs "true" when the logged-in customer has the wholesale tag
+  (Theme settings → Smidgen · Wholesale), otherwise nothing. Use with capture.
+{%- enddoc -%}
+{%- liquid
+  if customer
+    assign ws_tag = settings.sm_wholesale_tag | default: 'wholesale' | strip | downcase
+    assign ws_tags = customer.tags | join: '|' | downcase | split: '|'
+    if ws_tags contains ws_tag
+      echo 'true'
+    endif
+  endif
+-%}

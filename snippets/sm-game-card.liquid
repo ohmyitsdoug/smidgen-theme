@@ -13,6 +13,19 @@
   @param {string} [soon_label] - link text for coming-soon items, default 'Get notified →'
 {%- enddoc -%}
 {%- liquid
+  assign hide_card = false
+  assign ws_only_tag = settings.sm_wholesale_only_tag | default: 'wholesale-only'
+  if product.tags contains ws_only_tag
+    capture sm_ws
+      render 'sm-is-wholesale'
+    endcapture
+    if sm_ws != 'true'
+      assign hide_card = true
+    endif
+  endif
+-%}
+{%- unless hide_card -%}
+{%- liquid
   assign m = product.metafields.smidgen
   assign mc = product.metafields.custom
   assign f_ages = m.ages.value | default: mc.ages.value
@@ -90,3 +103,4 @@
     </span>
   </span>
 </a>
+{%- endunless -%}

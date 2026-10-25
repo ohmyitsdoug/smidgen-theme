@@ -258,6 +258,14 @@
                 {% endif %}
               </li>
             {%- endfor -%}
+            {%- capture sm_ws -%}{%- render 'sm-is-wholesale' -%}{%- endcapture -%}
+            {%- if sm_ws == 'true' -%}
+              <li class="menu-drawer__list-item sm-ws-link">
+                <a href="{{ settings.sm_wholesale_url | default: '/pages/wholesale-shop' }}" class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element">
+                  <span class="menu-drawer__menu-item-text wrap-text">{{ settings.sm_wholesale_label | default: 'Wholesale' }}</span>
+                </a>
+              </li>
+            {%- endif -%}
           {% else %}
             {%- comment -%}
               Handle menus with 3 levels of links

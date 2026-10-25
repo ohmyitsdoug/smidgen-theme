@@ -168,6 +168,25 @@
           {%- endif -%}
         </li>
       {% endfor %}
+      {%- capture sm_ws -%}{%- render 'sm-is-wholesale' -%}{%- endcapture -%}
+      {%- if sm_ws == 'true' -%}
+        <li
+          class="menu-list__list-item sm-ws-link"
+          on:blur="/deactivate"
+          on:pointerenter="/activate"
+          on:pointerleave="/deactivate"
+        >
+          <a
+            href="{{ settings.sm_wholesale_url | default: '/pages/wholesale-shop' }}"
+            data-skip-node-update="true"
+            class="menu-list__link"
+            {% if request.path == settings.sm_wholesale_url %}aria-current="page"{% endif %}
+            ref="menuitem"
+          >
+            <span class="menu-list__link-title">{{ settings.sm_wholesale_label | default: 'Wholesale' }}</span>
+          </a>
+        </li>
+      {%- endif -%}
       <li
         class="menu-list__list-item"
         slot="more"
