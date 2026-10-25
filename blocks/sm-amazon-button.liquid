@@ -1,0 +1,86 @@
+{%- doc -%}
+  "Also available on Amazon!" button for the product buy box.
+  Link comes from the product's Amazon link field (default custom.amazon_url);
+  the Associates tag is added automatically. Hidden when the product has no link.
+  Clicks are sent to Google Analytics (gtag / GTM dataLayer) and to Shopify's
+  customer events as "amazon_click".
+{%- enddoc -%}
+{%- liquid
+  assign bs = block.settings
+  assign p = closest.product | default: product
+  assign key = bs.link_field | default: 'custom.amazon_url' | strip | split: '.'
+  assign amz = p.metafields[key[0]][key[1]].value | default: bs.fallback_link
+  assign amz = amz | append: '' | strip
+  if amz != blank and bs.tag != blank
+    assign tag = bs.tag | strip
+    unless amz contains 'tag='
+      if amz contains '?'
+        assign amz = amz | append: '&tag=' | append: tag
+      else
+        assign amz = amz | append: '?tag=' | append: tag
+      endif
+    endunless
+  endif
+-%}
+{%- if amz != blank -%}
+  <a
+    href="{{ amz }}"
+    class="sm-amazon"
+    target="_blank"
+    rel="sponsored noopener"
+    style="--amz-bg: {{ bs.bg }}; --amz-fg: {{ bs.fg }};"
+    data-sm-amazon
+    data-product="{{ p.title | escape }}"
+    data-product-id="{{ p.id }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if bs.icon != blank -%}
+      {{ bs.icon | image_url: width: 160 | image_tag: alt: '', class: 'sm-amazon__icon', loading: 'lazy', style: 'height: 24px; width: auto;' }}
+    {%- else -%}
+      {% render 'sm-icon', name: 'shopping-bag', size: 22 %}
+    {%- endif -%}
+    <span>{{ bs.label }}</span>
+    <span class="sm-visually-hidden">(opens Amazon in a new tab)</span>
+  </a>
+  <script>
+    (function () {
+      var el = document.currentScript && document.currentScript.previousElementSibling;
+      if (!el || el.dataset.smAmzBound) return;
+      el.dataset.smAmzBound = '1';
+      el.addEventListener('click', function () {
+        var data = {
+          link_url: el.href,
+          product_name: el.dataset.product,
+          product_id: el.dataset.productId,
+          placement: 'product_buy_box'
+        };
+        try { if (typeof window.gtag === 'function') window.gtag('event', {{ bs.ga_event | default: 'amazon_click' | json }}, data); } catch (e) {}
+        try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: {{ bs.ga_event | default: 'amazon_click' | json }} }, data)); } catch (e) {}
+        try { if (window.Shopify && Shopify.analytics && Shopify.analytics.publish) Shopify.analytics.publish('amazon_click', data); } catch (e) {}
+      });
+    })();
+  </script>
+{%- elsif request.design_mode -%}
+  <p style="margin: 0; padding: 12px; border: 3px dashed #000; border-radius: 14px; font-size: 0.85rem;" {{ block.shopify_attributes }}>
+    <strong>Amazon button is hidden on this product</strong> (only you see this). Add its Amazon link in the product's {{ bs.link_field | default: 'custom.amazon_url' }} field.
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Amazon button",
+  "tag": null,
+  "settings": [
+    { "type": "paragraph", "content": "Shows on products that have an Amazon link. Clicks are tracked in Google Analytics as the event below." },
+    { "type": "text", "id": "label", "label": "Button text", "default": "Also available on Amazon!" },
+    { "type": "image_picker", "id": "icon", "label": "Logo icon", "info": "Upload the Amazon logo (PNG or SVG). Shown at 24px tall." },
+    { "type": "text", "id": "link_field", "label": "Product field with the Amazon link", "default": "custom.amazon_url", "info": "namespace.key of a URL field on each product" },
+    { "type": "url", "id": "fallback_link", "label": "Fallback link", "info": "Optional. Used for products without their own link, e.g. your Amazon storefront." },
+    { "type": "text", "id": "tag", "label": "Amazon Associates tag", "info": "e.g. smidgen-20. Added to every link as ?tag=… unless the link already has one." },
+    { "type": "text", "id": "ga_event", "label": "Analytics event name", "default": "amazon_click" },
+    { "type": "color", "id": "bg", "label": "Button color", "default": "#FFFFFF" },
+    { "type": "color", "id": "fg", "label": "Button text color", "default": "#000000" }
+  ],
+  "presets": [{ "name": "Smidgen · Amazon button" }]
+}
+{% endschema %}

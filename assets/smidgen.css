@@ -1872,3 +1872,15 @@ main a:not([class]):focus-visible { outline: 3px solid var(--sm-link); outline-o
 /* Footer: keep the menu's colors, underline on hover. */
 .sm-footer a:not(.sm-btn):not(.sm-footer__social):hover,
 .sm-footer a:not(.sm-btn):not(.sm-footer__social):focus-visible { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+/* "Also available on Amazon" button (product buy box) */
+.sm-amazon {
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; box-sizing: border-box;
+  min-height: 52px; padding: 10px 20px; background: var(--amz-bg, #fff); color: var(--amz-fg, #000) !important;
+  border: var(--sm-outline); border-radius: 999px; box-shadow: 4px 4px 0 #000; text-decoration: none !important;
+  font-family: var(--sm-font-display); font-size: 1.25rem; line-height: 1; transition: transform .12s ease, box-shadow .12s ease;
+}
+.sm-amazon:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
+.sm-amazon:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+.sm-amazon:focus-visible { outline: 3px solid var(--sm-link, #0b5fa5); outline-offset: 3px; }
+.sm-amazon__icon { display: block; }
