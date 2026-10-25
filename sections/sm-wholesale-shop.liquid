@@ -10,6 +10,15 @@
   capture is_ws
     render 'sm-is-wholesale'
   endcapture
+  assign view = 'guest'
+  if is_ws == 'true'
+    assign view = 'wholesale'
+  elsif customer
+    assign view = 'pending'
+  endif
+  if request.design_mode
+    assign view = s.preview_as | default: 'wholesale'
+  endif
   assign pct = s.percent | default: 50
   assign keep = 100 | minus: pct
   assign login_url = routes.account_login_url | append: '?return_url=' | append: request.path
@@ -17,7 +26,7 @@
 <section id="sm-{{ section.id }}" class="sm-section sm-ws" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
-    {%- if is_ws == 'true' -%}
+    {%- if view == 'wholesale' -%}
       <div class="sm-ws__head">
         <div class="sm-ws__intro">
           <span class="sm-sticker">{{ s.eyebrow }}</span>
@@ -105,7 +114,7 @@
         (function () {
           var root = document.getElementById('sm-{{ section.id }}');
           if (!root) return;
-          var code = {{ s.discount_code | strip | json }};
+          var code = {% if request.design_mode %}''{% else %}{{ s.discount_code | strip | json }}{% endif %};
           // Quietly apply the wholesale-only discount code once per session.
           try {
             if (code && sessionStorage.getItem('sm-ws-code') !== code) {
@@ -185,7 +194,7 @@
         })();
       </script>
 
-    {%- elsif customer -%}
+    {%- elsif view == 'pending' -%}
       <div class="sm-ws__gate">
         <h1 class="sm-display">{{ s.not_approved_heading }}</h1>
         {%- if s.not_approved_text != blank -%}<div class="sm-lede">{{ s.not_approved_text }}</div>{%- endif -%}
@@ -212,6 +221,27 @@
     {
       "type": "paragraph",
       "content": "Only customers with the wholesale tag (Theme settings → Smidgen · Wholesale) see products and prices. Everyone else sees a log-in or 'not approved' message."
+    },
+    {
+      "type": "select",
+      "id": "preview_as",
+      "label": "Preview in the editor as",
+      "options": [
+        {
+          "value": "wholesale",
+          "label": "Approved retailer"
+        },
+        {
+          "value": "guest",
+          "label": "Logged out"
+        },
+        {
+          "value": "pending",
+          "label": "Logged in, not approved"
+        }
+      ],
+      "default": "wholesale",
+      "info": "Only changes what you see in the theme editor. Shoppers always see their real view."
     },
     {
       "type": "collection",

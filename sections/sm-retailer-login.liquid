@@ -8,6 +8,15 @@
   capture is_ws
     render 'sm-is-wholesale'
   endcapture
+  assign view = 'guest'
+  if is_ws == 'true'
+    assign view = 'wholesale'
+  elsif customer
+    assign view = 'pending'
+  endif
+  if request.design_mode
+    assign view = s.preview_as | default: 'guest'
+  endif
   assign shop_url = s.shop_url | default: settings.sm_wholesale_url | default: '/pages/wholesale-shop'
   assign login_url = routes.account_login_url | append: '?return_url=' | append: shop_url
 -%}
@@ -16,10 +25,10 @@
     <div class="sm-rlogin__card" style="--sm-rlogin-card: {{ s.card_color }};">
       <span class="sm-rlogin__icon" aria-hidden="true">{% render 'sm-icon', name: 'storefront', size: 34 %}</span>
       <div class="sm-rlogin__text">
-        {%- if is_ws == 'true' -%}
-          <h2 class="sm-display">{{ s.ws_heading | replace: '[name]', customer.first_name }}</h2>
+        {%- if view == 'wholesale' -%}
+          <h2 class="sm-display">{{ s.ws_heading | replace: '[name]', customer.first_name | default: 'there' }}</h2>
           {%- if s.ws_text != blank -%}<p>{{ s.ws_text }}</p>{%- endif -%}
-        {%- elsif customer -%}
+        {%- elsif view == 'pending' -%}
           <h2 class="sm-display">{{ s.pending_heading }}</h2>
           {%- if s.pending_text != blank -%}<p>{{ s.pending_text }}</p>{%- endif -%}
         {%- else -%}
@@ -28,9 +37,9 @@
         {%- endif -%}
       </div>
       <div class="sm-actions sm-rlogin__actions">
-        {%- if is_ws == 'true' -%}
+        {%- if view == 'wholesale' -%}
           <a class="sm-btn" href="{{ shop_url }}">{{ s.ws_button }}</a>
-        {%- elsif customer -%}
+        {%- elsif view == 'pending' -%}
           {%- if s.apply_link != blank -%}<a class="sm-btn" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
         {%- else -%}
           <a class="sm-btn" href="{{ login_url }}">{{ s.login_button }}</a>
@@ -49,6 +58,27 @@
     {
       "type": "paragraph",
       "content": "Changes with who's looking: logged out, approved wholesale customer, or logged in but not approved yet."
+    },
+    {
+      "type": "select",
+      "id": "preview_as",
+      "label": "Preview in the editor as",
+      "options": [
+        {
+          "value": "wholesale",
+          "label": "Approved retailer"
+        },
+        {
+          "value": "guest",
+          "label": "Logged out"
+        },
+        {
+          "value": "pending",
+          "label": "Logged in, not approved"
+        }
+      ],
+      "default": "guest",
+      "info": "Only changes what you see in the theme editor. Shoppers always see their real view."
     },
     {
       "type": "text",
