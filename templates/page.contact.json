@@ -234,8 +234,8 @@
         "question_4bY6A6": {
           "type": "question",
           "settings": {
-            "question": "",
-            "answer": ""
+            "question": "My game is missing a piece. What should I do?",
+            "answer": "<p>Contact us with your order number (or where you bought the game), the game name, and what's missing. We'll do our best to accommodate, with no guarantees.</p>"
           }
         }
       },
