@@ -250,12 +250,48 @@
       if (openBtn && panel) {
         openBtn.addEventListener('click', function (e) {
           e.preventDefault();
-          setOpen(true);
-          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setTimeout(function () {
-            var w = panel.querySelector('.jdgm-write-rev-link, [class*="write-review"], button');
-            if (w && w.click && /write/i.test(w.textContent || '')) w.click();
-          }, 400);
+          // 1. Find Judge.me's own "Write a review" control (plain DOM or open shadow roots).
+          function findWrite(scope) {
+            var els = scope.querySelectorAll('button, a, [role="button"]');
+            for (var i = 0; i < els.length; i++) {
+              if (/write\s+a\s+review/i.test(els[i].textContent || els[i].getAttribute('aria-label') || '')) return els[i];
+            }
+            var hosts = scope.querySelectorAll('*');
+            for (var j = 0; j < hosts.length; j++) {
+              if (hosts[j].shadowRoot) { var f = findWrite(hosts[j].shadowRoot); if (f) return f; }
+            }
+            return null;
+          }
+          function visibleDialog() {
+            var cands = document.querySelectorAll('dialog[open], [role="dialog"], [aria-modal="true"], [class*="modal"], [class*="popup"]');
+            for (var i = 0; i < cands.length; i++) {
+              var c = cands[i];
+              if (panel.contains(c) && !panel.classList.contains('is-open')) continue;
+              var r = c.getBoundingClientRect();
+              var cs = getComputedStyle(c);
+              if (r.width > 200 && r.height > 150 && cs.visibility !== 'hidden' && cs.display !== 'none' && parseFloat(cs.opacity) > 0.1) return c;
+            }
+            return null;
+          }
+          var w = panel ? findWrite(panel) : null;
+          if (w) {
+            // 2. Open Judge.me's review form directly. Most versions show it as a pop-up over the page.
+            w.click();
+            setTimeout(function () {
+              if (visibleDialog()) return;
+              // 3. This widget shows the form inline: reveal the panel and jump straight to the form.
+              setOpen(true);
+              setTimeout(function () {
+                var form = panel.querySelector('form, .jdgm-form-wrapper, [class*="review-form"], [class*="ReviewForm"]') || w;
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                var first = form.querySelector && form.querySelector('input, textarea, [role="radio"]');
+                if (first && first.focus) first.focus({ preventScroll: true });
+              }, 120);
+            }, 450);
+          } else if (panel) {
+            setOpen(true);
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         });
       }
 
