@@ -1675,7 +1675,7 @@ a.sm-hero__badge:hover {
 .sm-article__card h2 { font-size: 2.2rem; } .sm-article__card h3 { font-size: 1.6rem; }
 .sm-article__card img { max-width: 100%; height: auto; border: 3px solid #000; border-radius: 20px; }
 .sm-article__card blockquote { margin: 1.5em 0; padding: 18px 24px; border: 3px solid #000; border-radius: 20px; background: var(--sm-yellow); font-weight: 500; }
-.sm-article__card a { color: var(--sm-purple); font-weight: 700; }
+.sm-article__card a { font-weight: 700; }
 .sm-article__foot { display: flex; justify-content: center; }
 .sm-article__comments { display: flex; flex-direction: column; gap: 20px; }
 .sm-article__comment { border-bottom: 2px dashed #000; padding-bottom: 16px; }
@@ -1810,3 +1810,65 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
 
 .sm-ws__stock { font-size: 0.85rem; font-weight: 700; color: #1f7a3a; }
 .sm-ws__stock.is-out { color: #a33; }
+
+
+/* ==========================================================================
+   Links: accessible blue + underline in content; header nav underlines on hover
+   ========================================================================== */
+:root { --sm-link: #0b5fa5; --sm-link-hover: #073f6e; }
+
+/* Header navigation: full-strength color (no fading of the other links) and
+   a thick underline on the link being hovered or focused. */
+html .menu-list .menu-list__link,
+html .menu-list:has(.menu-list__list-item:hover) .menu-list__link,
+html .menu-list:has(.menu-list__list-item:focus-within) .menu-list__link {
+  color: var(--menu-top-level-font-color) !important;
+}
+.menu-list__link-title { text-decoration: none; text-underline-offset: 7px; text-decoration-thickness: 3px; }
+.menu-list__list-item:hover > .menu-list__link .menu-list__link-title,
+.menu-list__list-item:hover > .menu-list__trigger .menu-list__link-title,
+.menu-list__link:focus-visible .menu-list__link-title,
+.menu-list__link[aria-current='page'] .menu-list__link-title,
+.menu-list__link--active .menu-list__link-title {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+.menu-drawer__menu-item:hover .menu-drawer__menu-item-text,
+.menu-drawer__menu-item:focus-visible .menu-drawer__menu-item-text {
+  text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 3px;
+}
+.mega-menu a:hover, .mega-menu a:focus-visible { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+/* Text links in page content: blue (5.6:1 on white) and always underlined.
+   Unclassed links are inline text links; buttons, cards and pills keep their own look. */
+main a:not([class]),
+.sm-rte a:not([class]),
+.rte a:not([class]),
+.sm-lede a:not([class]),
+.sm-faq__answer a:not([class]) {
+  color: var(--sm-link);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+main a:not([class]):hover,
+.sm-rte a:not([class]):hover,
+.rte a:not([class]):hover,
+.sm-lede a:not([class]):hover,
+.sm-faq__answer a:not([class]):hover {
+  color: var(--sm-link-hover);
+  text-decoration-thickness: 3px;
+}
+main a:not([class]):focus-visible { outline: 3px solid var(--sm-link); outline-offset: 2px; border-radius: 2px; }
+
+/* On dark bands (purple, black, the video hero) links go white/yellow instead of blue. */
+.sm-on-dark a:not([class]),
+.sm-vhero a:not([class]),
+.sm-blog__feature a:not([class]) { color: var(--sm-yellow); }
+.sm-on-dark a:not([class]):hover,
+.sm-vhero a:not([class]):hover { color: #fff; }
+
+/* Footer: keep the menu's colors, underline on hover. */
+.sm-footer a:not(.sm-btn):not(.sm-footer__social):hover,
+.sm-footer a:not(.sm-btn):not(.sm-footer__social):focus-visible { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
