@@ -287,7 +287,7 @@
         "heading": "Missing a piece?",
         "text": "Tell us which game and what's missing. We'll send a replacement, free.",
         "link_label": "Request a part →",
-        "link": "",
+        "link": "#contact",
         "icon_name": "package",
         "icon": "star",
         "icon_color": "#ea5d00",
