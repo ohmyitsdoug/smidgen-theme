@@ -418,15 +418,22 @@ html .button-secondary:hover {
    Dividers (waves etc.)
    -------------------------------------------------------------------------- */
 .sm-divider {
+  position: relative;
+  z-index: 2;
   display: block;
   line-height: 0;
   background: var(--sm-from);
+  /* Overlap the sections above and below by 1px so no hairline seam shows
+     between them at fractional zoom levels / device pixel ratios. */
+  margin: -1px 0 -2px;
+  padding-top: 1px;
 }
 
 .sm-divider svg {
   display: block;
   width: 100%;
   height: var(--sm-divider-h, 64px);
+  overflow: visible;
 }
 
 @media (max-width: 599px) {
