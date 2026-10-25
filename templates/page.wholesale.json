@@ -20,8 +20,8 @@
         "button_link": "",
         "button_2_label": "Order on Faire",
         "button_2_link": "shopify://pages/wholesale",
-        "show_rating": true,
-        "rating_text": "★★★★★ [rating] from [count] reviews",
+        "show_rating": false,
+        "rating_text": "",
         "rating_link": "",
         "rating_override": "",
         "count_override": "",
@@ -38,6 +38,10 @@
         "doodle_position": "top-left",
         "doodle_2": "none",
         "doodle_2_color": "#20a4f3",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
         "bg": "#fff503",
         "fg": "#000000",
         "divider": "wave",
@@ -60,9 +64,13 @@
         "pending_text": "Apply for a wholesale account and we'll set you up.",
         "apply_link": "",
         "apply_label": "Apply for wholesale",
-        "card_color": "#20A4F3",
+        "btn_bg": "#FFFFFF",
+        "btn_fg": "#753189",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "card_color": "#FFF503",
         "bg": "#ffffff",
-        "fg": "#000000",
+        "fg": "#FFFFFF",
         "pad_top": 32,
         "pad_bottom": 32
       }
@@ -139,7 +147,7 @@
         "q1": {
           "type": "quote",
           "settings": {
-            "quote": "This is a test",
+            "quote": "",
             "name": "Rob Campbell",
             "role": "Board Game Specialist",
             "store": "Games and Stuff",
@@ -150,7 +158,7 @@
         "q2": {
           "type": "quote",
           "settings": {
-            "quote": "This is a test",
+            "quote": "",
             "name": "Annelise Tarnowski",
             "role": "Owner",
             "store": "The Rook Room",
@@ -161,7 +169,7 @@
         "q3": {
           "type": "quote",
           "settings": {
-            "quote": "This is a test",
+            "quote": "",
             "name": "Ken Ingram",
             "role": "Owner",
             "store": "The Game Kastle",
@@ -203,7 +211,7 @@
           "type": "question",
           "settings": {
             "question": "What are your minimums?",
-            "answer": "<p>[Your minimum order and case packs.]</p>"
+            "answer": "<p>Our current MOQ is $85.</p>"
           }
         }
       },
