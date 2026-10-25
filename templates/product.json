@@ -321,6 +321,20 @@
               },
               "block_order": []
             },
+            "sm_amazon": {
+              "type": "sm-amazon-button",
+              "settings": {
+                "label": "Also available on Amazon!",
+                "icon": "shopify://shop_images/amazon-white-icon.svg",
+                "link_field": "custom.amazon_url",
+                "fallback_link": "",
+                "tag": "smidgengames-20",
+                "ga_event": "amazon_click",
+                "bg": "#ffffff",
+                "fg": "#000000"
+              },
+              "blocks": {}
+            },
             "sm_spec_dropdowns": {
               "type": "sm-spec-dropdowns",
               "settings": {
@@ -352,16 +366,6 @@
                 "circle": "-20%"
               },
               "blocks": {}
-            },
-            "sm_amazon": {
-              "type": "sm-amazon-button",
-              "settings": {
-                "label": "Also available on Amazon!",
-                "link_field": "custom.amazon_url",
-                "ga_event": "amazon_click",
-                "bg": "#FFFFFF",
-                "fg": "#000000"
-              }
             }
           },
           "block_order": [
