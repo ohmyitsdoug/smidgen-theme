@@ -1,0 +1,57 @@
+{%- doc -%}
+  One quick-order row on the wholesale shop.
+  @param {product} product
+  @param {number} keep - percent of price to charge (e.g. 50)
+  @param {number} qty_step
+  @param {boolean} show_sku
+{%- enddoc -%}
+            {%- liquid
+              assign v = product.selected_or_first_available_variant
+              assign row_keep = keep
+              assign ws_only_tag = settings.sm_wholesale_only_tag | default: 'wholesale-only'
+              assign is_ws_only = false
+              if product.tags contains ws_only_tag
+                assign row_keep = 100
+                assign is_ws_only = true
+              endif
+              assign ws_price = v.price | times: row_keep | divided_by: 100
+            -%}
+            <div class="sm-ws__row{% unless product.available %} is-soldout{% endunless %}" data-sm-ws-row data-keep="{{ row_keep }}">
+              <a href="{{ product.url }}" class="sm-ws__img" tabindex="-1" aria-hidden="true">
+                {%- if product.featured_media -%}
+                  {{ product.featured_media | image_url: width: 240 | image_tag: alt: '', loading: 'lazy', sizes: '96px' }}
+                {%- endif -%}
+              </a>
+              <div class="sm-ws__info">
+                <a href="{{ product.url }}" class="sm-ws__title">{{ product.title }}</a>
+                {%- if product.has_only_default_variant -%}
+                  <input type="hidden" name="id" value="{{ v.id }}" data-sm-ws-variant>
+                {%- else -%}
+                  <label class="sm-visually-hidden" for="ws-v-{{ product.id }}">Option for {{ product.title }}</label>
+                  <select id="ws-v-{{ product.id }}" class="sm-select sm-ws__variant" data-sm-ws-variant>
+                    {%- for variant in product.variants -%}
+                      <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %} {% if variant.id == v.id %}selected{% endif %}>{{ variant.title }}{% unless variant.available %} (sold out){% endunless %}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+                {%- if v.sku != blank and show_sku -%}<span class="sm-ws__sku">SKU {{ v.sku }}</span>{%- endif -%}
+              </div>
+              <div class="sm-ws__price">
+                {%- if is_ws_only -%}
+                  <span class="sm-ws__msrp" data-sm-ws-msrp-static>Retailer only</span>
+                {%- else -%}
+                  <s class="sm-ws__msrp" data-sm-ws-msrp>MSRP {{ v.price | money }}</s>
+                {%- endif -%}
+                <strong class="sm-ws__now" data-sm-ws-now data-cents="{{ ws_price }}">{{ ws_price | money }}</strong>
+              </div>
+              <div class="sm-ws__qty">
+                {%- if product.available -%}
+                  <label class="sm-visually-hidden" for="ws-q-{{ product.id }}">Quantity of {{ product.title }}</label>
+                  <button type="button" class="sm-ws__step" data-step="-{{ qty_step }}" aria-label="Fewer">−</button>
+                  <input id="ws-q-{{ product.id }}" class="sm-input" type="number" inputmode="numeric" min="0" step="{{ qty_step }}" value="0" data-sm-ws-qty>
+                  <button type="button" class="sm-ws__step" data-step="{{ qty_step }}" aria-label="More">+</button>
+                {%- else -%}
+                  <span class="sm-badge sm-badge--muted" style="position: static;">Out of stock</span>
+                {%- endif -%}
+              </div>
+            </div>
