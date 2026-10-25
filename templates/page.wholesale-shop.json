@@ -12,7 +12,8 @@
     "main": {
       "type": "sm-wholesale-shop",
       "settings": {
-        "collection": "",
+        "preview_as": "wholesale",
+        "collection": "wholesale",
         "percent": 50,
         "discount_code": "SMIDGEN-RETAIL-50",
         "qty_step": 1,
@@ -32,6 +33,10 @@
         "not_approved_text": "<p>Want to carry Smidgen games? Apply for a wholesale account and we'll get back to you within a few days.</p>",
         "apply_link": "",
         "apply_label": "Apply for wholesale",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
         "bg": "#ffffff",
         "fg": "#000000",
         "pad_top": 56,
