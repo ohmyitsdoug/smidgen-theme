@@ -1884,3 +1884,8 @@ main a:not([class]):focus-visible { outline: 3px solid var(--sm-link); outline-o
 .sm-amazon:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
 .sm-amazon:focus-visible { outline: 3px solid var(--sm-link, #0b5fa5); outline-offset: 3px; }
 .sm-amazon__icon { display: block; }
+
+/* Optional square image in how-to step cards */
+.sm-step__img { display: block; margin-top: auto; padding-top: 6px; }
+.sm-step__img img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 3px solid #000; border-radius: 18px; }
+.sm-steps > li { display: flex; flex-direction: column; gap: 10px; }

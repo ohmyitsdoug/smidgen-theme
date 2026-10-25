@@ -23,4 +23,13 @@
   {%- if step_desc.value != blank -%}
     <div style="font-size: 1.05rem; line-height: 1.5;">{{ step_desc | metafield_tag }}</div>
   {%- endif -%}
+  {%- liquid
+    assign step_img = step.image.value | default: step.photo.value | default: step.picture.value
+  -%}
+  {%- if step_img != blank -%}
+    {%- assign step_alt = step_img.alt | default: step.title.value -%}
+    <span class="sm-step__img">
+      {{ step_img | image_url: width: 700, height: 700, crop: 'center' | image_tag: alt: step_alt, loading: 'lazy', sizes: '(min-width: 990px) 300px, 80vw', widths: '300, 500, 700' }}
+    </span>
+  {%- endif -%}
 </li>
