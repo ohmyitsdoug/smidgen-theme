@@ -163,28 +163,36 @@
           "type": "question",
           "settings": {
             "question": "How long does shipping take?",
-            "answer": "<p>We typically ship within 1 business day.</p>"
+            "answer": "<p>We typically ship within 1 business day.&nbsp;<br/>You'll get a tracking number by email as soon as your order is on its way.</p>"
           }
         },
         "question_hjc4pR": {
           "type": "question",
           "settings": {
-            "question": "Test",
-            "answer": "<p>Test</p>"
+            "question": "How do preorders work?",
+            "answer": "<p>Preorder items ship as soon as they arrive in our warehouse. Each product page lists the expected ship date. Your card is charged when you place the order. If your order includes in-stock items and preorders, we ship in-stock items right away.</p>"
           }
         },
         "question_4grWep": {
           "type": "question",
           "settings": {
-            "question": "",
-            "answer": ""
+            "question": "What is your return policy?",
+            "answer": "<p>We don't accept returns, but if a game isn't right for you, we'll still refund it. Donate the game to a local library, school, or play space, then send us the donation receipt within 30 days of delivery. We'll refund the cost of the game once it's confirmed. Shipping costs are not refunded.</p>"
+          }
+        },
+        "question_4U9Gb6": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>No currently</p>"
           }
         }
       },
       "block_order": [
         "question_pjJetz",
         "question_hjc4pR",
-        "question_4grWep"
+        "question_4grWep",
+        "question_4U9Gb6"
       ],
       "name": "Smidgen · FAQ",
       "settings": {
@@ -291,6 +299,10 @@
         "ph_message": "Hey! My dad, a very hard man to impress, absolutely loved CUNO at game night. Where can I grab a copy for my best friend, Ghee Buttersnaps (a.k.a. Gus)? He'd be all over it.\n\nPineapple-ly yours,\nShawn Spencer, Head Psychic",
         "button_label": "Send message",
         "success": "Thanks! Your message is on its way. We'll get back to you as soon as we can.",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
         "bg": "#753189",
         "fg": "#ffffff",
         "link_color": "#fff503",
@@ -379,6 +391,10 @@
         "response": "<p>We do our best to reply to everyone, but reviewing pitches takes time, so please be patient with us. If it's a fit, we'll ask for a prototype or a video call.</p>",
         "fits_heading": "What fits Smidgen",
         "fits": "Teaches in a few minutes\nMeaningful choices without heavy rules\nKeeps every player in the game\nSmall, portable component count",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
         "bg": "#fff503",
         "fg": "#000000",
         "divider": "none",
