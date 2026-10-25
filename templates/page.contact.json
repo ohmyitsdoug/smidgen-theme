@@ -220,15 +220,15 @@
         "question_fp4XDH": {
           "type": "question",
           "settings": {
-            "question": "Test",
-            "answer": "<p>&nbsp;Test</p>"
+            "question": "Where can I find the rules for my game?",
+            "answer": "<p>Every product page has a how-to-play guide and video. You can also scan the QR code on your rulebook for rules, video tutorials, and more.</p>"
           }
         },
         "question_Hjt3Fq": {
           "type": "question",
           "settings": {
-            "question": "Test",
-            "answer": "<p>Test</p>"
+            "question": "I lost my rulebook. Can I get a new one?",
+            "answer": "<p>You can download a PDF of the rules from your game's product page. If you can't find it, contact us and we'll help.</p>"
           }
         },
         "question_4bY6A6": {
