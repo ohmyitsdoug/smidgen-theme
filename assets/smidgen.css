@@ -1889,3 +1889,11 @@ main a:not([class]):focus-visible { outline: 3px solid var(--sm-link); outline-o
 .sm-step__img { display: block; margin-top: auto; padding-top: 6px; }
 .sm-step__img img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 3px solid #000; border-radius: 18px; }
 .sm-steps > li { display: flex; flex-direction: column; gap: 10px; }
+
+/* Anchor links (#faq, #reviews, #in-the-box…) stop below the sticky header
+   with breathing room, instead of tucking the section's top under it. */
+html {
+  scroll-padding-top: calc(var(--header-height, 80px) + 40px);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
