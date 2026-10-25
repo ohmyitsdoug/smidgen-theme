@@ -1,0 +1,500 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "disclosures": {
+          "type": "disclosures",
+          "settings": {
+            "heading": "Disclosures",
+            "heading_preset": "h4",
+            "open_by_default": false,
+            "icon": "caret",
+            "disclosure_heading_preset": "h5",
+            "text_color": "",
+            "dividers": true,
+            "divider_color": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": true,
+            "icons_style": "arrow",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 0,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 18,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 20,
+            "sticky_details_desktop": true,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "sm_badges": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "badges",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
+              },
+              "blocks": {}
+            },
+            "group_icgrde": {
+              "type": "group",
+              "name": "t:names.header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xpVMaM": {
+                  "type": "text",
+                  "name": "t:names.title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xpVMaM"
+              ]
+            },
+            "sm_tagline": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "tagline",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
+              },
+              "blocks": {}
+            },
+            "sm_specs": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "specs",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
+              },
+              "blocks": {}
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_tVjtKg": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_unit_price": false,
+                "show_installments": false,
+                "show_tax_info": true,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "option_label_text_color": "",
+                "variant_style_class": "default",
+                "custom_variant_background": "{{ settings.color_palette.background }}",
+                "custom_variant_text": "{{ settings.color_palette.foreground }}",
+                "custom_variant_border": "{{ settings.color_palette.foreground }}",
+                "selected_variant_style_class": "default",
+                "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
+                "custom_selected_variant_text": "{{ settings.color_palette.background }}",
+                "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "text_color": "",
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "recipient_button_style": "default",
+                "recipient_button_background": "{{ settings.color_palette.background }}",
+                "recipient_button_text": "{{ settings.color_palette.foreground }}",
+                "recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_style": "default",
+                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {
+                    "input_style": "default",
+                    "input_background_color": "{{ settings.color_palette.background }}",
+                    "input_text_color": "{{ settings.color_palette.foreground }}",
+                    "input_border_color": "{{ settings.color_palette.foreground }}",
+                    "border_width": 1,
+                    "border_radius": 0
+                  },
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button",
+                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "{{ settings.color_palette.background }}"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "sm_spec_dropdowns": {
+              "type": "sm-spec-dropdowns",
+              "settings": {
+                "box_label": "Box size & weight",
+                "size_row_label": "Size",
+                "length": "{{ closest.product.metafields.next_cart.length.value }}",
+                "width": "{{ closest.product.metafields.next_cart.width.value }}",
+                "height": "{{ closest.product.metafields.next_cart.height.value }}",
+                "box_unit": "in",
+                "weight_label": "Weight",
+                "weight_unit": "oz",
+                "weight_needs_size": true,
+                "weight": "{{ closest.product.metafields.custom.weight.value }}oz",
+                "testing_label": "Safety testing",
+                "testing_field": "custom.testing",
+                "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
+                "extra_label": "UPC",
+                "extra_field": "custom.upc"
+              },
+              "blocks": {}
+            },
+            "sm_bundle": {
+              "type": "sm-game-facts",
+              "settings": {
+                "part": "bundle",
+                "tile_color": "#fff503",
+                "bundle": "",
+                "heading": "Also in the Family Game Night Bundle",
+                "circle": "-20%"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "sm_badges",
+            "group_icgrde",
+            "sm_tagline",
+            "sm_specs",
+            "text_aEtTtq",
+            "price_tVjtKg",
+            "variant_picker_R3rGDr",
+            "buy_buttons_eYQEYi",
+            "sm_spec_dropdowns",
+            "sm_bundle"
+          ]
+        }
+      },
+      "block_order": [
+        "disclosures"
+      ],
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": true,
+        "limit_details_width": false,
+        "gap": 48,
+        "enable_sticky_add_to_cart": true,
+        "background_color": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "sm_learn": {
+      "type": "sm-learn-to-play",
+      "settings": {
+        "heading": "Learn to play",
+        "rules_label": "Download the rules (PDF)",
+        "video_link": "{{ product.metafields.custom.how_to_play_youtube.value }}",
+        "video_field": "",
+        "steps_field": "custom.how_to_steps",
+        "rules_field": "smidgen.rules_pdf",
+        "bg": "#fff503",
+        "fg": "#000000",
+        "outer_color": "#ffffff",
+        "divider_shape": "wave",
+        "pad_top": 40,
+        "pad_bottom": 72
+      }
+    },
+    "sm_faq": {
+      "type": "sm-faq",
+      "settings": {
+        "anchor": "faq",
+        "heading": "Frequently asked questions",
+        "use_product": true,
+        "open_first": false,
+        "schema": true,
+        "show_box": true,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 24,
+        "pad_bottom": 72
+      }
+    },
+    "sm_reviews": {
+      "type": "sm-reviews",
+      "blocks": {
+        "judge_me_reviews_review_widget_eAmVHE": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": true,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_eAmVHE"
+      ],
+      "settings": {
+        "heading": "Reviews",
+        "write_label": "Write a review",
+        "show_all_toggle": false,
+        "all_label": "See all reviews",
+        "empty_text": "Read what players are saying below.",
+        "max_reviews": 12,
+        "hide_empty": true,
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "card_bg": "#ffffff",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#20a4f3",
+        "pad_top": 24,
+        "pad_bottom": 80
+      }
+    },
+    "sm_related": {
+      "type": "sm-related",
+      "settings": {
+        "heading": "Play these next",
+        "intent": "complementary",
+        "limit": 4,
+        "fallback": "our-games",
+        "image_fit": "fill",
+        "card_bg_mode": "game",
+        "card_bg": "#753189",
+        "card_max": 280,
+        "more_label": "View game →",
+        "soon_label": "Get notified →",
+        "bg": "#20a4f3",
+        "fg": "#000000",
+        "divider_top": "zigzag",
+        "divider_from": "#ffffff",
+        "pad_top": 40,
+        "pad_bottom": 88
+      }
+    },
+    "custom_liquid_HVBTXD": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{% if product.handle == 'cuno' %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What age is CUNO for?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"CUNO is designed for ages 8 and up. Many families play with younger kids too, since the rules are simple and the strategy grows with the player.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How many players does CUNO support?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"CUNO is for 2–4 players and plays well at every count, including head-to-head as a two-player game.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can kids and adults play CUNO together?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes. Kids can play by simply matching rings, while adults can plan ahead, block opponents, and set up big scoring plays, so everyone enjoys the same game.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is CUNO like dominoes?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"CUNO will feel familiar to dominoes fans because you match tile edges to connect rings. The difference is that each placement scores points and opens up blocking and combo strategy.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can I make a connection with just a blank side?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"No. All tile placements must create at least one valid ring connection. However, it's allowed to match a blank edge to another blank as long as the tile also makes a complete ring elsewhere on the board.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"I ran out of point tokens for a ring connection. What should I do?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"If you run out of the correct point tokens, you can stack other tokens that add up to the same value. For example, use a 1 and a 2 token stacked together in place of a 3.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Why do I need to remove tiles at the start of the game?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Removing a number of tiles equal to the number of players minus one ensures that the first player also places the final tile of the game. This balances the number of turns, giving every player an equal chance to make ring matches.\" }\n    }\n  ]\n}\n</script>\n{% endif %}\n\n{% if product.handle == 'going-bananas' %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How many people can play Going Bananas!?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Going Bananas! is for 3–6 players, ages 8 and up. The roles dealt each round change with the player count, and there is always one Monkey.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How long does a game of Going Bananas! take?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Most games take 5–15 minutes. The first player to 5 points (3–4 players) or 3 points (5–6 players) wins, so it's easy to play several games in a row.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is Going Bananas! family-friendly?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Absolutely! While it features bluffing, the tone is entirely goofy and lighthearted. Rather than teaching kids to lie, it exercises their creativity, acting skills, and deductive reasoning in a fun, safe game night environment.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"When will my preorder ship?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Preorders are expected to ship in early December. We'll email you as soon as your order is on its way.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What happens if there is a tie at the end of the game?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"All players who are tied at the end of the game will share the victory equally.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What can I do to convince the monkey that I am the banana?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Absolutely anything you can think of, without revealing your card to the monkey of course! Just make sure your act has total a-peel so you don't slip up.\" }\n    }\n  ]\n}\n</script>\n{% endif %}\n\n{% if product.handle == 'mrbls' %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How many people can play MRBLS?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"MRBLS is for 1–8 players, ages 8 and up. With 3–5 players, use 7 colors and 4 power-ups. With 6–8 players, use all the cards.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How long does a game of MRBLS take?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"A game of MRBLS takes about 20 minutes, and most new players learn the rules in just a few minutes.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is MRBLS cooperative?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes. Everyone plays as one team. You win together by emptying the deck and playing all the cards from your hands, and you lose together if the game row grows past 10 cards at the end of a turn.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can younger kids play MRBLS?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"MRBLS is recommended for ages 8 and up, but many families tell us they've played with kids as young as 5. Start with just 4 colors and no power-ups. Since MRBLS is cooperative and everyone's cards are face up, older players can help younger ones plan their moves without spoiling the fun. Add colors and power-ups as they get the hang of it.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What is a triad in MRBLS?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"A triad is 3 matching colors next to each other in the game row. Collecting a triad shrinks the row. If closing the gap creates another triad, that's a combo, and both are removed.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What do the power-ups do?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Lightning and the Magnifying Glass are wild cards that complete a triad with a bonus effect. The Bomb removes two adjacent cards, and the Magnet holds a spot in the row for the next card from the deck.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can I use two wild cards in one triad?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"No. Only one wild card can be used to complete a triad.\" }\n    }\n  ]\n}\n</script>\n{% endif %}\n\n{% if product.handle == 'stack-5' %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How many people can play Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Stack5 is a two-player game for ages 8 and up. Most games take 10–15 minutes.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How do you win Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"The first player to build a stack of exactly 5 of their own chips wins immediately. Any placement that would make a stack taller than 5 isn't allowed, so timing matters.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is Stack5 like Connect 4?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Like Connect 4, you only ever place pieces, and it's easy to learn. The difference is that Stack5 is about height, not lines. Each placement automatically merges your nearby stacks and knocks chips off your opponent's, so every move changes the board.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Do pieces ever move in Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Not by choice. Your only action is placing a chip. When you do, your adjacent stacks move on top of it, and adjacent opponent stacks of 2 or more lose their top chip.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Can younger kids play Stack5?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Stack5 is recommended for ages 8 and up. Because there's only one action per turn, younger kids can often pick it up quickly, especially playing alongside an adult.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What comes in the box?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"A 13.75 inch fabric game board with a 6x6 grid, 48 nesting chips (24 for each player), and a rule sheet.\" }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"When will my preorder ship?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Preorders are open now. We'll announce the ship date as soon as production is approved. Sign up for our newsletter to get updates.\" }\n    }\n  ]\n}\n</script>\n{% endif %}",
+        "background_color": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "sm_learn",
+    "sm_faq",
+    "sm_reviews",
+    "sm_related",
+    "custom_liquid_HVBTXD"
+  ]
+}
