@@ -9,20 +9,6 @@
  */
 {
   "sections": {
-    "sm_help_hero_LVjR4h": {
-      "type": "sm-help-hero",
-      "name": "Smidgen · Header + links",
-      "settings": {
-        "heading": "How can we help?",
-        "text": "",
-        "bg": "#20A4F3",
-        "fg": "#000000",
-        "divider": "wave",
-        "divider_to": "#FFFFFF",
-        "pad_top": 64,
-        "pad_bottom": 32
-      }
-    },
     "hero": {
       "type": "sm-hero",
       "settings": {
@@ -30,9 +16,9 @@
         "heading": "Bring Smidgen to your shelves.",
         "highlight": "Smidgen",
         "text": "<p>Award-winning family games in small boxes that demo in minutes.</p>",
-        "button_label": "Order on Faire",
+        "button_label": "Retailer log in",
         "button_link": "",
-        "button_2_label": "Apply for wholesale",
+        "button_2_label": "Order on Faire",
         "button_2_link": "shopify://pages/wholesale",
         "show_rating": true,
         "rating_text": "★★★★★ [rating] from [count] reviews",
@@ -58,6 +44,27 @@
         "divider_to": "#ffffff",
         "pad_top": 72,
         "pad_bottom": 40
+      }
+    },
+    "retailer_login": {
+      "type": "sm-retailer-login",
+      "settings": {
+        "shop_url": "",
+        "heading": "Already a Smidgen retailer?",
+        "text": "Log in to see wholesale pricing and place your order.",
+        "login_button": "Apply for wholesale",
+        "ws_heading": "Welcome back, [name]!",
+        "ws_text": "Your wholesale pricing is ready.",
+        "ws_button": "Go to the wholesale shop",
+        "pending_heading": "Want to carry Smidgen games?",
+        "pending_text": "Apply for a wholesale account and we'll set you up.",
+        "apply_link": "",
+        "apply_label": "Apply for wholesale",
+        "card_color": "#20A4F3",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 32,
+        "pad_bottom": 32
       }
     },
     "why": {
@@ -222,16 +229,11 @@
         "pad_top": 48,
         "pad_bottom": 72
       }
-    },
-    "retailer_login": {
-      "type": "sm-retailer-login",
-      "settings": {}
     }
   },
   "order": [
-    "sm_help_hero_LVjR4h",
-    "retailer_login",
     "hero",
+    "retailer_login",
     "why",
     "quotes",
     "faq"
