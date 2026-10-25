@@ -85,7 +85,7 @@
           "type": "link",
           "settings": {
             "label": "Orders & Shipping",
-            "link": "",
+            "link": "#orders",
             "icon_name": "package",
             "icon": "",
             "color": "#fff503",
@@ -96,7 +96,7 @@
           "type": "link",
           "settings": {
             "label": "Rules & pieces",
-            "link": "",
+            "link": "#rules",
             "icon_name": "book-open",
             "icon": "",
             "color": "#ea5d00",
@@ -107,7 +107,7 @@
           "type": "link",
           "settings": {
             "label": "Wholesale",
-            "link": "",
+            "link": "shopify://pages/wholesale",
             "icon_name": "tag",
             "icon": "",
             "color": "#753189",
@@ -118,7 +118,7 @@
           "type": "link",
           "settings": {
             "label": "Contact us",
-            "link": "",
+            "link": "#contact",
             "icon_name": "envelope-simple",
             "icon": "",
             "color": "#ffffff",
@@ -129,7 +129,7 @@
           "type": "link",
           "settings": {
             "label": "Pitch us a game",
-            "link": "",
+            "link": "#pitch",
             "icon_name": "handshake",
             "icon": "",
             "color": "#20a4f3",
@@ -204,7 +204,7 @@
       ],
       "name": "Smidgen · FAQ",
       "settings": {
-        "anchor": "faq",
+        "anchor": "orders",
         "heading": "Order & shipping",
         "use_product": true,
         "open_first": false,
@@ -262,7 +262,7 @@
       ],
       "name": "Smidgen · FAQ",
       "settings": {
-        "anchor": "faq",
+        "anchor": "rules",
         "heading": "Rules & pieces",
         "use_product": true,
         "open_first": false,
