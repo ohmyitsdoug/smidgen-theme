@@ -86,17 +86,6 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "sm_badges": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "badges",
-                "tile_color": "#fff503",
-                "bundle": "",
-                "heading": "Also in the Family Game Night Bundle",
-                "circle": "-20%"
-              },
-              "blocks": {}
-            },
             "group_icgrde": {
               "type": "group",
               "name": "t:names.header",
@@ -172,17 +161,6 @@
               "type": "sm-game-facts",
               "settings": {
                 "part": "tagline",
-                "tile_color": "#fff503",
-                "bundle": "",
-                "heading": "Also in the Family Game Night Bundle",
-                "circle": "-20%"
-              },
-              "blocks": {}
-            },
-            "sm_specs": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "specs",
                 "tile_color": "#fff503",
                 "bundle": "",
                 "heading": "Also in the Family Game Night Bundle",
@@ -320,51 +298,15 @@
                 }
               },
               "block_order": []
-            },
-            "sm_spec_dropdowns": {
-              "type": "sm-spec-dropdowns",
-              "settings": {
-                "box_label": "Box size & weight",
-                "size_row_label": "Size",
-                "length": "{{ closest.product.metafields.next_cart.length.value }}",
-                "width": "{{ closest.product.metafields.next_cart.width.value }}",
-                "height": "{{ closest.product.metafields.next_cart.height.value }}",
-                "box_unit": "in",
-                "weight_label": "Weight",
-                "weight_unit": "oz",
-                "weight_needs_size": true,
-                "weight": "{{ closest.product.metafields.custom.weight.value }}oz",
-                "testing_label": "Safety testing",
-                "testing_field": "custom.testing",
-                "testing_default": "<p>Meets ASTM F963, CPSIA and CPC safety testing standards.</p>",
-                "extra_label": "UPC",
-                "extra_field": "custom.upc"
-              },
-              "blocks": {}
-            },
-            "sm_bundle": {
-              "type": "sm-game-facts",
-              "settings": {
-                "part": "bundle",
-                "tile_color": "#fff503",
-                "bundle": "",
-                "heading": "Also in the Family Game Night Bundle",
-                "circle": "-20%"
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "sm_badges",
             "group_icgrde",
             "sm_tagline",
-            "sm_specs",
             "text_aEtTtq",
             "price_tVjtKg",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "sm_spec_dropdowns",
-            "sm_bundle"
+            "buy_buttons_eYQEYi"
           ]
         }
       },
@@ -381,23 +323,6 @@
         "background_color": "",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "sm_learn": {
-      "type": "sm-learn-to-play",
-      "settings": {
-        "heading": "Learn to play",
-        "rules_label": "Download the rules (PDF)",
-        "video_link": "{{ product.metafields.custom.how_to_play_youtube.value }}",
-        "video_field": "",
-        "steps_field": "custom.how_to_steps",
-        "rules_field": "smidgen.rules_pdf",
-        "bg": "#fff503",
-        "fg": "#000000",
-        "outer_color": "#ffffff",
-        "divider_shape": "wave",
-        "pad_top": 40,
-        "pad_bottom": 72
       }
     },
     "sm_faq": {
@@ -419,41 +344,6 @@
         "divider_to": "#ffffff",
         "pad_top": 24,
         "pad_bottom": 72
-      }
-    },
-    "sm_reviews": {
-      "type": "sm-reviews",
-      "blocks": {
-        "judge_me_reviews_review_widget_eAmVHE": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": true,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_eAmVHE"
-      ],
-      "settings": {
-        "heading": "Reviews",
-        "write_label": "Write a review",
-        "show_all_toggle": false,
-        "all_label": "See all reviews",
-        "empty_text": "Read what players are saying below.",
-        "max_reviews": 12,
-        "hide_empty": true,
-        "bg": "#ffffff",
-        "fg": "#000000",
-        "card_bg": "#ffffff",
-        "divider_top": "none",
-        "divider_from": "#ffffff",
-        "divider": "none",
-        "divider_to": "#20a4f3",
-        "pad_top": 24,
-        "pad_bottom": 80
       }
     },
     "sm_related": {
@@ -491,9 +381,7 @@
   },
   "order": [
     "main",
-    "sm_learn",
     "sm_faq",
-    "sm_reviews",
     "sm_related",
     "custom_liquid_HVBTXD"
   ]
