@@ -1731,3 +1731,14 @@ details.menu-open > .header__icon--summary .sm-burger i:nth-child(3) { top: 8.5p
 
 .sm-article__more { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
 .sm-article__more .sm-grid { justify-content: flex-start; }
+
+/* Product page: the sticky gallery (and details) stop just under the sticky
+   header instead of sliding beneath it. */
+#header-group:has(> .header-section > #header-component[data-sticky-state='active']) ~ * .product-information .sticky-content,
+#header-group:has(> .header-section > #header-component[data-sticky-state='active']) ~ * .product-information .sticky-content--desktop {
+  --sticky-header-offset: calc(var(--header-height, 72px) + 16px);
+}
+.product-information .sticky-content,
+.product-information .sticky-content--desktop {
+  transition: top .25s ease;
+}
