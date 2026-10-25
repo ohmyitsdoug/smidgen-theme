@@ -352,6 +352,16 @@
                 "circle": "-20%"
               },
               "blocks": {}
+            },
+            "sm_amazon": {
+              "type": "sm-amazon-button",
+              "settings": {
+                "label": "Also available on Amazon!",
+                "link_field": "custom.amazon_url",
+                "ga_event": "amazon_click",
+                "bg": "#FFFFFF",
+                "fg": "#000000"
+              }
             }
           },
           "block_order": [
@@ -363,6 +373,7 @@
             "price_tVjtKg",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "sm_amazon",
             "sm_spec_dropdowns",
             "sm_bundle"
           ]
