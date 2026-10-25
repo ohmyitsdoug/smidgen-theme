@@ -1902,3 +1902,11 @@ main [id], .shopify-section[id], section[id] {
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html, .page-wrapper { scroll-behavior: auto !important; } }
+
+/* Blog post doodles: two repeating columns that run the full length of any post */
+.sm-article__doodles {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='1800' viewBox='0 0 230 1800' fill='none'%3E %3Cpath d='M10 245 C 35 210, 60 210, 80 245 S 125 280, 145 245 S 190 210, 210 245' stroke='%23EA5D00' stroke-width='16' stroke-linecap='round'/%3E %3Cpath d='M115 760 m-8 0 a8 8 0 1 1 16 0 a18 18 0 1 1 -36 0 a28 28 0 1 1 56 0' stroke='%23753189' stroke-width='12' stroke-linecap='round'/%3E %3Cpath d='M20 1200 C 40 1160, 70 1148, 92 1164 C 108 1176, 94 1194, 80 1186 C 66 1178, 84 1152, 118 1154 C 150 1156, 170 1172, 186 1194' stroke='%23000' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M166 1192 L188 1198 L184 1176' stroke='%23000' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M110 1554 L120 1586 L154 1580 L128 1602 L148 1632 L116 1620 L104 1646 L98 1614 L66 1620 L88 1596 L68 1570 L100 1580 Z' fill='%23EA5D00' stroke='%23000' stroke-width='4' stroke-linejoin='round'/%3E %3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='1800' viewBox='0 0 230 1800' fill='none'%3E %3Cpath d='M115 504 L125 536 L159 530 L133 552 L153 582 L121 570 L109 596 L103 564 L71 570 L93 546 L73 520 L105 530 Z' fill='%2320A4F3' stroke='%23000' stroke-width='4' stroke-linejoin='round'/%3E %3Cpath d='M45 1000 L75 1040 L105 1000 L135 1040 L165 1000' stroke='%23753189' stroke-width='14' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10 1400 C 35 1365, 60 1365, 80 1400 S 125 1435, 145 1400 S 190 1365, 210 1400' stroke='%2320A4F3' stroke-width='16' stroke-linecap='round'/%3E %3Ccircle cx='115' cy='1720' r='34' stroke='%23753189' stroke-width='12'/%3E %3C/svg%3E");
+  background-repeat: repeat-y, repeat-y;
+  background-position: left max(16px, calc(50% - 760px)) top 280px, right max(16px, calc(50% - 760px)) top 280px;
+  background-size: 200px auto, 200px auto;
+}

@@ -8,15 +8,7 @@
 -%}
 <section class="sm-section sm-article" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
   {%- if s.show_doodles -%}
-    <div class="sm-article__doodles" aria-hidden="true">
-      {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', style: 'left: 4%; top: 340px;' %}
-      {% render 'sm-doodle', shape: 'star', color: '#20A4F3', style: 'right: 6%; top: 620px;' %}
-      {% render 'sm-doodle', shape: 'spiral', color: '#753189', style: 'left: 6%; top: 1100px;' %}
-      {% render 'sm-doodle', shape: 'zigzag', color: '#753189', style: 'right: 5%; top: 1500px;' %}
-      {% render 'sm-doodle', shape: 'loop-arrow', color: '#000000', style: 'left: 3%; top: 1950px;' %}
-      {% render 'sm-doodle', shape: 'squiggle', color: '#20A4F3', style: 'right: 4%; top: 2400px;' %}
-      {% render 'sm-doodle', shape: 'star', color: '#EA5D00', style: 'left: 7%; top: 2850px;' %}
-    </div>
+    <div class="sm-article__doodles" aria-hidden="true"></div>
   {%- endif -%}
 
   <div class="sm-container sm-article__wrap" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
