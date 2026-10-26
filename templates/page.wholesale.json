@@ -21,7 +21,7 @@
         "button_link": "shopify://pages/wholesale-shop",
         "button_2_label": "Order on Faire",
         "button_2_link": "https://smidgengames.faire.com",
-        "show_rating": false,
+        "show_rating": true,
         "rating_text": "",
         "rating_link": "",
         "rating_override": "",
