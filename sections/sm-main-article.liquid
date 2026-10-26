@@ -53,7 +53,8 @@
       {%- if more_count > 0 -%}
         <div class="sm-article__more">
           <h2 class="sm-display" style="font-size: clamp(2.2rem, 5vw, 3rem); margin: 0;">{{ s.more_heading }}</h2>
-          <div class="sm-grid sm-grid--cards" style="--sm-min: 240px; --sm-max: 340px;">{{ more_cards }}</div>
+          {%- assign more_min = s.more_card_max | at_most: 240 -%}
+          <div class="sm-grid sm-grid--cards" style="--sm-min: {{ more_min }}px; --sm-max: {{ s.more_card_max }}px;">{{ more_cards }}</div>
         </div>
       {%- endif -%}
     {%- endif -%}
@@ -150,6 +151,16 @@
       "id": "more_heading",
       "label": "More posts heading",
       "default": "More from the blog"
+    },
+    {
+      "type": "range",
+      "id": "more_card_max",
+      "label": "More posts: max card width",
+      "min": 200,
+      "max": 460,
+      "step": 10,
+      "unit": "px",
+      "default": 280
     },
     {
       "type": "header",
