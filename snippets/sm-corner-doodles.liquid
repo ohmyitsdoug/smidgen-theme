@@ -1,0 +1,14 @@
+{%- doc -%}
+  The four corner doodles every Smidgen section offers (Corner doodles
+  settings: doodle_tl / doodle_tr / doodle_bl / doodle_br plus a color each).
+
+  @param {object} section - the current section
+{%- enddoc -%}
+{%- liquid
+  assign cs = section.settings
+  assign sec_bg = cs.bg | default: cs.hero_bg | default: cs.section_bg
+-%}
+{%- if cs.doodle_tl != blank and cs.doodle_tl != 'none' -%}{% render 'sm-doodle', shape: cs.doodle_tl, color: cs.doodle_tl_color, position: 'top-left', bg: sec_bg %}{%- endif -%}
+{%- if cs.doodle_tr != blank and cs.doodle_tr != 'none' -%}{% render 'sm-doodle', shape: cs.doodle_tr, color: cs.doodle_tr_color, position: 'top-right', bg: sec_bg %}{%- endif -%}
+{%- if cs.doodle_bl != blank and cs.doodle_bl != 'none' -%}{% render 'sm-doodle', shape: cs.doodle_bl, color: cs.doodle_bl_color, position: 'bottom-left', bg: sec_bg %}{%- endif -%}
+{%- if cs.doodle_br != blank and cs.doodle_br != 'none' -%}{% render 'sm-doodle', shape: cs.doodle_br, color: cs.doodle_br_color, position: 'bottom-right', bg: sec_bg %}{%- endif -%}

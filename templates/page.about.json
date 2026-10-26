@@ -33,11 +33,6 @@
         "badge_size": 160,
         "badge_rotate": 10,
         "badge_link": "",
-        "doodle": "squiggle",
-        "doodle_color": "#fff503",
-        "doodle_position": "top-right",
-        "doodle_2": "none",
-        "doodle_2_color": "#ea5d00",
         "btn_bg": "",
         "btn_fg": "",
         "btn2_bg": "",
@@ -47,7 +42,9 @@
         "divider": "wave",
         "divider_to": "#ffffff",
         "pad_top": 72,
-        "pad_bottom": 56
+        "pad_bottom": 56,
+        "doodle_tr": "squiggle",
+        "doodle_tr_color": "#fff503"
       }
     },
     "story": {
@@ -64,8 +61,6 @@
         "button_label": "",
         "button_link": "",
         "button_style": "primary",
-        "doodle": "none",
-        "doodle_color": "#ea5d00",
         "btn_bg": "",
         "btn_fg": "",
         "btn2_bg": "",
@@ -75,7 +70,9 @@
         "divider": "zigzag",
         "divider_to": "#fff503",
         "pad_top": 48,
-        "pad_bottom": 88
+        "pad_bottom": 88,
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00"
       }
     },
     "values": {
@@ -122,14 +119,14 @@
       ],
       "settings": {
         "heading": "What every Smidgen game has to do",
-        "doodle": "none",
-        "doodle_color": "#fff503",
         "bg": "#fff503",
         "fg": "#000000",
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 64,
-        "pad_bottom": 32
+        "pad_bottom": 32,
+        "doodle_tr": "none",
+        "doodle_tr_color": "#fff503"
       }
     },
     "sm_callout_RPELUc": {
@@ -206,14 +203,14 @@
       ],
       "settings": {
         "heading": "The story so far",
-        "doodle": "none",
-        "doodle_color": "#fff503",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider": "scallop",
         "divider_to": "#20a4f3",
         "pad_top": 64,
-        "pad_bottom": 88
+        "pad_bottom": 88,
+        "doodle_tr": "none",
+        "doodle_tr_color": "#fff503"
       }
     },
     "stats": {

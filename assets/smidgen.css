@@ -1940,3 +1940,7 @@ h1, h2, h3, h4, h5, h6, .sm-display, .sm-sticker,
   .sm-pattern-bg::before { background-size: calc(var(--sm-pattern-size, 640px) * 0.7) auto; }
 }
 .sm-shape { display: block; overflow: visible; }
+
+/* Retailer quote: store sticker as a link */
+.sm-sticker--link { text-decoration: none; }
+.sm-sticker--link:hover, .sm-sticker--link:focus-visible { text-decoration: underline; text-underline-offset: 3px; }

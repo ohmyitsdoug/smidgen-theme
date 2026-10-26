@@ -34,11 +34,6 @@
         "badge_size": 160,
         "badge_rotate": 10,
         "badge_link": "",
-        "doodle": "zigzag",
-        "doodle_color": "#753189",
-        "doodle_position": "top-left",
-        "doodle_2": "none",
-        "doodle_2_color": "#20a4f3",
         "btn_bg": "",
         "btn_fg": "",
         "btn2_bg": "",
@@ -48,7 +43,11 @@
         "divider": "wave",
         "divider_to": "#ffffff",
         "pad_top": 72,
-        "pad_bottom": 40
+        "pad_bottom": 40,
+        "doodle_tl": "zigzag",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#20a4f3"
       }
     },
     "retailer_login": {
@@ -133,14 +132,14 @@
       ],
       "settings": {
         "heading": "Why stores stock us",
-        "doodle": "none",
-        "doodle_color": "#fff503",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider": "none",
         "divider_to": "#ffffff",
         "pad_top": 64,
-        "pad_bottom": 88
+        "pad_bottom": 88,
+        "doodle_tr": "none",
+        "doodle_tr_color": "#fff503"
       }
     },
     "quotes": {
@@ -188,7 +187,6 @@
       "settings": {
         "eyebrow": "From our retailers",
         "heading": "Don't take our word for it",
-        "doodle_color": "#fff503",
         "bg": "#753189",
         "fg": "#ffffff",
         "divider_top": "wave",
@@ -196,7 +194,8 @@
         "divider": "wave",
         "divider_to": "#ffffff",
         "pad_top": 40,
-        "pad_bottom": 80
+        "pad_bottom": 80,
+        "doodle_tr_color": "#fff503"
       }
     },
     "faq": {
