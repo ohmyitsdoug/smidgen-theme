@@ -24,7 +24,7 @@
               {{ s.image | image_url: width: 1000 | image_tag: alt: img_alt, loading: 'lazy', sizes: '(min-width: 900px) 440px, 90vw', style: 'width: 100%; max-width: 440px; height: auto; transform: rotate(-2deg);' }}
             {%- endif -%}
             {%- if s.note != blank -%}
-              <span class="sm-hero__note" style="left: 0; bottom: 8px;">{{ s.note }}</span>
+              <span class="sm-hero__note" style="left: 0; bottom: 8px;{% render 'sm-note-vars', s: s %}">{{ s.note }}</span>
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -94,6 +94,29 @@
       "type": "text",
       "id": "note",
       "label": "Hand-written note on image"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Note text color",
+      "info": "Empty uses the section's text color."
+    },
+    {
+      "type": "color",
+      "id": "note_outline_color",
+      "label": "Note outline color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "note_outline",
+      "label": "Note outline thickness",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 6,
+      "info": "0 turns the outline off."
     },
     {
       "type": "text",

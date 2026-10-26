@@ -64,7 +64,7 @@
             {%- endif -%}
           </div>
           {%- if s.note != blank -%}
-            <span class="sm-hero__note">{{ s.note }}</span>
+            <span class="sm-hero__note" style="{% render 'sm-note-vars', s: s %}">{{ s.note }}</span>
           {%- endif -%}
           {%- if s.show_badge and s.badge_image != blank -%}
             {%- capture badge_img -%}
@@ -216,6 +216,29 @@
       "id": "note",
       "label": "Hand-written note",
       "default": "2025 Strategy Game of the Year!"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Note text color",
+      "info": "Empty uses the section's text color."
+    },
+    {
+      "type": "color",
+      "id": "note_outline_color",
+      "label": "Note outline color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "note_outline",
+      "label": "Note outline thickness",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 6,
+      "info": "0 turns the outline off."
     },
     {
       "type": "header",

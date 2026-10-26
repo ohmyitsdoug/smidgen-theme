@@ -508,6 +508,11 @@ html .button-secondary:hover {
   line-height: 1.05;
   max-width: 220px;
   font-weight: 400;
+  color: var(--sm-note-color, inherit);
+  /* Outline drawn behind the letters so thick strokes don't eat the shapes */
+  -webkit-text-stroke: var(--sm-note-outline, 0) var(--sm-note-outline-color, #000);
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .sm-hero__copy {

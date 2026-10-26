@@ -1,0 +1,6 @@
+{%- doc -%}
+  Inline CSS variables for the hand-written note (text color and outline).
+  @param {object} s - section settings
+{%- enddoc -%}
+{%- if s.note_color != blank %} --sm-note-color: {{ s.note_color }};{% endif -%}
+{%- if s.note_outline > 0 %} --sm-note-outline: {{ s.note_outline | times: 2 }}px; --sm-note-outline-color: {{ s.note_outline_color | default: '#000000' }};{% endif -%}
