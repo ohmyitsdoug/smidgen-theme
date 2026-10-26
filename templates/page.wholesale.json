@@ -59,10 +59,10 @@
       "settings": {
         "preview_as": "guest",
         "shop_url": "",
-        "heading": "Already a Smidgen retailer?",
-        "text": "Log in to see wholesale pricing and place your order.",
+        "heading": "Looking to become a Smidgen retailer?",
+        "text": "Become an approved retailer to see wholesale pricing and place an order.",
         "show_login": true,
-        "login_button": "Log in",
+        "login_button": "",
         "ws_heading": "Welcome back, [name]!",
         "ws_text": "Your wholesale pricing is ready.",
         "ws_button": "Go to the wholesale shop",
