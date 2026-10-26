@@ -1910,3 +1910,6 @@ html { scroll-behavior: smooth; }
   background-position: left max(16px, calc(50% - 760px)) top 280px, right max(16px, calc(50% - 760px)) top 280px;
   background-size: 200px auto, 200px auto;
 }
+
+.sm-faq__group { margin: 24px 0 0; font-family: var(--sm-font-display); font-weight: 900; font-size: clamp(1.6rem, 3.4vw, 2.1rem); line-height: 1; }
+.sm-faq__group:first-child { margin-top: 0; }

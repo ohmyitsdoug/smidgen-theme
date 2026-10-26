@@ -20,7 +20,7 @@
             <div class="sm-ws__row{% unless product.available %} is-soldout{% endunless %}" data-sm-ws-row data-keep="{{ row_keep }}">
               <a href="{{ product.url }}" class="sm-ws__img" tabindex="-1" aria-hidden="true">
                 {%- if product.featured_media -%}
-                  {{ product.featured_media | image_url: width: 240 | image_tag: alt: '', loading: 'lazy', sizes: '96px' }}
+                  {{ product.featured_media | image_url: width: 240 | image_tag: alt: product.title, loading: 'lazy', sizes: '96px' }}
                 {%- endif -%}
               </a>
               <div class="sm-ws__info">

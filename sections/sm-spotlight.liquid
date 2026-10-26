@@ -16,8 +16,8 @@
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     <div class="sm-split" {% if s.image_side == 'right' %}style="flex-direction: row-reverse;"{% endif %}>
       <div style="display: flex; justify-content: center;">
-        {%- if s.image != blank -%}
-          {{ s.image | image_url: width: 1000 | image_tag: alt: s.image.alt, loading: 'lazy', sizes: '(min-width: 900px) 520px, 90vw', style: 'width: 100%; max-width: 520px; height: auto; border: var(--sm-outline); border-radius: 32px; box-shadow: var(--sm-shadow-lg); transform: rotate(-2deg);' }}
+        {%- assign img_alt = s.image.alt | default: title | default: shop.name -%}{%- if s.image != blank -%}
+          {{ s.image | image_url: width: 1000 | image_tag: alt: img_alt, loading: 'lazy', sizes: '(min-width: 900px) 520px, 90vw', style: 'width: 100%; max-width: 520px; height: auto; border: var(--sm-outline); border-radius: 32px; box-shadow: var(--sm-shadow-lg); transform: rotate(-2deg);' }}
         {%- elsif p.featured_media -%}
           {{ p.featured_media | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy', sizes: '(min-width: 900px) 440px, 80vw', style: 'width: 80%; max-width: 440px; height: auto; transform: rotate(-4deg); filter: drop-shadow(10px 12px 0 #000);' }}
         {%- endif -%}

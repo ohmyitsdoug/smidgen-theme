@@ -30,7 +30,7 @@
         {%- if s.eyebrow != blank -%}
           <span class="sm-sticker">{{ s.eyebrow }}</span>
         {%- endif -%}
-        <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</h1>
+        <{{ section.settings.heading_tag | default: 'h1' }} id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</{{ section.settings.heading_tag | default: 'h1' }}>
         {%- if s.text != blank -%}
           <div class="sm-lede">{{ s.text }}</div>
         {%- endif -%}
@@ -48,13 +48,14 @@
       {%- if s.image != blank -%}
         {%- assign focal = s.image.presentation.focal_point | default: '50% 50%' -%}
         {%- assign focal_style = 'object-position: ' | append: focal -%}
-        {{ s.image | image_url: width: 2000 | image_tag: alt: s.image.alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 1180px, 130vw', widths: '800, 1200, 1600, 2000', style: focal_style }}
+        {%- assign arc_alt = s.image.alt | default: s.heading | default: shop.name -%}
+        {{ s.image | image_url: width: 2000 | image_tag: alt: arc_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 1180px, 130vw', widths: '800, 1200, 1600, 2000', style: focal_style }}
       {%- elsif request.design_mode -%}
         <span class="sm-arc__hint">Pick an image in this section's settings. Set its focal point in Shopify so the important part stays in view.</span>
       {%- endif -%}
     </div>
     {%- if s.cutout != blank -%}
-      {{ s.cutout | image_url: width: 700 | image_tag: alt: s.cutout.alt, loading: 'eager', class: 'sm-arc__cutout', sizes: '320px' }}
+      {%- assign cut_alt = s.cutout.alt | default: 'Smidgen game box' -%}{{ s.cutout | image_url: width: 700 | image_tag: alt: cut_alt, loading: 'eager', class: 'sm-arc__cutout', sizes: '320px' }}
     {%- endif -%}
   </div>
 </section>
@@ -68,6 +69,23 @@
   "tag": "div",
   "class": "sm-hero-arc-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Main page heading (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Section heading (H2)"
+        }
+      ],
+      "default": "h1",
+      "info": "Each page should have one H1. If a page has two heroes, set the second to H2."
+    },
     {
       "type": "header",
       "content": "Text"

@@ -17,7 +17,13 @@
         {%- endif -%}
         {%- if s.blurb != blank -%}<div class="sm-rte" style="font-size: 0.95rem; opacity: 0.9;">{{ s.blurb }}</div>{%- endif -%}
 
-        {%- if s.show_signup -%}
+        {%- liquid
+  assign show_signup = s.show_signup
+  if request.page_type == 'index' and s.hide_signup_home
+    assign show_signup = false
+  endif
+-%}
+        {%- if show_signup -%}
           <div style="display: flex; flex-direction: column; gap: 10px;">
             {%- if s.signup_heading != blank -%}
               <h2 class="sm-display" style="font-size: 2rem;">{{ s.signup_heading }}</h2>
@@ -35,11 +41,11 @@
         {%- endif -%}
 
         {%- capture socials -%}
-          {%- if s.instagram != blank -%}<a href="{{ s.instagram }}" aria-label="Instagram" class="sm-footer__social">{% render 'sm-icon', name: 'instagram-logo', size: 22 %}</a>{%- endif -%}
-          {%- if s.tiktok != blank -%}<a href="{{ s.tiktok }}" aria-label="TikTok" class="sm-footer__social">{% render 'sm-icon', name: 'tiktok-logo', size: 22 %}</a>{%- endif -%}
-          {%- if s.youtube != blank -%}<a href="{{ s.youtube }}" aria-label="YouTube" class="sm-footer__social">{% render 'sm-icon', name: 'youtube-logo', size: 22 %}</a>{%- endif -%}
-          {%- if s.facebook != blank -%}<a href="{{ s.facebook }}" aria-label="Facebook" class="sm-footer__social">{% render 'sm-icon', name: 'facebook-logo', size: 22 %}</a>{%- endif -%}
-          {%- if s.x != blank -%}<a href="{{ s.x }}" aria-label="X" class="sm-footer__social">{% render 'sm-icon', name: 'x-logo', size: 22 %}</a>{%- endif -%}
+          {%- if s.instagram != blank -%}<a href="{{ s.instagram }}" class="sm-footer__social" rel="me noopener" target="_blank">{% render 'sm-icon', name: 'instagram-logo', size: 22 %}<span class="sm-visually-hidden">Smidgen on Instagram</span></a>{%- endif -%}
+          {%- if s.tiktok != blank -%}<a href="{{ s.tiktok }}" class="sm-footer__social" rel="me noopener" target="_blank">{% render 'sm-icon', name: 'tiktok-logo', size: 22 %}<span class="sm-visually-hidden">Smidgen on TikTok</span></a>{%- endif -%}
+          {%- if s.youtube != blank -%}<a href="{{ s.youtube }}" class="sm-footer__social" rel="me noopener" target="_blank">{% render 'sm-icon', name: 'youtube-logo', size: 22 %}<span class="sm-visually-hidden">Smidgen on YouTube</span></a>{%- endif -%}
+          {%- if s.facebook != blank -%}<a href="{{ s.facebook }}" class="sm-footer__social" rel="me noopener" target="_blank">{% render 'sm-icon', name: 'facebook-logo', size: 22 %}<span class="sm-visually-hidden">Smidgen on Facebook</span></a>{%- endif -%}
+          {%- if s.x != blank -%}<a href="{{ s.x }}" class="sm-footer__social" rel="me noopener" target="_blank">{% render 'sm-icon', name: 'x-logo', size: 22 %}<span class="sm-visually-hidden">Smidgen on X</span></a>{%- endif -%}
         {%- endcapture -%}
         {%- if socials != blank -%}
           <div style="display: flex; flex-wrap: wrap; gap: 10px;">{{ socials }}</div>
@@ -109,10 +115,17 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "hide_signup_home",
+      "label": "Hide signup on the homepage",
+      "default": true,
+      "info": "Avoids two signup forms when the homepage already has a newsletter section."
+    },
+    {
       "type": "text",
       "id": "signup_heading",
       "label": "Signup heading",
-      "default": "Join the game night crew"
+      "default": "Join the Smidgen family"
     },
     {
       "type": "text",

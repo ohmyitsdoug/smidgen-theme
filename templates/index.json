@@ -115,7 +115,7 @@
         "product": "cuno",
         "image": "shopify://shop_images/CUNO_BOX.png",
         "circle_color": "#753189",
-        "note": "",
+        "note": "CUNO: 2025 Sparks Play Award for Strategy Game of the Year",
         "show_badge": true,
         "badge_image": "shopify://shop_images/CUNO_Strategy.png",
         "badge_size": 260,
@@ -226,7 +226,7 @@
       "type": "sm-game-grid",
       "name": "Smidgen · Game grid",
       "settings": {
-        "heading": "Show your pride",
+        "heading": "Smidgen merch",
         "link_label": "",
         "link": "",
         "source": "products",

@@ -15,12 +15,12 @@
     {% render 'sm-doodle', shape: s.doodle, color: s.doodle_color, position: 'top-right' %}
     <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
       <div class="sm-split" {% if s.image_side == 'right' %}style="flex-direction: row-reverse;"{% endif %}>
-        {%- if s.image != blank -%}
+        {%- assign img_alt = s.image.alt | default: s.heading | default: shop.name -%}{%- if s.image != blank -%}
           <div style="position: relative; display: flex; justify-content: center;">
             {%- if s.image_style == 'framed' -%}
-              {{ s.image | image_url: width: 1000 | image_tag: alt: s.image.alt, loading: 'lazy', sizes: '(min-width: 900px) 520px, 90vw', style: 'width: 100%; max-width: 520px; height: auto; border: var(--sm-outline); border-radius: 30px; box-shadow: var(--sm-shadow-lg); transform: rotate(-2deg);' }}
+              {{ s.image | image_url: width: 1000 | image_tag: alt: img_alt, loading: 'lazy', sizes: '(min-width: 900px) 520px, 90vw', style: 'width: 100%; max-width: 520px; height: auto; border: var(--sm-outline); border-radius: 30px; box-shadow: var(--sm-shadow-lg); transform: rotate(-2deg);' }}
             {%- else -%}
-              {{ s.image | image_url: width: 1000 | image_tag: alt: s.image.alt, loading: 'lazy', sizes: '(min-width: 900px) 440px, 90vw', style: 'width: 100%; max-width: 440px; height: auto; transform: rotate(-2deg);' }}
+              {{ s.image | image_url: width: 1000 | image_tag: alt: img_alt, loading: 'lazy', sizes: '(min-width: 900px) 440px, 90vw', style: 'width: 100%; max-width: 440px; height: auto; transform: rotate(-2deg);' }}
             {%- endif -%}
             {%- if s.note != blank -%}
               <span class="sm-hero__note" style="left: 0; bottom: 8px;">{{ s.note }}</span>

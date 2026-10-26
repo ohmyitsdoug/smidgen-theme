@@ -7,7 +7,7 @@
 >
   {% render 'sm-doodle', shape: 'spiral', color: '#FFF503', position: 'top-right' %}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
-    <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ s.heading | default: page.title }}</h1>
+    <{{ section.settings.heading_tag | default: 'h1' }} id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ s.heading | default: page.title }}</{{ section.settings.heading_tag | default: 'h1' }}>
     {%- if s.text != blank -%}<div class="sm-lede">{{ s.text }}</div>{%- endif -%}
     {%- if section.blocks.size > 0 -%}
       <ul class="sm-grid" style="--sm-min: 220px; margin: 0; padding: 0; list-style: none; gap: 20px;">
@@ -43,6 +43,23 @@
   "tag": "div",
   "max_blocks": 8,
   "settings": [
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Main page heading (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Section heading (H2)"
+        }
+      ],
+      "default": "h1",
+      "info": "Each page should have one H1. If a page has two heroes, set the second to H2."
+    },
     {
       "type": "text",
       "id": "heading",
