@@ -12,7 +12,7 @@
     "main": {
       "type": "sm-wholesale-shop",
       "settings": {
-        "preview_as": "wholesale",
+        "preview_as": "guest",
         "collection": "wholesale",
         "extra_products": [
           "mrbls-small-retail-display-box-5-copies",
@@ -23,6 +23,7 @@
         "discount_code": "SMIDGEN-RETAIL-50",
         "qty_step": 1,
         "show_sku": true,
+        "show_stock": false,
         "eyebrow": "Retailer portal",
         "heading": "Wholesale shop",
         "text": "<p>Pick your quantities and add everything to your order at once. Wholesale pricing is applied at checkout.</p><p>If you have any questions, please feel free to email us at <a href=\"mailto:info@playsmidgen.com\" title=\"mailto:info@playsmidgen.com\">info@playsmidgen.com.</a></p>",

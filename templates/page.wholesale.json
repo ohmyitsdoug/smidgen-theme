@@ -12,14 +12,15 @@
     "hero": {
       "type": "sm-hero",
       "settings": {
+        "heading_tag": "h1",
         "eyebrow": "For retailers & educators",
         "heading": "Bring Smidgen to your shelves.",
         "highlight": "Smidgen",
         "text": "<p>Award-winning family games in small boxes that demo in minutes.</p>",
         "button_label": "Retailer log in",
-        "button_link": "",
+        "button_link": "shopify://pages/wholesale-shop",
         "button_2_label": "Order on Faire",
-        "button_2_link": "shopify://pages/wholesale",
+        "button_2_link": "https://www.faire.com/brand/b_pn66wa4hqs",
         "show_rating": false,
         "rating_text": "",
         "rating_link": "",
@@ -53,6 +54,7 @@
     "retailer_login": {
       "type": "sm-retailer-login",
       "settings": {
+        "preview_as": "guest",
         "shop_url": "",
         "heading": "Already a Smidgen retailer?",
         "text": "Log in to see wholesale pricing and place your order.",
@@ -64,13 +66,13 @@
         "pending_text": "Apply for a wholesale account and we'll set you up.",
         "apply_link": "shopify://pages/contact-us",
         "apply_label": "Apply for wholesale",
-        "btn_bg": "#FFFFFF",
+        "btn_bg": "#ffffff",
         "btn_fg": "#753189",
         "btn2_bg": "",
         "btn2_fg": "",
-        "card_color": "#FFF503",
+        "card_color": "#fff503",
         "bg": "#ffffff",
-        "fg": "#FFFFFF",
+        "fg": "#ffffff",
         "pad_top": 32,
         "pad_bottom": 32
       }
