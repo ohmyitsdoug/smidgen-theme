@@ -234,6 +234,13 @@
     "faq": {
       "type": "sm-faq",
       "blocks": {
+        "question_kxnkH9": {
+          "type": "question",
+          "settings": {
+            "question": "Which distributors do you current work with?",
+            "answer": "<p>You can also order our games through PSI distribution. Contact your rep today.</p>"
+          }
+        },
         "f1": {
           "type": "question",
           "settings": {
@@ -250,6 +257,7 @@
         }
       },
       "block_order": [
+        "question_kxnkH9",
         "f1",
         "f2"
       ],
