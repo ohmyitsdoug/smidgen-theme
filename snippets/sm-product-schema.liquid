@@ -20,9 +20,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Product",
-  "@id": {{ request.origin | append: p.url | append: '#product' | json }},
+  "@id": {{ shop.url | append: p.url | append: '#product' | json }},
   "name": {{ p.title | json }},
-  "url": {{ request.origin | append: p.url | json }},
+  "url": {{ shop.url | append: p.url | json }},
   {%- if desc != blank %}
   "description": {{ desc | json }},
   {%- endif %}
@@ -61,7 +61,7 @@
       "@type": "Offer",
       {%- if v.sku != blank %}"sku": {{ v.sku | json }},{% endif %}
       {%- unless p.has_only_default_variant %}"name": {{ v.title | json }},{% endunless %}
-      "url": {{ request.origin | append: v.url | json }},
+      "url": {{ shop.url | append: v.url | json }},
       "price": {{ v.price | divided_by: 100.0 | json }},
       "priceCurrency": {{ cart.currency.iso_code | json }},
       "priceValidUntil": {{ valid_until | json }},
