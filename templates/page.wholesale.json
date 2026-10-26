@@ -61,7 +61,7 @@
         "shop_url": "",
         "heading": "Already a Smidgen retailer?",
         "text": "Log in to see wholesale pricing and place your order.",
-        "login_button": "Apply for wholesale",
+        "login_button": "Log in",
         "ws_heading": "Welcome back, [name]!",
         "ws_text": "Your wholesale pricing is ready.",
         "ws_button": "Go to the wholesale shop",

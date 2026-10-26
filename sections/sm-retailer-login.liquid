@@ -44,8 +44,8 @@
         {%- elsif view == 'pending' -%}
           {%- if s.apply_link != blank -%}<a class="sm-btn" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
         {%- else -%}
-          <a class="sm-btn" href="{{ login_url }}">{{ s.login_button }}</a>
-          {%- if s.apply_link != blank -%}<a class="sm-btn sm-btn--secondary" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
+          {%- if s.show_login and s.login_button != blank -%}<a class="sm-btn" href="{{ login_url }}">{{ s.login_button }}</a>{%- endif -%}
+          {%- if s.show_apply_guest and s.apply_link != blank and s.apply_label != blank -%}<a class="sm-btn sm-btn--secondary" href="{{ s.apply_link }}">{{ s.apply_label }}</a>{%- endif -%}
         {%- endif -%}
       </div>
     </div>
@@ -105,10 +105,17 @@
       "default": "Log in to see wholesale pricing and place your order."
     },
     {
+      "type": "checkbox",
+      "id": "show_login",
+      "label": "Logged out: show login button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "login_button",
       "label": "Log in button",
-      "default": "Retailer log in"
+      "default": "Retailer log in",
+      "info": "Goes to the customer login page, then on to the wholesale shop."
     },
     {
       "type": "header",
@@ -159,6 +166,13 @@
       "id": "apply_label",
       "label": "Apply button",
       "default": "Apply for wholesale"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_apply_guest",
+      "label": "Logged out: also show the apply button",
+      "default": true,
+      "info": "The apply button always shows for logged-in customers who aren't approved yet."
     },
     {
       "type": "header",
