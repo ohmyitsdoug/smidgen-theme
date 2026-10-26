@@ -75,7 +75,10 @@
         "bg": "#ffffff",
         "fg": "#000000",
         "pad_top": 40,
-        "pad_bottom": 96
+        "pad_bottom": 96,
+        "show_pattern": true,
+        "pattern_mode": "brand",
+        "pattern_opacity": 15
       }
     }
   },
