@@ -7,9 +7,7 @@
   assign img_alt = article.image.alt | default: article.title
 -%}
 <section class="sm-section sm-article" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
-  {%- if s.show_doodles -%}
-    <div class="sm-article__doodles" aria-hidden="true"></div>
-  {%- endif -%}
+  {%- if s.show_doodles -%}{% render 'sm-pattern-bg', bg: s.bg, mode: s.pattern_mode, color: s.pattern_color, opacity: s.pattern_opacity, size: s.pattern_size, outline: s.pattern_outline, scroll: s.pattern_scroll %}{%- endif -%}
 
   <div class="sm-container sm-article__wrap" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     <header class="sm-article__head">
@@ -143,12 +141,6 @@
     },
     {
       "type": "checkbox",
-      "id": "show_doodles",
-      "label": "Doodles in the background",
-      "default": true
-    },
-    {
-      "type": "checkbox",
       "id": "show_more",
       "label": "Show more posts at the bottom",
       "default": true
@@ -202,6 +194,73 @@
       "id": "fg",
       "label": "Text",
       "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Background pattern"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_doodles",
+      "label": "Show shape pattern",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pattern_mode",
+      "label": "Pattern colors",
+      "options": [
+        {
+          "value": "single",
+          "label": "One color"
+        },
+        {
+          "value": "brand",
+          "label": "Brand colors"
+        }
+      ],
+      "default": "single",
+      "info": "Brand colors never put two matching shapes side by side, and skip colors too close to the background."
+    },
+    {
+      "type": "color",
+      "id": "pattern_color",
+      "label": "Pattern color",
+      "default": "#FFFFFF",
+      "info": "Used with One color."
+    },
+    {
+      "type": "range",
+      "id": "pattern_opacity",
+      "label": "Pattern strength",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "pattern_size",
+      "label": "Pattern scale",
+      "min": 320,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "default": 640
+    },
+    {
+      "type": "checkbox",
+      "id": "pattern_outline",
+      "label": "Outline pattern shapes",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pattern_scroll",
+      "label": "Scroll pattern with the page",
+      "default": false,
+      "info": "Off keeps the pattern still while the page moves."
     },
     {
       "type": "range",

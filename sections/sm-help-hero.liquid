@@ -5,7 +5,7 @@
   style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
   aria-labelledby="sm-{{ section.id }}-title"
 >
-  {% render 'sm-doodle', shape: 'spiral', color: '#FFF503', position: 'top-right' %}
+  {% render 'sm-doodle', shape: 'spiral', color: '#FFF503', position: 'top-right', bg: section.settings.bg %}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     <{{ section.settings.heading_tag | default: 'h1' }} id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ s.heading | default: page.title }}</{{ section.settings.heading_tag | default: 'h1' }}>
     {%- if s.text != blank -%}<div class="sm-lede">{{ s.text }}</div>{%- endif -%}

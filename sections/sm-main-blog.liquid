@@ -10,8 +10,11 @@
   endif
 -%}
 <section class="sm-section sm-blog" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}">
-  {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right' %}
-  {% render 'sm-doodle', shape: 'star', color: '#20A4F3', position: 'bottom-left' %}
+  {%- if s.show_pattern -%}{% render 'sm-pattern-bg', bg: s.bg, mode: s.pattern_mode, color: s.pattern_color, opacity: s.pattern_opacity, size: s.pattern_size, outline: s.pattern_outline, scroll: s.pattern_scroll %}{%- endif -%}
+  {%- unless s.show_pattern -%}
+  {% render 'sm-doodle', shape: 'squiggle', color: '#EA5D00', position: 'top-right', bg: section.settings.bg %}
+  {% render 'sm-doodle', shape: 'star', color: '#20A4F3', position: 'bottom-left', bg: section.settings.bg %}
+  {%- endunless -%}
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px;">
     {%- if s.show_tags and blog.all_tags.size > 0 -%}
       <nav aria-label="Blog topics">
@@ -263,6 +266,73 @@
       "id": "fg",
       "label": "Text",
       "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Background pattern"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pattern",
+      "label": "Show shape pattern",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pattern_mode",
+      "label": "Pattern colors",
+      "options": [
+        {
+          "value": "single",
+          "label": "One color"
+        },
+        {
+          "value": "brand",
+          "label": "Brand colors"
+        }
+      ],
+      "default": "single",
+      "info": "Brand colors never put two matching shapes side by side, and skip colors too close to the background."
+    },
+    {
+      "type": "color",
+      "id": "pattern_color",
+      "label": "Pattern color",
+      "default": "#FFFFFF",
+      "info": "Used with One color."
+    },
+    {
+      "type": "range",
+      "id": "pattern_opacity",
+      "label": "Pattern strength",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "pattern_size",
+      "label": "Pattern scale",
+      "min": 320,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "default": 640
+    },
+    {
+      "type": "checkbox",
+      "id": "pattern_outline",
+      "label": "Outline pattern shapes",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pattern_scroll",
+      "label": "Scroll pattern with the page",
+      "default": false,
+      "info": "Off keeps the pattern still while the page moves."
     },
     {
       "type": "range",

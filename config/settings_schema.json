@@ -2165,5 +2165,36 @@
         "default": "Smidgen Games"
       }
     ]
+  },
+  {
+    "name": "Smidgen · Shapes",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shapes come from the Smidgen brand squiggles. Pick shapes and colors in each section; a shape that would blend into its background switches to a contrasting brand color."
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_shape_outline",
+        "label": "Outline shapes",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "sm_shape_outline_color",
+        "label": "Outline color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "sm_shape_outline_width",
+        "label": "Outline width",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "unit": "px",
+        "default": 3
+      }
+    ]
   }
 ]

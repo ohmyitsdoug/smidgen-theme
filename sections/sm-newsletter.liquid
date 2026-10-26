@@ -8,7 +8,7 @@
   style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% render 'sm-btn-vars', s: s %}"
   aria-labelledby="sm-{{ section.id }}-title"
 >
-  {% render 'sm-doodle', shape: 'zigzag', color: '#EA5D00', position: 'bottom-left' %}
+  {% render 'sm-doodle', shape: 'zigzag', color: '#EA5D00', position: 'bottom-left', bg: section.settings.bg %}
   <div class="sm-container sm-container--narrow" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px; align-items: center; text-align: center;">
     <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
     {%- if s.text != blank -%}<div class="sm-lede">{{ s.text }}</div>{%- endif -%}

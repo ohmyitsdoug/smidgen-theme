@@ -56,8 +56,8 @@
   endfor
 -%}
 <section class="sm-section" style="--sm-bg: {{ s.hero_bg }}; --sm-fg: #000;" aria-labelledby="sm-{{ section.id }}-title">
-  {% render 'sm-doodle', shape: 'squiggle', color: '#753189', position: 'top-right' %}
-  {% render 'sm-doodle', shape: 'spiral', color: '#EA5D00', position: 'bottom-right' %}
+  {% render 'sm-doodle', shape: 'squiggle', color: '#753189', position: 'top-right', bg: section.settings.bg %}
+  {% render 'sm-doodle', shape: 'spiral', color: '#EA5D00', position: 'bottom-right', bg: section.settings.bg %}
   <div class="sm-container" style="--sm-pad-top: 48px; --sm-pad-bottom: 24px; gap: 10px;">
     <nav aria-label="Breadcrumb" style="font-size: 0.95rem;">
       <a href="{{ routes.root_url }}" style="color: inherit;">Home</a> / <span>{{ coll_title }}</span>

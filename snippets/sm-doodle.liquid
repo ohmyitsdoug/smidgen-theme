@@ -1,15 +1,85 @@
 {%- doc -%}
-  Decorative hand-drawn shape, hidden from assistive tech.
+  Decorative brand shape (from the Smidgen brand squiggles), hidden from
+  assistive tech. Accepts the shape numbers (shape-1 … shape-42) and the older
+  doodle names, which map to the closest brand shape.
 
-  @param {string} shape - squiggle | spiral | zigzag | star | loop-arrow | dot | ring | triangle | plus | tile | none
-  @param {string} [color] - stroke/fill color
+  If the color is too close to the background, a contrasting brand color is
+  used instead. Outlines follow Theme settings → Smidgen · Shapes unless
+  `outline` is 'on' or 'off'.
+
+  @param {string} shape - shape-N, or squiggle | spiral | zigzag | star | loop-arrow | dot | ring | triangle | plus | tile | none
+  @param {string} [color] - fill color
+  @param {string} [bg] - background color behind the shape (for the contrast check)
+  @param {string} [outline] - 'on' | 'off' | blank (theme default)
   @param {string} [position] - top-left | top-right | bottom-left | bottom-right (ignored when style is set)
   @param {string} [style] - inline style for free placement (used by doodle blocks)
   @param {string} [extra_class] - extra classes
   @param {string} [attrs] - extra attributes, e.g. block.shopify_attributes
 {%- enddoc -%}
 {%- liquid
+  case shape
+    when 'squiggle'
+      assign sid = 'shape-2'
+    when 'spiral'
+      assign sid = 'shape-3'
+    when 'zigzag'
+      assign sid = 'shape-18'
+    when 'star'
+      assign sid = 'shape-17'
+    when 'loop-arrow'
+      assign sid = 'shape-16'
+    when 'dot'
+      assign sid = 'shape-40'
+    when 'ring'
+      assign sid = 'shape-9'
+    when 'triangle'
+      assign sid = 'shape-12'
+    when 'plus'
+      assign sid = 'shape-33'
+    when 'tile'
+      assign sid = 'shape-37'
+    else
+      assign sid = shape
+  endcase
+
   assign c = color | default: '#753189'
+  if bg != blank
+    assign c_b = c | color_brightness
+    assign bg_b = bg | color_brightness
+    assign diff = c_b | minus: bg_b | abs
+    if diff < 40
+      comment
+        Too close to the background: use the brand color with the most
+        contrast, or black/white if no brand color stands out enough.
+      endcomment
+      assign best = c
+      assign best_diff = diff
+      assign palette = '#753189,#EA5D00,#20A4F3,#FFF503' | split: ','
+      for pc in palette
+        assign pd = pc | color_brightness | minus: bg_b | abs
+        if pd > best_diff
+          assign best = pc
+          assign best_diff = pd
+        endif
+      endfor
+      if best_diff < 70
+        if bg_b > 128
+          assign best = '#000000'
+        else
+          assign best = '#FFFFFF'
+        endif
+      endif
+      assign c = best
+    endif
+  endif
+
+  assign show_outline = settings.sm_shape_outline
+  if outline == 'on'
+    assign show_outline = true
+  elsif outline == 'off'
+    assign show_outline = false
+  endif
+
   assign pos = position | default: 'top-right'
   if style != blank
     assign cls = 'sm-doodle sm-doodle--free ' | append: extra_class
@@ -17,25 +87,15 @@
     assign cls = 'sm-doodle sm-doodle--' | append: pos | append: ' ' | append: extra_class
   endif
 -%}
-{%- case shape -%}
-  {%- when 'squiggle' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="210" height="86" viewBox="0 0 220 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 45 C 35 10, 60 10, 80 45 S 125 80, 145 45 S 190 10, 210 45" stroke="{{ c }}" stroke-width="16" stroke-linecap="round"/></svg>
-  {%- when 'spiral' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="110" height="110" viewBox="0 0 110 110" fill="none" aria-hidden="true" focusable="false"><path d="M55 55 m-8 0 a8 8 0 1 1 16 0 a18 18 0 1 1 -36 0 a28 28 0 1 1 56 0" stroke="{{ c }}" stroke-width="12" stroke-linecap="round"/></svg>
-  {%- when 'zigzag' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="140" height="90" viewBox="0 0 140 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 25 L40 65 L70 25 L100 65 L130 25" stroke="{{ c }}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  {%- when 'star' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 4 L60 36 L94 30 L68 52 L88 82 L56 70 L44 96 L38 64 L6 70 L28 46 L8 20 L40 30 Z" fill="{{ c }}" stroke="#000" stroke-width="4" stroke-linejoin="round"/></svg>
-  {%- when 'loop-arrow' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="170" height="90" viewBox="0 0 190 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 70 C 30 30, 60 18, 82 34 C 98 46, 84 64, 70 56 C 56 48, 74 22, 108 24 C 140 26, 160 42, 176 64" stroke="{{ c }}" stroke-width="7" stroke-linecap="round"/><path d="M156 62 L178 68 L174 46" stroke="{{ c }}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  {%- when 'dot' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><circle cx="22" cy="22" r="18" fill="{{ c }}" stroke="#000" stroke-width="3"/></svg>
-  {%- when 'ring' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true" focusable="false"><circle cx="40" cy="40" r="30" stroke="{{ c }}" stroke-width="12"/></svg>
-  {%- when 'triangle' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="90" height="80" viewBox="0 0 90 80" aria-hidden="true" focusable="false"><path d="M45 6 Q48 4 50 8 L84 70 Q86 75 80 75 L10 75 Q4 75 6 70 L40 8 Q42 4 45 6 Z" fill="{{ c }}" stroke="#000" stroke-width="4" stroke-linejoin="round"/></svg>
-  {%- when 'plus' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="70" height="70" viewBox="0 0 70 70" fill="none" aria-hidden="true" focusable="false"><path d="M35 10 V60 M10 35 H60" stroke="{{ c }}" stroke-width="14" stroke-linecap="round"/></svg>
-  {%- when 'tile' -%}
-    <svg class="{{ cls }}" style="{{ style }}" {{ attrs }} width="84" height="84" viewBox="0 0 84 84" aria-hidden="true" focusable="false"><rect x="6" y="6" width="72" height="72" rx="18" fill="{{ c }}" stroke="#000" stroke-width="4"/><path d="M22 52 C 30 30, 54 30, 62 52" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg>
-{%- endcase -%}
+{%- unless shape == blank or shape == 'none' -%}
+  {% render 'sm-shape',
+    name: sid,
+    color: c,
+    class: cls,
+    style: style,
+    attrs: attrs,
+    outline: show_outline,
+    outline_color: settings.sm_shape_outline_color,
+    outline_width: settings.sm_shape_outline_width
+  %}
+{%- endunless -%}
