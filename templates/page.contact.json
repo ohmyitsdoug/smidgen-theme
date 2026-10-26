@@ -107,7 +107,7 @@
           "type": "link",
           "settings": {
             "label": "Wholesale",
-            "link": "shopify://pages/wholesale",
+            "link": "shopify://pages/wholesale-shop",
             "icon_name": "tag",
             "icon": "",
             "color": "#753189",
@@ -159,6 +159,13 @@
     "sm_faq_dfgpUn": {
       "type": "sm-faq",
       "blocks": {
+        "group_orders": {
+          "type": "group",
+          "settings": {
+            "title": "Order & shipping",
+            "anchor": "orders"
+          }
+        },
         "question_pjJetz": {
           "type": "question",
           "settings": {
@@ -184,7 +191,7 @@
           "type": "question",
           "settings": {
             "question": "Do you ship internationally?",
-            "answer": "<p>No currently</p>"
+            "answer": "<p>Not currently. We ship within the US only.</p>"
           }
         },
         "question_DE6hLc": {
@@ -193,38 +200,14 @@
             "question": "Do you sell to stores?",
             "answer": "<p>Yes! Retailers can order through Faire or apply for a wholesale account on our Wholesale page in the footer of our site.</p>"
           }
-        }
-      },
-      "block_order": [
-        "question_pjJetz",
-        "question_hjc4pR",
-        "question_4grWep",
-        "question_4U9Gb6",
-        "question_DE6hLc"
-      ],
-      "name": "Smidgen · FAQ",
-      "settings": {
-        "anchor": "orders",
-        "heading": "Order & shipping",
-        "use_product": true,
-        "open_first": false,
-        "schema": true,
-        "show_box": false,
-        "box_heading": "What's in the box",
-        "components_field": "custom.components",
-        "bg": "#ffffff",
-        "fg": "#000000",
-        "divider_top": "none",
-        "divider_from": "#ffffff",
-        "divider": "none",
-        "divider_to": "#ffffff",
-        "pad_top": 48,
-        "pad_bottom": 72
-      }
-    },
-    "sm_faq_8Vp9pA": {
-      "type": "sm-faq",
-      "blocks": {
+        },
+        "group_rules": {
+          "type": "group",
+          "settings": {
+            "title": "Rules & pieces",
+            "anchor": "rules"
+          }
+        },
         "question_fp4XDH": {
           "type": "question",
           "settings": {
@@ -255,6 +238,13 @@
         }
       },
       "block_order": [
+        "group_orders",
+        "question_pjJetz",
+        "question_hjc4pR",
+        "question_4grWep",
+        "question_4U9Gb6",
+        "question_DE6hLc",
+        "group_rules",
         "question_fp4XDH",
         "question_Hjt3Fq",
         "question_4bY6A6",
@@ -262,8 +252,8 @@
       ],
       "name": "Smidgen · FAQ",
       "settings": {
-        "anchor": "rules",
-        "heading": "Rules & pieces",
+        "anchor": "faq",
+        "heading": "Frequently asked questions",
         "use_product": true,
         "open_first": false,
         "schema": true,
@@ -276,7 +266,7 @@
         "divider_from": "#ffffff",
         "divider": "none",
         "divider_to": "#ffffff",
-        "pad_top": 0,
+        "pad_top": 48,
         "pad_bottom": 56
       }
     },
@@ -424,7 +414,6 @@
     "main",
     "sm_help_hero_peMhm4",
     "sm_faq_dfgpUn",
-    "sm_faq_8Vp9pA",
     "sm_callout_EFUYiq",
     "sm_contact_6q7jFc",
     "sm_pitch_ityV8w"

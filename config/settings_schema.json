@@ -2150,5 +2150,20 @@
         "info": "Products with this tag (like POP displays) are hidden from everyone except wholesale customers."
       }
     ]
+  },
+  {
+    "name": "Smidgen · Search data",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Used in the structured data search engines and shopping agents read."
+      },
+      {
+        "type": "text",
+        "id": "sm_brand_name",
+        "label": "Brand name",
+        "default": "Smidgen Games"
+      }
+    ]
   }
 ]

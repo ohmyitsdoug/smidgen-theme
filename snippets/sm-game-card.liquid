@@ -52,6 +52,15 @@
   assign hook = f_hook | default: product.metafields.descriptors.subtitle.value
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign card_alt = product.featured_media.alt
+  if card_alt == blank
+    assign p_type = product.type | downcase
+    if p_type contains 'merch' or p_type contains 'apparel' or p_type contains 'shirt'
+      assign card_alt = product.title
+    else
+      assign card_alt = product.title | append: ' game box'
+    endif
+  endif
   assign sizes = image_sizes | default: '(min-width: 1200px) 300px, (min-width: 600px) 45vw, 90vw'
 -%}
 <a href="{{ product.url }}" class="sm-card" style="--sm-card-color: {{ card_color }};">
@@ -60,34 +69,51 @@
       {{
         product.featured_media
         | image_url: width: 800
-        | image_tag: alt: '', loading: 'lazy', sizes: sizes, widths: '300, 450, 600, 800'
+        | image_tag: alt: card_alt, loading: 'lazy', sizes: sizes, widths: '300, 450, 600, 800'
       }}
     {%- endif -%}
-    {%- if badge != blank -%}
-      <span class="sm-badge" data-status="{{ badge }}">{{ badge }}</span>
-    {%- endif -%}
+    {%- if badge != blank %}
+      <span class="sm-badge" data-status="{{ badge }}">{{ badge }}</span><span class="sm-visually-hidden">: </span>
+    {% endif -%}
   </span>
   <span class="sm-card__body">
     <span class="sm-card__title">{{ product.title }}</span>
-    {%- if hook != blank -%}
+
+    {% if hook != blank %}
       <span class="sm-card__hook">{{ hook }}</span>
-    {%- endif -%}
-    {%- if f_players != blank or f_play_time != blank or f_ages != blank -%}
+    {% endif %}
+    {% if f_players != blank or f_play_time != blank or f_ages != blank %}
+      {%- liquid
+        assign spec_sep = false
+        assign players_txt = f_players | replace: '-', '–'
+        assign players_low = f_players | downcase
+        assign time_low = f_play_time | downcase
+      -%}
       <span class="sm-chips">
-        {%- if f_ages != blank -%}<span class="sm-chip">{{ f_ages }}</span>{%- endif -%}
-        {%- if f_players != blank -%}<span class="sm-chip">{{ f_players }}</span>{%- endif -%}
-        {%- if f_play_time != blank -%}<span class="sm-chip">{{ f_play_time }}</span>{%- endif -%}
+        {%- if f_ages != blank %}
+          <span class="sm-chip"><span class="sm-visually-hidden">Ages </span>{{ f_ages }}</span>
+          {%- assign spec_sep = true -%}
+        {% endif -%}
+        {%- if f_players != blank %}
+          {% if spec_sep %}<span class="sm-visually-hidden"> · </span>{% endif %}
+          <span class="sm-chip">{{ players_txt }}{% unless players_low contains 'player' %}<span class="sm-visually-hidden"> players</span>{% endunless %}</span>
+          {%- assign spec_sep = true -%}
+        {% endif -%}
+        {%- if f_play_time != blank %}
+          {% if spec_sep %}<span class="sm-visually-hidden"> · </span>{% endif %}
+          <span class="sm-chip">{{ f_play_time }}{% unless time_low contains 'min' or time_low contains 'hour' %}<span class="sm-visually-hidden"> min</span>{% endunless %}</span>
+        {% endif -%}
       </span>
-    {%- endif -%}
-    {%- if rating_count > 0 -%}
+    {% endif %}
+    {% if rating_count > 0 %}
       <span class="sm-card__rating">
-        ★ {{ rating.rating | round: 1 }}
+        <span aria-hidden="true">★</span> {{ rating.rating | round: 1 }}<span class="sm-visually-hidden"> out of 5 stars</span>
         · {{ rating_count }}
         {{ rating_count | pluralize: 'review', 'reviews' }}</span
       >
-    {%- elsif f_ship_date != blank -%}
+    {% elsif f_ship_date != blank %}
       <span class="sm-card__rating">Ships {{ f_ship_date }}</span>
-    {%- endif -%}
+    {% endif %}
     <span class="sm-card__foot">
       <span class="sm-card__price">
         {%- if product.tags contains 'coming-soon' -%}

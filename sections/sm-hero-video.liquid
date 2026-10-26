@@ -22,6 +22,8 @@
     endif
   endif
 -%}
+{%- assign poster_alt = s.poster.alt | default: s.heading | default: shop.name -%}
+{%- assign bubble_alt = s.bubble_image.alt | default: 'Smidgen game box' -%}
 <section
   id="sm-{{ section.id }}"
   class="sm-section sm-vhero"
@@ -46,7 +48,7 @@
         {%- if s.eyebrow != blank -%}
           <span class="sm-sticker">{{ s.eyebrow }}</span>
         {%- endif -%}
-        <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</h1>
+        <{{ section.settings.heading_tag | default: 'h1' }} id="sm-{{ section.id }}-title" class="sm-display sm-display--xl" style="--sm-hl: {{ s.highlight_color }};">{{ heading }}</{{ section.settings.heading_tag | default: 'h1' }}>
         {%- if s.text != blank -%}
           <div class="sm-lede">{{ s.text }}</div>
         {%- endif -%}
@@ -70,7 +72,7 @@
             {%- endif -%}
             <button type="button" class="sm-vhero__play" data-sm-vhero-yt="{{ yt_id }}" aria-label="Play video"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
           {%- elsif s.poster != blank -%}
-            {{ s.poster | image_url: width: 1400 | image_tag: alt: s.poster.alt, loading: 'eager', class: 'sm-vhero__media', sizes: '(min-width: 990px) 700px, 92vw' }}
+            {{ s.poster | image_url: width: 1400 | image_tag: alt: poster_alt, loading: 'eager', class: 'sm-vhero__media', sizes: '(min-width: 990px) 700px, 92vw' }}
           {%- elsif request.design_mode -%}
             <span class="sm-vhero__hint">Add a Shopify video or a YouTube link in this section's settings.</span>
           {%- endif -%}
@@ -79,7 +81,7 @@
           {%- if s.bubble_link != blank -%}<a href="{{ s.bubble_link }}" class="sm-vhero__bubble">{%- else -%}<span class="sm-vhero__bubble">{%- endif -%}
             {%- assign b_focal = s.bubble_image.presentation.focal_point | default: '50% 50%' -%}
             {%- assign b_style = 'object-position: ' | append: b_focal -%}
-            {{ s.bubble_image | image_url: width: 800 | image_tag: alt: s.bubble_image.alt, loading: 'eager', sizes: '(min-width: 750px) 240px, 34vw', style: b_style }}
+            {{ s.bubble_image | image_url: width: 800 | image_tag: alt: bubble_alt, loading: 'eager', sizes: '(min-width: 750px) 240px, 34vw', style: b_style }}
           {%- if s.bubble_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
           {%- if s.show_arrow -%}
             <svg class="sm-vhero__arrow" viewBox="0 0 190 90" fill="none" aria-hidden="true" focusable="false"><path d="M10 70 C 30 30, 60 18, 82 34 C 98 46, 84 64, 70 56 C 56 48, 74 22, 108 24 C 140 26, 160 42, 176 64" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M156 62 L178 68 L174 46" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -127,6 +129,23 @@
   "tag": "div",
   "class": "sm-hero-video-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Main page heading (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Section heading (H2)"
+        }
+      ],
+      "default": "h1",
+      "info": "Each page should have one H1. If a page has two heroes, set the second to H2."
+    },
     {
       "type": "header",
       "content": "Text"

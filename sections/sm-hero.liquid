@@ -33,7 +33,7 @@
         {%- if s.eyebrow != blank -%}
           <span class="sm-sticker">{{ s.eyebrow }}</span>
         {%- endif -%}
-        <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ heading }}</h1>
+        <{{ section.settings.heading_tag | default: 'h1' }} id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ heading }}</{{ section.settings.heading_tag | default: 'h1' }}>
         {%- if s.text != blank -%}
           <div class="sm-lede">{{ s.text }}</div>
         {%- endif -%}
@@ -58,9 +58,10 @@
         <div class="sm-hero__art">
           <div class="sm-hero__circle" style="--sm-circle: {{ s.circle_color }};">
             {%- if s.image != blank -%}
-              {{ s.image | image_url: width: 900 | image_tag: alt: s.image.alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 440px, 80vw' }}
+              {%- assign hero_alt = s.image.alt | default: featured.title | default: s.heading | default: shop.name -%}{{ s.image | image_url: width: 900 | image_tag: alt: hero_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 440px, 80vw' }}
             {%- else -%}
-              {{ featured.featured_media | image_url: width: 900 | image_tag: alt: featured.title, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 440px, 80vw' }}
+              {%- assign feat_alt = featured.featured_media.alt | default: featured.title | append: '' -%}{%- unless featured.featured_media.alt != blank -%}{%- assign feat_alt = featured.title | append: ' game box' -%}{%- endunless -%}
+              {{ featured.featured_media | image_url: width: 900 | image_tag: alt: feat_alt, loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 440px, 80vw' }}
             {%- endif -%}
           </div>
           {%- if s.note != blank -%}
@@ -68,7 +69,7 @@
           {%- endif -%}
           {%- if s.show_badge and s.badge_image != blank -%}
             {%- capture badge_img -%}
-              {{ s.badge_image | image_url: width: 480 | image_tag: alt: s.badge_image.alt, loading: 'eager', sizes: '240px', style: 'width: 100%; height: auto; display: block;' }}
+              {%- assign badge_alt = s.badge_image.alt | default: 'Award badge' -%}{{ s.badge_image | image_url: width: 480 | image_tag: alt: badge_alt, loading: 'eager', sizes: '240px', style: 'width: 100%; height: auto; display: block;' }}
             {%- endcapture -%}
             {%- if s.badge_link != blank -%}
               <a class="sm-hero__badge" href="{{ s.badge_link }}" style="--sm-badge-w: {{ s.badge_size }}px; --sm-badge-r: {{ s.badge_rotate }}deg;">{{ badge_img }}</a>
@@ -90,6 +91,23 @@
   "name": "Smidgen · Hero",
   "tag": "div",
   "settings": [
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Main page heading (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Section heading (H2)"
+        }
+      ],
+      "default": "h1",
+      "info": "Each page should have one H1. If a page has two heroes, set the second to H2."
+    },
     {
       "type": "text",
       "id": "eyebrow",

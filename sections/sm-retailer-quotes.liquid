@@ -48,7 +48,7 @@
             <figure class="sm-quote-feature" {{ block.shopify_attributes }}>
               <div class="sm-quote-feature__media">
                 {%- if b.image != blank -%}
-                  {{ b.image | image_url: width: 900 | image_tag: alt: b.image.alt, loading: 'lazy', sizes: '(min-width: 900px) 45vw, 100vw' }}
+                  {%- assign q_alt = b.image.alt | default: 'Smidgen games on a store shelf' -%}{{ b.image | image_url: width: 900 | image_tag: alt: q_alt, loading: 'lazy', sizes: '(min-width: 900px) 45vw, 100vw' }}
                 {%- endif -%}
                 {%- if b.store != blank -%}<span class="sm-sticker">{{ b.store }}</span>{%- endif -%}
               </div>

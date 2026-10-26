@@ -8,6 +8,10 @@
   assign s = section.settings
   assign filter_tags = s.filter_tags | split: ','
   assign base_url = collection.url
+  assign coll_title = collection.title
+  if collection.handle == 'all' and s.all_title != blank
+    assign coll_title = s.all_title
+  endif
 
   comment
     Per-collection tag control (collection fields, set on each collection):
@@ -56,9 +60,9 @@
   {% render 'sm-doodle', shape: 'spiral', color: '#EA5D00', position: 'bottom-right' %}
   <div class="sm-container" style="--sm-pad-top: 48px; --sm-pad-bottom: 24px; gap: 10px;">
     <nav aria-label="Breadcrumb" style="font-size: 0.95rem;">
-      <a href="{{ routes.root_url }}" style="color: inherit;">Home</a> / <span>{{ collection.title }}</span>
+      <a href="{{ routes.root_url }}" style="color: inherit;">Home</a> / <span>{{ coll_title }}</span>
     </nav>
-    <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ collection.title }}</h1>
+    <h1 id="sm-{{ section.id }}-title" class="sm-display sm-display--xl">{{ coll_title }}</h1>
     {%- if collection.description != blank -%}
       <div class="sm-lede sm-rte">{{ collection.description }}</div>
     {%- elsif s.intro != blank -%}
@@ -345,6 +349,13 @@
   "settings": [
     {
       "type": "text",
+      "id": "all_title",
+      "label": "All products page title",
+      "default": "Shop all games",
+      "info": "Replaces Shopify's default \"Products\" title on /collections/all."
+    },
+    {
+      "type": "text",
       "id": "intro",
       "label": "Intro (used if the collection has no description)",
       "default": "Every Smidgen game teaches in minutes and fits in a bag. Pick by who's playing tonight."
@@ -402,14 +413,14 @@
       "type": "text",
       "id": "item_word",
       "label": "Item word (one)",
-      "default": "game",
+      "default": "item",
       "info": "Used in the count, e.g. 1 game / 1 shirt"
     },
     {
       "type": "text",
       "id": "items_word",
       "label": "Item word (many)",
-      "default": "games"
+      "default": "items"
     },
     {
       "type": "text",
