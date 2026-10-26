@@ -18,6 +18,7 @@
           "settings": {
             "shape": "dot",
             "color": "#ea5d00",
+            "outline": "",
             "x": 47,
             "y": 12,
             "size": 100,
@@ -30,6 +31,7 @@
           "settings": {
             "shape": "ring",
             "color": "#20a4f3",
+            "outline": "",
             "x": 5,
             "y": 82,
             "size": 90,
@@ -43,6 +45,7 @@
           "settings": {
             "shape": "plus",
             "color": "#753189",
+            "outline": "",
             "x": 42,
             "y": 88,
             "size": 80,
@@ -55,6 +58,7 @@
           "settings": {
             "shape": "triangle",
             "color": "#ffffff",
+            "outline": "",
             "x": 93,
             "y": 80,
             "size": 70,
@@ -68,6 +72,7 @@
           "settings": {
             "shape": "zigzag",
             "color": "#ea5d00",
+            "outline": "",
             "x": 88,
             "y": 10,
             "size": 70,
@@ -81,6 +86,7 @@
           "settings": {
             "shape": "tile",
             "color": "#753189",
+            "outline": "",
             "x": 30,
             "y": 6,
             "size": 60,
@@ -98,6 +104,7 @@
         "doodle_6"
       ],
       "settings": {
+        "heading_tag": "h1",
         "eyebrow": "Award-winning family games",
         "heading": "Game night just got a Smidgen more fun!",
         "highlight": "Smidgen",
@@ -158,7 +165,7 @@
         "soon_label": "Get notified →",
         "article_label": "Read more →",
         "show_date": false,
-        "doodle": "none",
+        "doodle": "shape-11",
         "doodle_color": "#ea5d00",
         "bg": "#ffffff",
         "fg": "#000000",
@@ -270,7 +277,9 @@
         "divider": "none",
         "divider_to": "#000000",
         "pad_top": 56,
-        "pad_bottom": 80
+        "pad_bottom": 80,
+        "doodle": "zigzag",
+        "doodle_color": "#ea5d00"
       }
     }
   },
