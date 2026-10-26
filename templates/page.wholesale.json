@@ -245,14 +245,14 @@
           "type": "question",
           "settings": {
             "question": "Where can I order wholesale?",
-            "answer": "<p>Order on Faire, or apply below for direct wholesale.</p>"
+            "answer": "<p>Order on Faire, or apply above for direct wholesale.</p>"
           }
         },
         "f2": {
           "type": "question",
           "settings": {
             "question": "What are your minimums?",
-            "answer": "<p>Our current MOQ is $85.</p>"
+            "answer": "<p>Our current MOQ is $85 for first orders.</p>"
           }
         }
       },
