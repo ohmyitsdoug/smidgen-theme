@@ -123,11 +123,22 @@
         "image": "shopify://shop_images/CUNO_BOX.png",
         "circle_color": "#753189",
         "note": "CUNO: 2025 Sparks Play Award for Strategy Game of the Year",
+        "note_color": "",
+        "note_outline_color": "#FFF503",
+        "note_outline": 3,
         "show_badge": true,
         "badge_image": "shopify://shop_images/CUNO_Strategy.png",
         "badge_size": 260,
         "badge_rotate": 25,
         "badge_link": "",
+        "doodle_tl": "squiggle",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "star",
+        "doodle_tr_color": "#20a4f3",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
         "btn_bg": "",
         "btn_fg": "",
         "btn2_bg": "",
@@ -137,11 +148,7 @@
         "divider": "wave",
         "divider_to": "#ffffff",
         "pad_top": 72,
-        "pad_bottom": 40,
-        "doodle_tl": "squiggle",
-        "doodle_tl_color": "#753189",
-        "doodle_tr": "star",
-        "doodle_tr_color": "#20a4f3"
+        "pad_bottom": 40
       }
     },
     "games": {
@@ -164,14 +171,20 @@
         "soon_label": "Get notified →",
         "article_label": "Read more →",
         "show_date": false,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "shape-11",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider": "zigzag",
         "divider_to": "#20a4f3",
         "pad_top": 48,
-        "pad_bottom": 88,
-        "doodle_tr": "shape-11",
-        "doodle_tr_color": "#ea5d00"
+        "pad_bottom": 88
       }
     },
     "features": {
@@ -218,14 +231,20 @@
       ],
       "settings": {
         "heading": "Big fun, tiny rulebook.",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "spiral",
+        "doodle_tr_color": "#fff503",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
         "bg": "#20a4f3",
         "fg": "#000000",
         "divider": "wave",
         "divider_to": "{{ settings.color_palette.background }}",
         "pad_top": 64,
-        "pad_bottom": 88,
-        "doodle_tr": "spiral",
-        "doodle_tr_color": "#fff503"
+        "pad_bottom": 88
       }
     },
     "sm_game_grid_n66cH9": {
@@ -249,14 +268,20 @@
         "soon_label": "Get notified →",
         "article_label": "Read more →",
         "show_date": false,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
         "bg": "#ffffff",
         "fg": "#000000",
         "divider": "scallop",
         "divider_to": "#fff503",
         "pad_top": 48,
-        "pad_bottom": 88,
-        "doodle_tr": "none",
-        "doodle_tr_color": "#ea5d00"
+        "pad_bottom": 88
       }
     },
     "newsletter": {
@@ -277,8 +302,14 @@
         "divider_to": "#000000",
         "pad_top": 56,
         "pad_bottom": 80,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
         "doodle_bl": "zigzag",
-        "doodle_bl_color": "#ea5d00"
+        "doodle_bl_color": "#ea5d00",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503"
       }
     }
   },
