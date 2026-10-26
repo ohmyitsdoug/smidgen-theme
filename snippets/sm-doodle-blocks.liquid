@@ -1,0 +1,20 @@
+{%- doc -%}
+  Renders a section's Doodle blocks (free-placed brand shapes). Other block
+  types are ignored, so this can sit in any section that offers Doodle blocks.
+
+  @param {object} section - the current section
+{%- enddoc -%}
+{%- assign sec_bg = section.settings.bg | default: section.settings.hero_bg | default: section.settings.section_bg -%}
+{%- for block in section.blocks -%}
+  {%- if block.type != 'doodle' -%}{%- continue -%}{%- endif -%}
+  {%- liquid
+    assign b = block.settings
+    assign scale = b.size | divided_by: 100.0
+    assign d_style = 'left: ' | append: b.x | append: '%; top: ' | append: b.y | append: '%; transform: translate(-50%, -50%) rotate(' | append: b.rotate | append: 'deg) scale(' | append: scale | append: ');'
+    assign d_class = ''
+    if b.hide_mobile
+      assign d_class = 'sm-doodle--hide-mobile'
+    endif
+  -%}
+  {% render 'sm-doodle', shape: b.shape, color: b.color, style: d_style, extra_class: d_class, attrs: block.shopify_attributes, bg: sec_bg, outline: b.outline %}
+{%- endfor -%}
