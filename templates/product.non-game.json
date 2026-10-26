@@ -322,7 +322,7 @@
         "enable_sticky_add_to_cart": true,
         "background_color": "",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 16
       }
     },
     "sm_faq": {
