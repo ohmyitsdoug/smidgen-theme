@@ -13,7 +13,26 @@
       "type": "sm-main-article",
       "settings": {
         "show_date": false,
-        "show_author": false
+        "show_author": false,
+        "show_tags": true,
+        "back_label": "Back to the blog",
+        "show_more": true,
+        "more_heading": "More from the blog",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "bg": "#fff503",
+        "fg": "#000000",
+        "show_doodles": true,
+        "pattern_mode": "single",
+        "pattern_color": "#ffffff",
+        "pattern_opacity": 45,
+        "pattern_size": 880,
+        "pattern_outline": false,
+        "pattern_scroll": false,
+        "pad_top": 48,
+        "pad_bottom": 96
       }
     }
   },
