@@ -41,7 +41,7 @@
     {%- endif -%}
     {%- if closing != blank -%}<h2 class="sm-display" style="font-size: clamp(2.2rem, 7vw, 3rem);">{{ closing }}</h2>{%- endif -%}
     {%- if amz != blank -%}
-      <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-placement="bridge_closing" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
+      <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-amazon-cta="footer" data-placement="bridge_closing" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
         {{ btn_label }}<span class="sm-visually-hidden"> (opens Amazon in a new tab)</span>
       </a>
     {%- endif -%}
@@ -69,7 +69,7 @@
         </span>
       {%- endif -%}
     </div>
-    <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-placement="bridge_sticky_bar" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
+    <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-amazon-cta="sticky" data-placement="bridge_sticky_bar" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
       {{ bar_label }}<span class="sm-visually-hidden"> (opens Amazon in a new tab)</span>
     </a>
   </div>

@@ -58,7 +58,7 @@
       </dl>
     {%- endif -%}
     {%- if amz != blank -%}
-      <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-placement="bridge_hero" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
+      <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-amazon-cta="hero" data-placement="bridge_hero" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
         {{ btn_label }}<span class="sm-visually-hidden"> (opens Amazon in a new tab)</span>
       </a>
     {%- elsif request.design_mode -%}

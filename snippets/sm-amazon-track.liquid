@@ -9,13 +9,15 @@
     window.__smAmzTrack = true;
     var EVENT = {{ settings.sm_amazon_event | default: 'amazon_click' | json }};
     document.addEventListener('click', function (e) {
-      var el = e.target.closest && e.target.closest('a[data-sm-amazon]');
+      var el = e.target.closest && e.target.closest('a[data-sm-amazon], [data-amazon-cta]');
       if (!el || el.dataset.smAmzBound) return;
       var data = {
         link_url: el.href,
+        product: el.dataset.product || '',
         product_name: el.dataset.product || '',
         product_id: el.dataset.productId || '',
-        placement: el.dataset.placement || 'bridge_page'
+        placement: el.dataset.amazonCta || el.dataset.placement || 'bridge_page',
+        placement_detail: el.dataset.placement || ''
       };
       try { if (typeof window.gtag === 'function') window.gtag('event', EVENT, data); } catch (err) {}
       try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: EVENT }, data)); } catch (err) {}
