@@ -1985,12 +1985,11 @@ h1, h2, h3, h4, h5, h6, .sm-display, .sm-sticker,
 .sm-breviews__stars .is-off, .sm-breviews__card-stars .is-off { color: #c9c9c9; }
 .sm-breviews__source { margin: 0; font-size: 0.95rem; font-weight: 500; }
 .sm-breviews__amazon { margin: 4px 0 0; padding: 4px 12px; border: 2px solid #000; border-radius: 999px; font-size: 0.85rem; font-weight: 500; background: #fff; }
-.sm-breviews__stack { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 0; padding: 8px 6px 12px; }
+.sm-breviews__stack { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 18px; padding: 8px 10px 12px; }
 .sm-breviews__card {
-  margin: 0; width: min(100%, 340px); display: flex; flex-direction: column; gap: 8px; color: #000;
+  margin: 0; width: min(94%, 380px); box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; color: #000;
   border: 3px solid #000; border-radius: 22px; box-shadow: 6px 6px 0 #000; padding: 16px 18px; position: relative;
 }
-.sm-breviews__card + .sm-breviews__card { margin-top: -10px; }
 .sm-breviews__card--1 { background: var(--sm-yellow); transform: rotate(-2.5deg); align-self: flex-start; }
 .sm-breviews__card--2 { background: #fff; transform: rotate(2deg); align-self: flex-end; z-index: 1; }
 .sm-breviews__card--0 { background: #fde9dc; transform: rotate(-1deg); align-self: center; z-index: 2; }

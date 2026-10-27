@@ -20,7 +20,12 @@
   assign amz = amz | strip
   assign rating = p.metafields.reviews.rating.value
   assign rating_count = p.metafields.reviews.rating_count.value | default: 0
-  assign img = s.image | default: p.featured_image
+  assign img_key = s.image_field | default: 'custom.bridge_image' | strip | split: '.'
+  assign img = blank
+  if img_key.size == 2
+    assign img = p.metafields[img_key[0]][img_key[1]].value
+  endif
+  assign img = img | default: s.image | default: p.featured_image
   assign has_specs = false
   if f_ages != blank or f_players != blank or f_time != blank
     assign has_specs = true
@@ -117,10 +122,17 @@
       "info": "Empty uses the product's tagline field."
     },
     {
+      "type": "text",
+      "id": "image_field",
+      "label": "Product field with the hero image",
+      "default": "custom.bridge_image",
+      "info": "namespace.key of a File (image) field on each product, so every game gets its own hero image."
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Image",
-      "info": "Empty uses the product's main image."
+      "label": "Fallback image",
+      "info": "Used when the product has no bridge image. Empty uses the product's main image."
     },
     {
       "type": "checkbox",

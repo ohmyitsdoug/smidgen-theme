@@ -17,6 +17,7 @@
   assign rating_count = p.metafields.reviews.rating_count.value | default: 0
   assign award = p.metafields.smidgen.award.value | default: p.metafields.custom.award.value
 -%}
+{%- if section.settings.divider_top != blank and section.settings.divider_top != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_top, from: section.settings.divider_top_from, to: section.settings.bg %}{%- endif -%}
 <section id="sm-{{ section.id }}" class="sm-section sm-bclose" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};" data-sm-bclose>
   {% render 'sm-corner-doodles', section: section %}
   {% render 'sm-doodle-blocks', section: section %}
@@ -43,6 +44,7 @@
     {%- endif -%}
   </div>
 </section>
+{%- if section.settings.divider_bottom != blank and section.settings.divider_bottom != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_bottom, from: section.settings.bg, to: section.settings.divider_bottom_to %}{%- endif -%}
 
 {%- if s.sticky_bar and amz != blank -%}
   <div class="sm-bbar" data-sm-bbar style="--sm-bbar-bg: {{ s.bar_bg }};">
@@ -923,6 +925,80 @@
       "id": "doodle_br_color",
       "label": "Bottom right color",
       "default": "#FFF503"
+    },
+    {
+      "type": "header",
+      "content": "Dividers"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Divider above",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_top_from",
+      "label": "Color of the section above",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_top != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "divider_bottom",
+      "label": "Divider below",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_bottom_to",
+      "label": "Color of the section below",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_bottom != 'none' }}"
     },
     {
       "type": "header",

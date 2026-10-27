@@ -79,7 +79,9 @@
   assign num_colors = '#753189,#EA5D00,#20A4F3,#000000' | split: ','
 -%}
 {%- if has_any -%}
+  {%- if s.divider_shape != 'none' and s.divider_above != false -%}
   {% render 'sm-divider', shape: s.divider_shape, from: s.outer_color, to: s.bg %}
+  {%- endif -%}
   <section
     id="how-to-play"
     class="sm-section"
@@ -155,7 +157,9 @@
       {%- endif -%}
     </div>
   </section>
+  {%- if s.divider_shape != 'none' and s.divider_below != false -%}
   {% render 'sm-divider', shape: s.divider_shape, from: s.bg, to: s.outer_color %}
+  {%- endif -%}
 {%- elsif request.design_mode -%}
   <div class="sm-container sm-container--narrow" style="--sm-pad-top: 24px; --sm-pad-bottom: 24px;">
     <p style="margin: 0; padding: 20px; border: 3px dashed #000; border-radius: 20px; font-family: var(--sm-font-body);">
@@ -284,6 +288,10 @@
       "label": "Divider shape",
       "options": [
         {
+          "value": "none",
+          "label": "None"
+        },
+        {
           "value": "wave",
           "label": "Wave"
         },
@@ -301,6 +309,18 @@
         }
       ],
       "default": "wave"
+    },
+    {
+      "type": "checkbox",
+      "id": "divider_above",
+      "label": "Divider above",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "divider_below",
+      "label": "Divider below",
+      "default": true
     },
     {
       "type": "header",

@@ -20,7 +20,8 @@
   endfor
 -%}
 {%- if count > 0 -%}
-  <section
+  {%- if section.settings.divider_top != blank and section.settings.divider_top != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_top, from: section.settings.divider_top_from, to: section.settings.bg %}{%- endif -%}
+<section
     id="in-the-box"
     class="sm-section"
     style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};"
@@ -40,6 +41,7 @@
       </ul>
     </div>
   </section>
+{%- if section.settings.divider_bottom != blank and section.settings.divider_bottom != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_bottom, from: section.settings.bg, to: section.settings.divider_bottom_to %}{%- endif -%}
 {%- elsif request.design_mode -%}
   <div class="sm-container sm-container--narrow" style="--sm-pad-top: 24px; --sm-pad-bottom: 24px;">
     <p style="margin: 0; padding: 20px; border: 3px dashed #000; border-radius: 20px; font-family: var(--sm-font-body);">
@@ -827,6 +829,80 @@
       "id": "doodle_br_color",
       "label": "Bottom right color",
       "default": "#FFF503"
+    },
+    {
+      "type": "header",
+      "content": "Dividers"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Divider above",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_top_from",
+      "label": "Color of the section above",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_top != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "divider_bottom",
+      "label": "Divider below",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_bottom_to",
+      "label": "Color of the section below",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_bottom != 'none' }}"
     },
     {
       "type": "color",

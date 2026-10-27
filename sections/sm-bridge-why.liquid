@@ -2,6 +2,7 @@
   "Why Amazon?" strip for bridge pages: a heading and up to six icon + label items.
 {%- endcomment -%}
 {%- assign s = section.settings -%}
+{%- if section.settings.divider_top != blank and section.settings.divider_top != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_top, from: section.settings.divider_top_from, to: section.settings.bg %}{%- endif -%}
 <section class="sm-section sm-bwhy" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% if s.border %} border-top: 3px solid #000; border-bottom: 3px solid #000;{% endif %}">
   {% render 'sm-corner-doodles', section: section %}
   {% render 'sm-doodle-blocks', section: section %}
@@ -18,6 +19,7 @@
     </ul>
   </div>
 </section>
+{%- if section.settings.divider_bottom != blank and section.settings.divider_bottom != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_bottom, from: section.settings.bg, to: section.settings.divider_bottom_to %}{%- endif -%}
 
 {% schema %}
 {
@@ -781,6 +783,80 @@
       "id": "doodle_br_color",
       "label": "Bottom right color",
       "default": "#FFF503"
+    },
+    {
+      "type": "header",
+      "content": "Dividers"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Divider above",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_top_from",
+      "label": "Color of the section above",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_top != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "divider_bottom",
+      "label": "Divider below",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "scallop",
+          "label": "Scallop"
+        },
+        {
+          "value": "straight",
+          "label": "Straight line"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_bottom_to",
+      "label": "Color of the section below",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.divider_bottom != 'none' }}"
     },
     {
       "type": "color",
