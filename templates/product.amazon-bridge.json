@@ -94,6 +94,8 @@
       ],
       "settings": {
         "heading": "Why families love it",
+        "cards_field": "custom.amazon_benefits",
+        "card_colors": "#FFF503,#20A4F3,#EA5D00",
         "doodle_tl": "none",
         "doodle_tl_color": "#753189",
         "doodle_tr": "none",
@@ -105,10 +107,44 @@
         "bg": "#20a4f3",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#fff503",
+        "divider_to": "{{ settings.color_palette.color2 }}",
         "pad_top": 64,
-        "pad_bottom": 48,
-        "cards_field": "custom.amazon_benefits"
+        "pad_bottom": 48
+      }
+    },
+    "sm_image_grid_8qf6MW": {
+      "type": "sm-image-grid",
+      "name": "Smidgen · Image grid",
+      "settings": {
+        "eyebrow": "",
+        "heading": "See it on the table",
+        "subcopy": "",
+        "align": "center",
+        "source": "product",
+        "product": "",
+        "featured_index": 1,
+        "rest_index": 2,
+        "tilt": true,
+        "tape": true,
+        "tape_color": "{{ settings.color_palette.color6 }}",
+        "show_captions": false,
+        "divider_top": "none",
+        "divider_top_from": "#FFFFFF",
+        "divider_bottom": "zigzag",
+        "divider_bottom_to": "{{ settings.color_palette.color6 }}",
+        "doodle_tl": "none",
+        "doodle_tl_color": "{{ settings.color_palette.color7 }}",
+        "doodle_tr": "spiral",
+        "doodle_tr_color": "{{ settings.color_palette.color7 }}",
+        "doodle_bl": "shape-28",
+        "doodle_bl_color": "{{ settings.color_palette.color7 }}",
+        "doodle_br": "none",
+        "doodle_br_color": "{{ settings.color_palette.color6 }}",
+        "bg": "{{ settings.color_palette.color2 }}",
+        "paper": false,
+        "fg": "#000000",
+        "pad_top": 64,
+        "pad_bottom": 72
       }
     },
     "learn": {
@@ -264,7 +300,7 @@
       ],
       "settings": {
         "heading": "Why Amazon?",
-        "benefits_field": "custom.amazon_benefits",
+        "benefits_field": "",
         "default_icons": "truck,arrows-clockwise,seal-check,star,gift,clock",
         "icon_bg": "#ffffff",
         "doodle_tl": "none",
@@ -283,8 +319,7 @@
         "fg": "#000000",
         "border": false,
         "pad_top": 40,
-        "pad_bottom": 40,
-        "benefits_field": ""
+        "pad_bottom": 40
       }
     },
     "faq": {
@@ -319,8 +354,10 @@
     "closing": {
       "type": "sm-bridge-closing",
       "settings": {
+        "image_field": "custom.amazon_bridge_image",
         "price_text": "",
         "sticker_color": "#ea5d00",
+        "closing_field": "custom.amazon_closing_line",
         "heading": "[Closing line]",
         "button_label": "Get [title] on Amazon",
         "amazon_link": "",
@@ -355,6 +392,7 @@
     "bridge_header",
     "bridge_hero",
     "benefits",
+    "sm_image_grid_8qf6MW",
     "learn",
     "reviews",
     "box",
