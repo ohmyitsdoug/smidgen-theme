@@ -1,4 +1,18 @@
-{%- assign s = section.settings -%}
+{%- liquid
+  assign s = section.settings
+  assign mf_items = blank
+  if product and s.cards_field != blank
+    assign ck = s.cards_field | strip | split: '.'
+    if ck.size == 2
+      assign mf_items = product.metafields[ck[0]][ck[1]].value
+    endif
+  endif
+  assign use_mf = false
+  if mf_items != blank and mf_items.size > 0
+    assign use_mf = true
+  endif
+  assign card_colors = s.card_colors | default: '#FFF503,#20A4F3,#EA5D00' | split: ','
+-%}
 <section
   id="sm-{{ section.id }}"
   class="sm-section"
@@ -12,6 +26,47 @@
       <h2 id="sm-{{ section.id }}-title" class="sm-display">{{ s.heading }}</h2>
     {%- endif -%}
     <div class="sm-grid" style="--sm-min: 250px;">
+      {%- if use_mf -%}
+        {%- for item in mf_items -%}
+          {%- liquid
+            assign c_title = item.title.value | default: item.heading.value | default: item.name.value | default: item.label.value | default: item.benefit.value
+            assign c_desc = item.description | default: item.text | default: item.body | default: item.details
+            if c_title == blank and item.system == blank
+              assign c_title = item | append: ''
+            endif
+            if c_title == blank and c_desc == blank
+              continue
+            endif
+            assign c_icon = item.icon.value | default: item.icon_image.value | default: item.image.value
+            assign c_icon_name = item.icon_name.value
+            if c_icon != blank and c_icon.preview_image == blank and c_icon.src == blank
+              assign c_icon_name = c_icon
+              assign c_icon = blank
+            endif
+            assign ci = forloop.index0 | modulo: card_colors.size
+            assign c_color = item.color.value | default: card_colors[ci] | strip
+          -%}
+          <div class="sm-box" style="display: flex; flex-direction: column; gap: 14px;">
+            {%- if c_icon != blank or c_icon_name != blank -%}
+              <span class="sm-icon-label" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: {{ c_color }}; color: #000; border: var(--sm-outline); border-radius: 18px;" aria-hidden="true">
+                {%- if c_icon != blank -%}
+                  {{ c_icon | image_url: width: 120 | image_tag: alt: '', width: 36, height: 36, loading: 'lazy', style: 'width: 36px; height: 36px; object-fit: contain;' }}
+                {%- else -%}
+                  {% render 'sm-icon', name: c_icon_name, size: 34 %}
+                {%- endif -%}
+              </span>
+            {%- else -%}
+              <span class="sm-icon-label" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: {{ c_color }}; color: #000; border: var(--sm-outline); border-radius: 18px; font-family: var(--sm-font-display); font-size: 1.6rem;" aria-hidden="true">{{ forloop.index }}</span>
+            {%- endif -%}
+            {%- if c_title != blank -%}<h3 class="sm-step__title" style="margin: 0;">{{ c_title }}</h3>{%- endif -%}
+            {%- if c_desc != blank -%}
+              <div class="sm-rte" style="font-size: 1.05rem;">
+                {%- if c_desc.type == 'rich_text_field' -%}{{ c_desc | metafield_tag }}{%- else -%}<p>{{ c_desc.value | default: c_desc | newline_to_br }}</p>{%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
       {%- for block in section.blocks -%}{%- if block.type == 'doodle' -%}{%- continue -%}{%- endif -%}
         {%- if block.settings.title != blank or block.settings.text != blank -%}
           <div class="sm-box" style="display: flex; flex-direction: column; gap: 14px;" {{ block.shopify_attributes }}>
@@ -39,6 +94,7 @@
           </div>
         {%- endif -%}
       {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -57,6 +113,19 @@
       "id": "heading",
       "label": "Heading",
       "default": "Big fun, tiny rulebook."
+    },
+    {
+      "type": "text",
+      "id": "cards_field",
+      "label": "Product field with the cards",
+      "info": "On product pages only. A list field (e.g. custom.amazon_benefits). When the product has entries, they replace the Card blocks. Empty = always use the blocks."
+    },
+    {
+      "type": "text",
+      "id": "card_colors",
+      "label": "Icon colors for product cards",
+      "default": "#FFF503,#20A4F3,#EA5D00",
+      "info": "Used in order when an entry has no color."
     },
     {
       "type": "header",
