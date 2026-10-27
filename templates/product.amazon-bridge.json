@@ -26,7 +26,7 @@
         "title": "",
         "heading_tag": "h1",
         "tagline": "",
-        "image_field": "custom.bridge_image",
+        "image_field": "custom.amazon_bridge_image",
         "image": "{{ product.featured_image }}",
         "show_specs": true,
         "button_label": "Get [title] on Amazon",

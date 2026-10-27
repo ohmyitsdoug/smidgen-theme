@@ -20,7 +20,7 @@
   assign amz = amz | strip
   assign rating = p.metafields.reviews.rating.value
   assign rating_count = p.metafields.reviews.rating_count.value | default: 0
-  assign img_key = s.image_field | default: 'custom.bridge_image' | strip | split: '.'
+  assign img_key = s.image_field | default: 'custom.amazon_bridge_image' | strip | split: '.'
   assign img = blank
   if img_key.size == 2
     assign img = p.metafields[img_key[0]][img_key[1]].value
@@ -125,7 +125,7 @@
       "type": "text",
       "id": "image_field",
       "label": "Product field with the hero image",
-      "default": "custom.bridge_image",
+      "default": "custom.amazon_bridge_image",
       "info": "namespace.key of a File (image) field on each product, so every game gets its own hero image."
     },
     {
