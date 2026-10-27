@@ -1,0 +1,37 @@
+{%- comment -%}
+  Logo-only header for bridge / ad landing pages. The logo links to the store.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign logo = s.logo | default: settings.logo
+  assign home = s.link | default: routes.root_url
+-%}
+<header class="sm-bheader" style="--sm-bg: {{ s.bg }};{% if s.border %} border-bottom: 3px solid #000;{% endif %}">
+  <a href="{{ home }}" class="sm-bheader__logo" aria-label="{{ shop.name | escape }} home">
+    {%- if logo != blank -%}
+      {{ logo | image_url: width: 600 | image_tag: alt: shop.name, loading: 'eager', style: 'width: 100%; height: auto; display: block;', sizes: '200px' }}
+    {%- else -%}
+      <span class="sm-display" style="font-size: 2rem;">{{ shop.name }}</span>
+    {%- endif -%}
+  </a>
+</header>
+<style>
+  #shopify-section-{{ section.id }} .sm-bheader__logo { width: {{ s.logo_width }}px; }
+  @media (max-width: 749px) { #shopify-section-{{ section.id }} .sm-bheader__logo { width: {{ s.logo_width | times: 0.8 | round }}px; } }
+</style>
+
+{% schema %}
+{
+  "name": "Smidgen · Logo header",
+  "tag": "div",
+  "settings": [
+    { "type": "paragraph", "content": "Just the logo, centered. Use on bridge pages instead of the full store header." },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Empty uses the store logo from Theme settings." },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 280, "step": 10, "unit": "px", "default": 150 },
+    { "type": "url", "id": "link", "label": "Logo link", "info": "Empty goes to your home page." },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "checkbox", "id": "border", "label": "Black line under the header", "default": true }
+  ],
+  "presets": [{ "name": "Smidgen · Logo header" }]
+}
+{% endschema %}

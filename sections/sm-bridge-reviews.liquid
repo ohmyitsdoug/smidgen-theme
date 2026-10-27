@@ -1,0 +1,1236 @@
+{%- comment -%}
+  Bridge page reviews: the product's rating from your own site (Judge.me),
+  clearly labelled with where it comes from, an optional separate Amazon
+  rating, and a stack of hand-picked review quotes, each tagged with its source.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign p = product
+  assign rating = p.metafields.reviews.rating.value
+  assign rating_count = p.metafields.reviews.rating_count.value | default: 0
+  assign quote_count = 0
+  for block in section.blocks
+    if block.type == 'quote' and block.settings.quote != blank
+      assign quote_count = quote_count | plus: 1
+    endif
+  endfor
+  assign show = true
+  if rating_count == 0 and quote_count == 0
+    assign show = false
+  endif
+-%}
+{%- if show or request.design_mode -%}
+<section class="sm-section sm-breviews" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};" aria-labelledby="sm-{{ section.id }}-title">
+  {% render 'sm-corner-doodles', section: section %}
+  {% render 'sm-doodle-blocks', section: section %}
+  <div class="sm-container sm-container--narrow" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px; align-items: center;">
+    <h2 id="sm-{{ section.id }}-title" class="sm-display" style="font-size: clamp(2.2rem, 6vw, 3rem); text-align: center;">{{ s.heading }}</h2>
+
+    {%- if rating_count > 0 -%}
+      <div class="sm-breviews__summary">
+        <p class="sm-breviews__score">{{ rating.rating | round: 1 }}</p>
+        {%- assign full = rating.rating | round -%}
+        <p class="sm-breviews__stars" aria-label="{{ rating.rating | round: 1 }} out of 5 stars">
+          {%- for i in (1..5) -%}<span aria-hidden="true"{% if i > full %} class="is-off"{% endif %}>★</span>{%- endfor -%}
+        </p>
+        <p class="sm-breviews__source">{{ s.site_text | replace: '[count]', rating_count }}</p>
+        {%- if s.amazon_rating != blank and s.amazon_count != blank -%}
+          <p class="sm-breviews__amazon">{{ s.amazon_text | replace: '[rating]', s.amazon_rating | replace: '[count]', s.amazon_count }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if quote_count > 0 -%}
+      <div class="sm-breviews__stack">
+        {%- assign n = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'quote' or block.settings.quote == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- assign b = block.settings -%}
+          <figure class="sm-breviews__card sm-breviews__card--{{ n | modulo: 3 }}" {{ block.shopify_attributes }}>
+            <p class="sm-breviews__card-stars" aria-label="{{ b.stars }} out of 5 stars">
+              {%- for i in (1..5) -%}<span aria-hidden="true"{% if i > b.stars %} class="is-off"{% endif %}>★</span>{%- endfor -%}
+            </p>
+            <blockquote>“{{ b.quote }}”</blockquote>
+            <figcaption>
+              {%- if b.name != blank -%}<strong>{{ b.name }}</strong>{%- endif -%}
+              {%- case b.source -%}
+                {%- when 'site' -%}<span>Verified buyer · playsmidgen.com</span>
+                {%- when 'amazon' -%}<span>Amazon review</span>
+                {%- else -%}{%- if b.source_text != blank -%}<span>{{ b.source_text }}</span>{%- endif -%}
+              {%- endcase -%}
+            </figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="sm-bridge-note">Add Review quote blocks: paste real reviews and pick where each one is from.</p>
+    {%- endif -%}
+
+    {%- if s.show_all_link and rating_count > 0 -%}
+      <a href="{{ p.url }}#reviews" style="font-weight: 700;">Read all {{ rating_count }} reviews</a>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Bridge reviews",
+  "tag": "div",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What players say"
+    },
+    {
+      "type": "paragraph",
+      "content": "The score and count come from your site's Judge.me reviews. Say where they're from, so nobody is surprised by a different count on Amazon."
+    },
+    {
+      "type": "text",
+      "id": "site_text",
+      "label": "Rating label",
+      "default": "from [count] verified reviews on playsmidgen.com",
+      "info": "[count] becomes the number of reviews."
+    },
+    {
+      "type": "header",
+      "content": "Amazon rating (optional)"
+    },
+    {
+      "type": "text",
+      "id": "amazon_rating",
+      "label": "Amazon rating",
+      "placeholder": "4.8",
+      "info": "Shown only when both rating and count are filled in. Update it when it changes on Amazon."
+    },
+    {
+      "type": "text",
+      "id": "amazon_count",
+      "label": "Amazon review count",
+      "placeholder": "7"
+    },
+    {
+      "type": "text",
+      "id": "amazon_text",
+      "label": "Amazon label",
+      "default": "★ [rating] from [count] reviews on Amazon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_link",
+      "label": "Link to all reviews on your site",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Corner doodles"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pick a brand shape for any corner. Use Doodle blocks to place shapes anywhere else."
+    },
+    {
+      "type": "select",
+      "id": "doodle_tl",
+      "label": "Top left",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "shape-1",
+          "label": "1 · Zigzag squiggle"
+        },
+        {
+          "value": "squiggle",
+          "label": "2 · Wave"
+        },
+        {
+          "value": "spiral",
+          "label": "3 · Spiral"
+        },
+        {
+          "value": "shape-4",
+          "label": "4 · Swirl"
+        },
+        {
+          "value": "shape-5",
+          "label": "5 · Bumpy wave"
+        },
+        {
+          "value": "shape-6",
+          "label": "6 · Wiggle"
+        },
+        {
+          "value": "shape-7",
+          "label": "7 · Hook"
+        },
+        {
+          "value": "shape-8",
+          "label": "8 · Step"
+        },
+        {
+          "value": "ring",
+          "label": "9 · Ring"
+        },
+        {
+          "value": "shape-10",
+          "label": "10 · S-curve"
+        },
+        {
+          "value": "shape-11",
+          "label": "11 · Wiggle 2"
+        },
+        {
+          "value": "triangle",
+          "label": "12 · Peak"
+        },
+        {
+          "value": "shape-13",
+          "label": "13 · Arch"
+        },
+        {
+          "value": "shape-14",
+          "label": "14 · Arc"
+        },
+        {
+          "value": "shape-15",
+          "label": "15 · Curly 3"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "16 · S-wave"
+        },
+        {
+          "value": "star",
+          "label": "17 · Lightning"
+        },
+        {
+          "value": "zigzag",
+          "label": "18 · Zigzag"
+        },
+        {
+          "value": "shape-19",
+          "label": "19 · Horseshoe"
+        },
+        {
+          "value": "shape-20",
+          "label": "20 · W-wave"
+        },
+        {
+          "value": "shape-21",
+          "label": "21 · J-hook"
+        },
+        {
+          "value": "shape-22",
+          "label": "22 · Curl"
+        },
+        {
+          "value": "shape-23",
+          "label": "23 · Spring"
+        },
+        {
+          "value": "shape-24",
+          "label": "24 · Wave line"
+        },
+        {
+          "value": "shape-25",
+          "label": "25 · Swoosh"
+        },
+        {
+          "value": "shape-26",
+          "label": "26 · Arch 2"
+        },
+        {
+          "value": "shape-27",
+          "label": "27 · Brow"
+        },
+        {
+          "value": "shape-28",
+          "label": "28 · Elbow"
+        },
+        {
+          "value": "shape-29",
+          "label": "29 · Smile"
+        },
+        {
+          "value": "shape-30",
+          "label": "30 · Roof"
+        },
+        {
+          "value": "shape-31",
+          "label": "31 · Bracket"
+        },
+        {
+          "value": "shape-32",
+          "label": "32 · C-curl"
+        },
+        {
+          "value": "plus",
+          "label": "33 · Slash"
+        },
+        {
+          "value": "shape-34",
+          "label": "34 · Small hook"
+        },
+        {
+          "value": "shape-35",
+          "label": "35 · Stick"
+        },
+        {
+          "value": "shape-36",
+          "label": "36 · Dash"
+        },
+        {
+          "value": "tile",
+          "label": "37 · Bar"
+        },
+        {
+          "value": "shape-38",
+          "label": "38 · Pill"
+        },
+        {
+          "value": "shape-39",
+          "label": "39 · Long bar"
+        },
+        {
+          "value": "dot",
+          "label": "40 · Dot"
+        },
+        {
+          "value": "shape-41",
+          "label": "41 · Oval dot"
+        },
+        {
+          "value": "shape-42",
+          "label": "42 · Small dot"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "doodle_tl_color",
+      "label": "Top left color",
+      "default": "#753189"
+    },
+    {
+      "type": "select",
+      "id": "doodle_tr",
+      "label": "Top right",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "shape-1",
+          "label": "1 · Zigzag squiggle"
+        },
+        {
+          "value": "squiggle",
+          "label": "2 · Wave"
+        },
+        {
+          "value": "spiral",
+          "label": "3 · Spiral"
+        },
+        {
+          "value": "shape-4",
+          "label": "4 · Swirl"
+        },
+        {
+          "value": "shape-5",
+          "label": "5 · Bumpy wave"
+        },
+        {
+          "value": "shape-6",
+          "label": "6 · Wiggle"
+        },
+        {
+          "value": "shape-7",
+          "label": "7 · Hook"
+        },
+        {
+          "value": "shape-8",
+          "label": "8 · Step"
+        },
+        {
+          "value": "ring",
+          "label": "9 · Ring"
+        },
+        {
+          "value": "shape-10",
+          "label": "10 · S-curve"
+        },
+        {
+          "value": "shape-11",
+          "label": "11 · Wiggle 2"
+        },
+        {
+          "value": "triangle",
+          "label": "12 · Peak"
+        },
+        {
+          "value": "shape-13",
+          "label": "13 · Arch"
+        },
+        {
+          "value": "shape-14",
+          "label": "14 · Arc"
+        },
+        {
+          "value": "shape-15",
+          "label": "15 · Curly 3"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "16 · S-wave"
+        },
+        {
+          "value": "star",
+          "label": "17 · Lightning"
+        },
+        {
+          "value": "zigzag",
+          "label": "18 · Zigzag"
+        },
+        {
+          "value": "shape-19",
+          "label": "19 · Horseshoe"
+        },
+        {
+          "value": "shape-20",
+          "label": "20 · W-wave"
+        },
+        {
+          "value": "shape-21",
+          "label": "21 · J-hook"
+        },
+        {
+          "value": "shape-22",
+          "label": "22 · Curl"
+        },
+        {
+          "value": "shape-23",
+          "label": "23 · Spring"
+        },
+        {
+          "value": "shape-24",
+          "label": "24 · Wave line"
+        },
+        {
+          "value": "shape-25",
+          "label": "25 · Swoosh"
+        },
+        {
+          "value": "shape-26",
+          "label": "26 · Arch 2"
+        },
+        {
+          "value": "shape-27",
+          "label": "27 · Brow"
+        },
+        {
+          "value": "shape-28",
+          "label": "28 · Elbow"
+        },
+        {
+          "value": "shape-29",
+          "label": "29 · Smile"
+        },
+        {
+          "value": "shape-30",
+          "label": "30 · Roof"
+        },
+        {
+          "value": "shape-31",
+          "label": "31 · Bracket"
+        },
+        {
+          "value": "shape-32",
+          "label": "32 · C-curl"
+        },
+        {
+          "value": "plus",
+          "label": "33 · Slash"
+        },
+        {
+          "value": "shape-34",
+          "label": "34 · Small hook"
+        },
+        {
+          "value": "shape-35",
+          "label": "35 · Stick"
+        },
+        {
+          "value": "shape-36",
+          "label": "36 · Dash"
+        },
+        {
+          "value": "tile",
+          "label": "37 · Bar"
+        },
+        {
+          "value": "shape-38",
+          "label": "38 · Pill"
+        },
+        {
+          "value": "shape-39",
+          "label": "39 · Long bar"
+        },
+        {
+          "value": "dot",
+          "label": "40 · Dot"
+        },
+        {
+          "value": "shape-41",
+          "label": "41 · Oval dot"
+        },
+        {
+          "value": "shape-42",
+          "label": "42 · Small dot"
+        }
+      ],
+      "default": "spiral"
+    },
+    {
+      "type": "color",
+      "id": "doodle_tr_color",
+      "label": "Top right color",
+      "default": "#FFF503"
+    },
+    {
+      "type": "select",
+      "id": "doodle_bl",
+      "label": "Bottom left",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "shape-1",
+          "label": "1 · Zigzag squiggle"
+        },
+        {
+          "value": "squiggle",
+          "label": "2 · Wave"
+        },
+        {
+          "value": "spiral",
+          "label": "3 · Spiral"
+        },
+        {
+          "value": "shape-4",
+          "label": "4 · Swirl"
+        },
+        {
+          "value": "shape-5",
+          "label": "5 · Bumpy wave"
+        },
+        {
+          "value": "shape-6",
+          "label": "6 · Wiggle"
+        },
+        {
+          "value": "shape-7",
+          "label": "7 · Hook"
+        },
+        {
+          "value": "shape-8",
+          "label": "8 · Step"
+        },
+        {
+          "value": "ring",
+          "label": "9 · Ring"
+        },
+        {
+          "value": "shape-10",
+          "label": "10 · S-curve"
+        },
+        {
+          "value": "shape-11",
+          "label": "11 · Wiggle 2"
+        },
+        {
+          "value": "triangle",
+          "label": "12 · Peak"
+        },
+        {
+          "value": "shape-13",
+          "label": "13 · Arch"
+        },
+        {
+          "value": "shape-14",
+          "label": "14 · Arc"
+        },
+        {
+          "value": "shape-15",
+          "label": "15 · Curly 3"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "16 · S-wave"
+        },
+        {
+          "value": "star",
+          "label": "17 · Lightning"
+        },
+        {
+          "value": "zigzag",
+          "label": "18 · Zigzag"
+        },
+        {
+          "value": "shape-19",
+          "label": "19 · Horseshoe"
+        },
+        {
+          "value": "shape-20",
+          "label": "20 · W-wave"
+        },
+        {
+          "value": "shape-21",
+          "label": "21 · J-hook"
+        },
+        {
+          "value": "shape-22",
+          "label": "22 · Curl"
+        },
+        {
+          "value": "shape-23",
+          "label": "23 · Spring"
+        },
+        {
+          "value": "shape-24",
+          "label": "24 · Wave line"
+        },
+        {
+          "value": "shape-25",
+          "label": "25 · Swoosh"
+        },
+        {
+          "value": "shape-26",
+          "label": "26 · Arch 2"
+        },
+        {
+          "value": "shape-27",
+          "label": "27 · Brow"
+        },
+        {
+          "value": "shape-28",
+          "label": "28 · Elbow"
+        },
+        {
+          "value": "shape-29",
+          "label": "29 · Smile"
+        },
+        {
+          "value": "shape-30",
+          "label": "30 · Roof"
+        },
+        {
+          "value": "shape-31",
+          "label": "31 · Bracket"
+        },
+        {
+          "value": "shape-32",
+          "label": "32 · C-curl"
+        },
+        {
+          "value": "plus",
+          "label": "33 · Slash"
+        },
+        {
+          "value": "shape-34",
+          "label": "34 · Small hook"
+        },
+        {
+          "value": "shape-35",
+          "label": "35 · Stick"
+        },
+        {
+          "value": "shape-36",
+          "label": "36 · Dash"
+        },
+        {
+          "value": "tile",
+          "label": "37 · Bar"
+        },
+        {
+          "value": "shape-38",
+          "label": "38 · Pill"
+        },
+        {
+          "value": "shape-39",
+          "label": "39 · Long bar"
+        },
+        {
+          "value": "dot",
+          "label": "40 · Dot"
+        },
+        {
+          "value": "shape-41",
+          "label": "41 · Oval dot"
+        },
+        {
+          "value": "shape-42",
+          "label": "42 · Small dot"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "doodle_bl_color",
+      "label": "Bottom left color",
+      "default": "#20A4F3"
+    },
+    {
+      "type": "select",
+      "id": "doodle_br",
+      "label": "Bottom right",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "shape-1",
+          "label": "1 · Zigzag squiggle"
+        },
+        {
+          "value": "squiggle",
+          "label": "2 · Wave"
+        },
+        {
+          "value": "spiral",
+          "label": "3 · Spiral"
+        },
+        {
+          "value": "shape-4",
+          "label": "4 · Swirl"
+        },
+        {
+          "value": "shape-5",
+          "label": "5 · Bumpy wave"
+        },
+        {
+          "value": "shape-6",
+          "label": "6 · Wiggle"
+        },
+        {
+          "value": "shape-7",
+          "label": "7 · Hook"
+        },
+        {
+          "value": "shape-8",
+          "label": "8 · Step"
+        },
+        {
+          "value": "ring",
+          "label": "9 · Ring"
+        },
+        {
+          "value": "shape-10",
+          "label": "10 · S-curve"
+        },
+        {
+          "value": "shape-11",
+          "label": "11 · Wiggle 2"
+        },
+        {
+          "value": "triangle",
+          "label": "12 · Peak"
+        },
+        {
+          "value": "shape-13",
+          "label": "13 · Arch"
+        },
+        {
+          "value": "shape-14",
+          "label": "14 · Arc"
+        },
+        {
+          "value": "shape-15",
+          "label": "15 · Curly 3"
+        },
+        {
+          "value": "loop-arrow",
+          "label": "16 · S-wave"
+        },
+        {
+          "value": "star",
+          "label": "17 · Lightning"
+        },
+        {
+          "value": "zigzag",
+          "label": "18 · Zigzag"
+        },
+        {
+          "value": "shape-19",
+          "label": "19 · Horseshoe"
+        },
+        {
+          "value": "shape-20",
+          "label": "20 · W-wave"
+        },
+        {
+          "value": "shape-21",
+          "label": "21 · J-hook"
+        },
+        {
+          "value": "shape-22",
+          "label": "22 · Curl"
+        },
+        {
+          "value": "shape-23",
+          "label": "23 · Spring"
+        },
+        {
+          "value": "shape-24",
+          "label": "24 · Wave line"
+        },
+        {
+          "value": "shape-25",
+          "label": "25 · Swoosh"
+        },
+        {
+          "value": "shape-26",
+          "label": "26 · Arch 2"
+        },
+        {
+          "value": "shape-27",
+          "label": "27 · Brow"
+        },
+        {
+          "value": "shape-28",
+          "label": "28 · Elbow"
+        },
+        {
+          "value": "shape-29",
+          "label": "29 · Smile"
+        },
+        {
+          "value": "shape-30",
+          "label": "30 · Roof"
+        },
+        {
+          "value": "shape-31",
+          "label": "31 · Bracket"
+        },
+        {
+          "value": "shape-32",
+          "label": "32 · C-curl"
+        },
+        {
+          "value": "plus",
+          "label": "33 · Slash"
+        },
+        {
+          "value": "shape-34",
+          "label": "34 · Small hook"
+        },
+        {
+          "value": "shape-35",
+          "label": "35 · Stick"
+        },
+        {
+          "value": "shape-36",
+          "label": "36 · Dash"
+        },
+        {
+          "value": "tile",
+          "label": "37 · Bar"
+        },
+        {
+          "value": "shape-38",
+          "label": "38 · Pill"
+        },
+        {
+          "value": "shape-39",
+          "label": "39 · Long bar"
+        },
+        {
+          "value": "dot",
+          "label": "40 · Dot"
+        },
+        {
+          "value": "shape-41",
+          "label": "41 · Oval dot"
+        },
+        {
+          "value": "shape-42",
+          "label": "42 · Small dot"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "doodle_br_color",
+      "label": "Bottom right color",
+      "default": "#FFF503"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Review quote",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review",
+          "info": "Paste a real review, word for word."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "source",
+          "label": "Where it's from",
+          "options": [
+            {
+              "value": "site",
+              "label": "playsmidgen.com"
+            },
+            {
+              "value": "amazon",
+              "label": "Amazon"
+            },
+            {
+              "value": "other",
+              "label": "Other"
+            }
+          ],
+          "default": "site"
+        },
+        {
+          "type": "text",
+          "id": "source_text",
+          "label": "Source label (Other)",
+          "placeholder": "Board Game Geek"
+        }
+      ]
+    },
+    {
+      "type": "doodle",
+      "name": "Doodle",
+      "settings": [
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            {
+              "value": "shape-1",
+              "label": "1 · Zigzag squiggle"
+            },
+            {
+              "value": "squiggle",
+              "label": "2 · Wave"
+            },
+            {
+              "value": "spiral",
+              "label": "3 · Spiral"
+            },
+            {
+              "value": "shape-4",
+              "label": "4 · Swirl"
+            },
+            {
+              "value": "shape-5",
+              "label": "5 · Bumpy wave"
+            },
+            {
+              "value": "shape-6",
+              "label": "6 · Wiggle"
+            },
+            {
+              "value": "shape-7",
+              "label": "7 · Hook"
+            },
+            {
+              "value": "shape-8",
+              "label": "8 · Step"
+            },
+            {
+              "value": "ring",
+              "label": "9 · Ring"
+            },
+            {
+              "value": "shape-10",
+              "label": "10 · S-curve"
+            },
+            {
+              "value": "shape-11",
+              "label": "11 · Wiggle 2"
+            },
+            {
+              "value": "triangle",
+              "label": "12 · Peak"
+            },
+            {
+              "value": "shape-13",
+              "label": "13 · Arch"
+            },
+            {
+              "value": "shape-14",
+              "label": "14 · Arc"
+            },
+            {
+              "value": "shape-15",
+              "label": "15 · Curly 3"
+            },
+            {
+              "value": "loop-arrow",
+              "label": "16 · S-wave"
+            },
+            {
+              "value": "star",
+              "label": "17 · Lightning"
+            },
+            {
+              "value": "zigzag",
+              "label": "18 · Zigzag"
+            },
+            {
+              "value": "shape-19",
+              "label": "19 · Horseshoe"
+            },
+            {
+              "value": "shape-20",
+              "label": "20 · W-wave"
+            },
+            {
+              "value": "shape-21",
+              "label": "21 · J-hook"
+            },
+            {
+              "value": "shape-22",
+              "label": "22 · Curl"
+            },
+            {
+              "value": "shape-23",
+              "label": "23 · Spring"
+            },
+            {
+              "value": "shape-24",
+              "label": "24 · Wave line"
+            },
+            {
+              "value": "shape-25",
+              "label": "25 · Swoosh"
+            },
+            {
+              "value": "shape-26",
+              "label": "26 · Arch 2"
+            },
+            {
+              "value": "shape-27",
+              "label": "27 · Brow"
+            },
+            {
+              "value": "shape-28",
+              "label": "28 · Elbow"
+            },
+            {
+              "value": "shape-29",
+              "label": "29 · Smile"
+            },
+            {
+              "value": "shape-30",
+              "label": "30 · Roof"
+            },
+            {
+              "value": "shape-31",
+              "label": "31 · Bracket"
+            },
+            {
+              "value": "shape-32",
+              "label": "32 · C-curl"
+            },
+            {
+              "value": "plus",
+              "label": "33 · Slash"
+            },
+            {
+              "value": "shape-34",
+              "label": "34 · Small hook"
+            },
+            {
+              "value": "shape-35",
+              "label": "35 · Stick"
+            },
+            {
+              "value": "shape-36",
+              "label": "36 · Dash"
+            },
+            {
+              "value": "tile",
+              "label": "37 · Bar"
+            },
+            {
+              "value": "shape-38",
+              "label": "38 · Pill"
+            },
+            {
+              "value": "shape-39",
+              "label": "39 · Long bar"
+            },
+            {
+              "value": "dot",
+              "label": "40 · Dot"
+            },
+            {
+              "value": "shape-41",
+              "label": "41 · Oval dot"
+            },
+            {
+              "value": "shape-42",
+              "label": "42 · Small dot"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#20A4F3"
+        },
+        {
+          "type": "select",
+          "id": "outline",
+          "label": "Outline",
+          "options": [
+            {
+              "value": "",
+              "label": "Theme default"
+            },
+            {
+              "value": "on",
+              "label": "On"
+            },
+            {
+              "value": "off",
+              "label": "Off"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Left to right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Top to bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "size",
+          "label": "Size",
+          "min": 30,
+          "max": 250,
+          "step": 10,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "rotate",
+          "label": "Rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide on phones",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smidgen · Bridge reviews"
+    }
+  ]
+}
+{% endschema %}

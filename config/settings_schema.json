@@ -2196,5 +2196,27 @@
         "default": 3
       }
     ]
+  },
+  {
+    "name": "Smidgen · Amazon",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Used by the Amazon bridge page template."
+      },
+      {
+        "type": "text",
+        "id": "sm_amazon_tag",
+        "label": "Amazon Associates tag",
+        "default": "smidgengames-20",
+        "info": "Added to Amazon links unless the link already has a tag or is an Amazon Attribution link."
+      },
+      {
+        "type": "text",
+        "id": "sm_amazon_event",
+        "label": "Analytics event name",
+        "default": "amazon_click"
+      }
+    ]
   }
 ]

@@ -1,0 +1,27 @@
+{%- doc -%}
+  Outputs a product's Amazon link for bridge pages (nothing when there isn't one).
+  Order: the `link` passed in → the product's custom.amazon_bridge_link field
+  (e.g. an Amazon Attribution link for ads) → custom.amazon_link.
+  The Associates tag (Theme settings → Smidgen · Amazon) is added unless the link
+  already carries a tag or is an Amazon Attribution link (maas=).
+
+  @param {product} product
+  @param {string} [link] - override link
+{%- enddoc -%}
+{%- liquid
+  assign u = link | append: '' | strip
+  if u == blank
+    assign u = product.metafields.custom.amazon_bridge_link.value | default: product.metafields.custom.amazon_link.value | append: '' | strip
+  endif
+  assign t = settings.sm_amazon_tag | strip
+  if u != blank and t != blank
+    unless u contains 'tag=' or u contains 'maas='
+      if u contains '?'
+        assign u = u | append: '&tag=' | append: t
+      else
+        assign u = u | append: '?tag=' | append: t
+      endif
+    endunless
+  endif
+-%}
+{{- u -}}
