@@ -1,7 +1,22 @@
 {%- comment -%}
-  "Why Amazon?" strip for bridge pages: a heading and up to six icon + label items.
+  "Why Amazon?" strip for bridge pages. Items come from the product's Amazon
+  Benefits field (custom.amazon_benefits) when it has any, otherwise from the
+  Item blocks below.
 {%- endcomment -%}
-{%- assign s = section.settings -%}
+{%- liquid
+  assign s = section.settings
+  assign from_product = false
+  assign benefits = blank
+  if product and s.benefits_field != blank
+    assign bk = s.benefits_field | strip | split: '.'
+    if bk.size == 2
+      assign benefits = product.metafields[bk[0]][bk[1]].value
+    endif
+    if benefits != blank and benefits.size > 0
+      assign from_product = true
+    endif
+  endif
+-%}
 {%- if section.settings.divider_top != blank and section.settings.divider_top != 'none' -%}{% render 'sm-divider', shape: section.settings.divider_top, from: section.settings.divider_top_from, to: section.settings.bg %}{%- endif -%}
 <section class="sm-section sm-bwhy" style="--sm-bg: {{ s.bg }}; --sm-fg: {{ s.fg }};{% if s.border %} border-top: 3px solid #000; border-bottom: 3px solid #000;{% endif %}">
   {% render 'sm-corner-doodles', section: section %}
@@ -9,13 +24,47 @@
   <div class="sm-container" style="--sm-pad-top: {{ s.pad_top }}px; --sm-pad-bottom: {{ s.pad_bottom }}px; align-items: center;">
     {%- if s.heading != blank -%}<h2 class="sm-display" style="font-size: clamp(2rem, 5vw, 2.6rem); text-align: center;">{{ s.heading }}</h2>{%- endif -%}
     <ul class="sm-bwhy__list">
-      {%- for block in section.blocks -%}
-        {%- if block.type != 'item' or block.settings.label == blank -%}{%- continue -%}{%- endif -%}
-        <li {{ block.shopify_attributes }}>
-          <span class="sm-bwhy__icon" style="background: {{ block.settings.color }};">{% render 'sm-icon', name: block.settings.icon_name, size: 28 %}</span>
-          <span class="sm-bwhy__label">{{ block.settings.label }}</span>
-        </li>
-      {%- endfor -%}
+      {%- if from_product -%}
+        {%- for item in benefits -%}
+          {%- liquid
+            assign txt = item.label.value | default: item.title.value | default: item.name.value | default: item.benefit.value | default: item.text.value
+            if txt == blank and item.system == blank
+              assign txt = item | append: ''
+            endif
+            if txt == blank
+              continue
+            endif
+            assign icon_val = item.icon.value | default: item.icon_image.value | default: item.image.value
+            assign icon_name = item.icon_name.value
+            if icon_val != blank and icon_val.preview_image == blank and icon_val.src == blank
+              assign icon_name = icon_val
+              assign icon_val = blank
+            endif
+            assign fallback_icons = s.default_icons | split: ','
+            assign fi = forloop.index0 | modulo: fallback_icons.size
+            assign icon_name = icon_name | default: fallback_icons[fi] | strip
+            assign circle = item.color.value | default: s.icon_bg
+          -%}
+          <li>
+            <span class="sm-bwhy__icon" style="background: {{ circle }};">
+              {%- if icon_val != blank -%}
+                {{ icon_val | image_url: width: 96 | image_tag: alt: '', width: 32, height: 32, style: 'width: 32px; height: 32px; object-fit: contain;' }}
+              {%- else -%}
+                {% render 'sm-icon', name: icon_name, size: 28 %}
+              {%- endif -%}
+            </span>
+            <span class="sm-bwhy__label">{{ txt }}</span>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'item' or block.settings.label == blank -%}{%- continue -%}{%- endif -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="sm-bwhy__icon" style="background: {{ block.settings.color }};">{% render 'sm-icon', name: block.settings.icon_name, size: 28 %}</span>
+            <span class="sm-bwhy__label">{{ block.settings.label }}</span>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
     </ul>
   </div>
 </section>
@@ -31,6 +80,26 @@
       "id": "heading",
       "label": "Heading",
       "default": "Why Amazon?"
+    },
+    {
+      "type": "text",
+      "id": "benefits_field",
+      "label": "Product field with the benefits",
+      "default": "custom.amazon_benefits",
+      "info": "A list field on the product (Amazon Benefits entries or plain text). When it has items, they replace the Item blocks."
+    },
+    {
+      "type": "text",
+      "id": "default_icons",
+      "label": "Icons when an entry has none",
+      "default": "truck,arrows-clockwise,seal-check,star,gift,clock",
+      "info": "Icon names in order, separated by commas."
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon circle color",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",
