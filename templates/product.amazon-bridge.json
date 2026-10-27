@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "layout": "bridge",
   "sections": {
@@ -5,15 +14,39 @@
       "type": "sm-bridge-header",
       "settings": {
         "logo_width": 150,
+        "link": "",
         "bg": "#ffffff",
         "border": true
       }
     },
     "bridge_hero": {
       "type": "sm-bridge-hero",
-      "blocks": {},
-      "block_order": [],
-      "settings": {}
+      "settings": {
+        "eyebrow": "",
+        "title": "",
+        "heading_tag": "h1",
+        "tagline": "",
+        "show_specs": true,
+        "button_label": "Get [title] on Amazon",
+        "amazon_link": "",
+        "button_bg": "#ea5d00",
+        "button_fg": "#ffffff",
+        "show_rating": true,
+        "rating_text": "[count] reviews on playsmidgen.com",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "spiral",
+        "doodle_tr_color": "#fff503",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#fff503",
+        "fg": "#000000",
+        "circle_color": "#753189",
+        "band_color": "#753189",
+        "pad_top": 32
+      }
     },
     "benefits": {
       "type": "sm-feature-cards",
@@ -70,9 +103,9 @@
         "bg": "#20a4f3",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "{{ settings.color_palette.background }}",
+        "divider_to": "#FFF503",
         "pad_top": 64,
-        "pad_bottom": 88
+        "pad_bottom": 48
       }
     },
     "learn": {
@@ -90,8 +123,8 @@
         "btn2_fg": "",
         "bg": "#fff503",
         "fg": "#000000",
-        "outer_color": "#ffffff",
-        "divider_shape": "wave",
+        "outer_color": "#20A4F3",
+        "divider_shape": "straight",
         "pad_top": 40,
         "pad_bottom": 72,
         "doodle_tl": "none",
@@ -106,14 +139,81 @@
     },
     "reviews": {
       "type": "sm-bridge-reviews",
-      "blocks": {},
-      "block_order": [],
-      "settings": {}
+      "blocks": {
+        "quote_httVgk": {
+          "type": "quote",
+          "settings": {
+            "quote": "Grab it! We immediately started a second round. And then a third.",
+            "name": "Kerry",
+            "stars": 5,
+            "source": "amazon",
+            "source_text": ""
+          }
+        },
+        "quote_Btrjkz": {
+          "type": "quote",
+          "settings": {
+            "quote": "We love your game! My adult kids played and loved it and’s my 5yo grands daughter also loves it!",
+            "name": "Jennifer",
+            "stars": 5,
+            "source": "site",
+            "source_text": ""
+          }
+        },
+        "quote_JMXMVf": {
+          "type": "quote",
+          "settings": {
+            "quote": "Few games become instant favorites, but we're so glad we found this one. Easy to learn, but the strategy is a slow burn that will keep you coming back for just one more round.",
+            "name": "Dawn",
+            "stars": 5,
+            "source": "amazon",
+            "source_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "quote_httVgk",
+        "quote_Btrjkz",
+        "quote_JMXMVf"
+      ],
+      "settings": {
+        "heading": "What players say",
+        "site_text": "from [count] verified reviews on playsmidgen.com",
+        "amazon_rating": "",
+        "amazon_count": "",
+        "amazon_text": "★ [rating] from [count] reviews on Amazon",
+        "show_all_link": false,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#20A4F3",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#20A4F3",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "{{ settings.color_palette.background }}",
+        "fg": "#000000",
+        "pad_top": 56,
+        "pad_bottom": 64
+      }
     },
     "box": {
       "type": "sm-in-the-box",
       "settings": {
-        "components_field": "custom.components"
+        "heading": "What's in the box",
+        "components_field": "custom.components",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "pad_top": 48,
+        "pad_bottom": 24
       }
     },
     "why": {
@@ -123,7 +223,7 @@
           "type": "item",
           "settings": {
             "icon_name": "truck",
-            "label": "[Fast shipping]",
+            "label": "Fast shipping",
             "color": "#ffffff"
           }
         },
@@ -131,7 +231,7 @@
           "type": "item",
           "settings": {
             "icon_name": "arrows-clockwise",
-            "label": "[Easy returns]",
+            "label": "Easy returns",
             "color": "#ffffff"
           }
         },
@@ -149,7 +249,22 @@
         "w2",
         "w3"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "Why Amazon?",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#20A4F3",
+        "doodle_tr": "shape-32",
+        "doodle_tr_color": "#fff503",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#f7f2fa",
+        "fg": "#000000",
+        "border": true,
+        "pad_top": 40,
+        "pad_bottom": 40
+      }
     },
     "faq": {
       "type": "sm-faq",
@@ -182,10 +297,32 @@
     },
     "closing": {
       "type": "sm-bridge-closing",
-      "blocks": {},
-      "block_order": [],
       "settings": {
-        "heading": "[Closing line]"
+        "price_text": "",
+        "sticker_color": "#ea5d00",
+        "heading": "[Closing line]",
+        "button_label": "Get [title] on Amazon",
+        "amazon_link": "",
+        "button_bg": "#ea5d00",
+        "button_fg": "#ffffff",
+        "direct_label": "Prefer to buy direct? Shop playsmidgen.com",
+        "show_policies": true,
+        "sticky_bar": true,
+        "bar_button": "Buy on Amazon",
+        "bar_award": true,
+        "bar_bg": "#fff503",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "spiral",
+        "doodle_tr_color": "#fff503",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#753189",
+        "fg": "#ffffff",
+        "pad_top": 56,
+        "pad_bottom": 120
       }
     }
   },
