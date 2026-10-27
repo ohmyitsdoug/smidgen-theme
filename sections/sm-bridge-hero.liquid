@@ -38,7 +38,7 @@
   <div class="sm-bhero__stage">
     <div class="sm-bhero__circle" aria-hidden="true"></div>
     {%- if img != blank -%}
-      {%- assign img_alt = img.alt | default: p.title | append: ' game box' -%}
+      {%- assign img_alt = p.title | append: ' game box' -%}{%- if img.alt != blank -%}{%- assign img_alt = img.alt -%}{%- endif -%}
       {{ img | image_url: width: 900 | image_tag: alt: img_alt, class: 'sm-bhero__img', loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 750px) 380px, 66vw' }}
     {%- endif -%}
   </div>
@@ -47,9 +47,9 @@
   <div class="sm-bhero__band-inner">
     {%- if s.show_specs and has_specs -%}
       <dl class="sm-bhero__specs">
-        {%- if f_ages != blank -%}<div><dd>{{ f_ages }}</dd><dt>Ages</dt></div>{%- endif -%}
-        {%- if f_players != blank -%}<div><dd>{{ f_players }}</dd><dt>Players</dt></div>{%- endif -%}
-        {%- if f_time != blank -%}<div><dd>{{ f_time | remove: ' min' | remove: 'min' }}</dd><dt>Minutes</dt></div>{%- endif -%}
+        {%- if f_ages != blank -%}<div><dt>Ages</dt><dd>{{ f_ages }}</dd></div>{%- endif -%}
+        {%- if f_players != blank -%}<div><dt>Players</dt><dd>{{ f_players }}</dd></div>{%- endif -%}
+        {%- if f_time != blank -%}<div><dt>Minutes</dt><dd>{{ f_time | remove: ' min' | remove: 'min' }}</dd></div>{%- endif -%}
       </dl>
     {%- endif -%}
     {%- if amz != blank -%}
