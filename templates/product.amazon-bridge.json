@@ -107,7 +107,8 @@
         "divider": "wave",
         "divider_to": "#fff503",
         "pad_top": 64,
-        "pad_bottom": 48
+        "pad_bottom": 48,
+        "cards_field": "custom.amazon_benefits"
       }
     },
     "learn": {
@@ -282,7 +283,8 @@
         "fg": "#000000",
         "border": false,
         "pad_top": 40,
-        "pad_bottom": 40
+        "pad_bottom": 40,
+        "benefits_field": ""
       }
     },
     "faq": {
