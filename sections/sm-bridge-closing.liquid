@@ -10,7 +10,18 @@
     render 'sm-amazon-url', product: p, link: s.amazon_link
   endcapture
   assign amz = amz | strip
-  assign img = s.image | default: p.featured_image
+  assign img = blank
+  assign ik = s.image_field | default: 'custom.amazon_bridge_image' | strip | split: '.'
+  if ik.size == 2
+    assign img = p.metafields[ik[0]][ik[1]].value
+  endif
+  assign img = img | default: s.image | default: p.featured_image
+  assign closing = blank
+  assign lk = s.closing_field | default: 'custom.amazon_closing_line' | strip | split: '.'
+  if lk.size == 2
+    assign closing = p.metafields[lk[0]][lk[1]].value
+  endif
+  assign closing = closing | default: s.heading
   assign btn_label = s.button_label | replace: '[title]', p.title
   assign bar_label = s.bar_button | replace: '[title]', p.title
   assign rating = p.metafields.reviews.rating.value
@@ -28,7 +39,7 @@
         {%- if s.price_text != blank -%}<span class="sm-bclose__price" style="background: {{ s.sticker_color }};">{{ s.price_text }}</span>{%- endif -%}
       </div>
     {%- endif -%}
-    {%- if s.heading != blank -%}<h2 class="sm-display" style="font-size: clamp(2.2rem, 7vw, 3rem);">{{ s.heading }}</h2>{%- endif -%}
+    {%- if closing != blank -%}<h2 class="sm-display" style="font-size: clamp(2.2rem, 7vw, 3rem);">{{ closing }}</h2>{%- endif -%}
     {%- if amz != blank -%}
       <a class="sm-btn sm-bridge-amz" href="{{ amz }}" target="_blank" rel="sponsored noopener" data-sm-amazon data-placement="bridge_closing" data-product="{{ p.title | escape }}" data-product-id="{{ p.id }}" style="--sm-btn-bg: {{ s.button_bg }}; --sm-btn-fg: {{ s.button_fg }};">
         {{ btn_label }}<span class="sm-visually-hidden"> (opens Amazon in a new tab)</span>
@@ -85,10 +96,16 @@
   },
   "settings": [
     {
+      "type": "text",
+      "id": "image_field",
+      "label": "Product field with the image",
+      "default": "custom.amazon_bridge_image"
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Image",
-      "info": "Empty uses the product's main image."
+      "label": "Fallback image",
+      "info": "Used when the product has no bridge image. Empty uses the product's main image."
     },
     {
       "type": "text",
@@ -104,8 +121,16 @@
     },
     {
       "type": "text",
+      "id": "closing_field",
+      "label": "Product field with the closing line",
+      "default": "custom.amazon_closing_line",
+      "info": "A single line text field on each product."
+    },
+    {
+      "type": "text",
       "id": "heading",
-      "label": "Closing line"
+      "label": "Fallback closing line",
+      "info": "Used when the product has no closing line of its own."
     },
     {
       "type": "text",

@@ -54,7 +54,7 @@
       <dl class="sm-bhero__specs">
         {%- if f_ages != blank -%}<div><dd>{{ f_ages }}</dd><dt>Ages</dt></div>{%- endif -%}
         {%- if f_players != blank -%}<div><dd>{{ f_players }}</dd><dt>Players</dt></div>{%- endif -%}
-        {%- if f_time != blank -%}<div><dd>{{ f_time | remove: ' min' | remove: 'min' }}</dd><dt>Minutes</dt></div>{%- endif -%}
+        {%- if f_time != blank -%}<div><dd>{{ f_time | remove: ' minutes' | remove: 'minutes' | remove: ' mins' | remove: 'mins' | remove: ' min' | remove: 'min' | strip }}</dd><dt>Minutes</dt></div>{%- endif -%}
       </dl>
     {%- endif -%}
     {%- if amz != blank -%}
