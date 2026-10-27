@@ -1,0 +1,203 @@
+{
+  "layout": "bridge",
+  "sections": {
+    "bridge_header": {
+      "type": "sm-bridge-header",
+      "settings": {
+        "logo_width": 150,
+        "bg": "#ffffff",
+        "border": true
+      }
+    },
+    "bridge_hero": {
+      "type": "sm-bridge-hero",
+      "blocks": {},
+      "block_order": [],
+      "settings": {}
+    },
+    "benefits": {
+      "type": "sm-feature-cards",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon_name": "sparkle",
+            "label": "",
+            "color": "#fff503",
+            "label_color": "#000000",
+            "title": "[Benefit 1]",
+            "text": "[One line]"
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon_name": "users-three",
+            "label": "",
+            "color": "#20a4f3",
+            "label_color": "#000000",
+            "title": "[Benefit 2]",
+            "text": "[One line]"
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon_name": "clock",
+            "label": "",
+            "color": "#ea5d00",
+            "label_color": "#000000",
+            "title": "[Benefit 3]",
+            "text": "[One line]"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "[Why families love it]",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#fff503",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#20a4f3",
+        "fg": "#000000",
+        "divider": "wave",
+        "divider_to": "{{ settings.color_palette.background }}",
+        "pad_top": 64,
+        "pad_bottom": 88
+      }
+    },
+    "learn": {
+      "type": "sm-learn-to-play",
+      "settings": {
+        "heading": "Learn to play",
+        "rules_label": "Download the rules (PDF)",
+        "video_link": "{{ product.metafields.custom.how_to_play_youtube.value }}",
+        "video_field": "",
+        "steps_field": "custom.how_to_steps",
+        "rules_field": "smidgen.rules_pdf",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "bg": "#fff503",
+        "fg": "#000000",
+        "outer_color": "#ffffff",
+        "divider_shape": "wave",
+        "pad_top": 40,
+        "pad_bottom": 72,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "zigzag",
+        "doodle_tr_color": "#753189",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503"
+      }
+    },
+    "reviews": {
+      "type": "sm-bridge-reviews",
+      "blocks": {},
+      "block_order": [],
+      "settings": {}
+    },
+    "box": {
+      "type": "sm-in-the-box",
+      "settings": {
+        "components_field": "custom.components"
+      }
+    },
+    "why": {
+      "type": "sm-bridge-why",
+      "blocks": {
+        "w1": {
+          "type": "item",
+          "settings": {
+            "icon_name": "truck",
+            "label": "[Fast shipping]",
+            "color": "#ffffff"
+          }
+        },
+        "w2": {
+          "type": "item",
+          "settings": {
+            "icon_name": "arrows-clockwise",
+            "label": "[Easy returns]",
+            "color": "#ffffff"
+          }
+        },
+        "w3": {
+          "type": "item",
+          "settings": {
+            "icon_name": "seal-check",
+            "label": "Same game, made by Smidgen",
+            "color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "sm-faq",
+      "settings": {
+        "anchor": "faq",
+        "heading": "Frequently asked questions",
+        "use_product": true,
+        "open_first": false,
+        "schema": false,
+        "show_box": false,
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider_from": "#ffffff",
+        "divider": "none",
+        "divider_to": "#ffffff",
+        "pad_top": 24,
+        "pad_bottom": 72
+      }
+    },
+    "closing": {
+      "type": "sm-bridge-closing",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "[Closing line]"
+      }
+    }
+  },
+  "order": [
+    "bridge_header",
+    "bridge_hero",
+    "benefits",
+    "learn",
+    "reviews",
+    "box",
+    "why",
+    "faq",
+    "closing"
+  ]
+}
