@@ -25,7 +25,7 @@
         "eyebrow": "",
         "title": "",
         "heading_tag": "h1",
-        "tagline": "",
+        "tagline": "The award-winning family game you can learn in 2 minutes.",
         "image_field": "custom.amazon_bridge_image",
         "image": "{{ product.featured_image }}",
         "show_specs": true,
@@ -263,6 +263,9 @@
       ],
       "settings": {
         "heading": "Why Amazon?",
+        "benefits_field": "custom.amazon_benefits",
+        "default_icons": "truck,arrows-clockwise,seal-check,star,gift,clock",
+        "icon_bg": "#ffffff",
         "doodle_tl": "none",
         "doodle_tl_color": "#20a4f3",
         "doodle_tr": "shape-32",
