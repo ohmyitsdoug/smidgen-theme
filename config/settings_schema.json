@@ -2216,6 +2216,13 @@
         "id": "sm_amazon_event",
         "label": "Analytics event name",
         "default": "amazon_click"
+      },
+      {
+        "type": "text",
+        "id": "sm_meta_pixel_id",
+        "label": "Meta pixel ID (bridge pages)",
+        "default": "622117253543027",
+        "info": "Sends an AmazonClick event to Meta from bridge pages so ad clicks can be credited. Leave blank to turn off."
       }
     ]
   }

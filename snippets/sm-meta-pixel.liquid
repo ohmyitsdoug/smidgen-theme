@@ -1,0 +1,65 @@
+{%- doc -%}
+  Meta pixel for bridge pages (layout/bridge.liquid only).
+  Runs on the page itself — not in Shopify's sandboxed custom-pixel frame — so
+  Meta can read the ad click ID (fbclid) and its first-party cookies, and credit
+  Amazon-button clicks to the ad that sent the visitor.
+
+  - No PageView here: the Facebook & Instagram app already sends page views.
+  - Waits for marketing consent via Shopify's Customer Privacy API. Where no
+    consent is required (e.g. most US visitors) that is granted immediately.
+  - Sends "AmazonClick" (custom event) on any [data-sm-amazon] / [data-amazon-cta] click.
+  Pixel ID comes from Theme settings → Smidgen · Amazon.
+{%- enddoc -%}
+{%- assign sm_meta_pixel = settings.sm_meta_pixel_id | strip -%}
+{%- if sm_meta_pixel != blank -%}
+<script>
+  (function () {
+    if (window.__smMetaBridge) return;
+    window.__smMetaBridge = true;
+    var PIXEL_ID = {{ sm_meta_pixel | json }};
+    var ready = false;
+
+    function startPixel() {
+      if (ready) return;
+      ready = true;
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+      (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+    }
+
+    function marketingAllowed() {
+      var cp = window.Shopify && window.Shopify.customerPrivacy;
+      if (!cp) return null;
+      try { return cp.marketingAllowed(); } catch (e) { return null; }
+    }
+
+    function checkConsent() {
+      if (marketingAllowed()) startPixel();
+    }
+
+    document.addEventListener('visitorConsentCollected', checkConsent);
+    if (window.Shopify && typeof window.Shopify.loadFeatures === 'function') {
+      window.Shopify.loadFeatures(
+        [{ name: 'consent-tracking-api', version: '0.1' }],
+        function (err) { if (!err) checkConsent(); }
+      );
+    } else {
+      checkConsent();
+    }
+
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('a[data-sm-amazon], [data-amazon-cta]');
+      if (!el || !ready || typeof window.fbq !== 'function') return;
+      try {
+        window.fbq('trackCustom', 'AmazonClick', {
+          content_name: el.dataset.product || '',
+          placement: el.dataset.amazonCta || el.dataset.placement || 'bridge_page'
+        });
+      } catch (err) {}
+    });
+  })();
+</script>
+{%- endif -%}
