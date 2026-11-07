@@ -1,67 +1,108 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "sm-help-hero",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading_tag": "h1",
         "heading": "Play online",
         "text": "<p>Two free daily games from Smidgen Games, the Baltimore tabletop publisher behind CUNO and MRBLS. Both play in your browser on a phone or computer, with nothing to download.</p>",
-        "bg": "#FFF503",
+        "bg": "#fff503",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF",
+        "divider_to": "#ffffff",
         "pad_top": 64,
         "pad_bottom": 40,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
         "doodle_tr": "spiral",
         "doodle_tr_color": "#753189",
         "doodle_bl": "none",
-        "doodle_tl": "none",
-        "doodle_br": "none"
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503"
       }
     },
     "alphablitz": {
       "type": "sm-image-text",
-      "blocks": {},
-      "block_order": [],
       "settings": {
+        "image": "shopify://shop_images/alphablitz.online.png",
         "image_style": "framed",
-        "image_side": "left",
+        "image_side": "right",
+        "note": "Game launching 2027",
+        "note_color": "{{ settings.color_palette.color6 }}",
+        "note_outline_color": "#000000",
+        "note_outline": 6,
         "eyebrow": "Daily word game",
         "heading": "Alphablitz Online",
+        "use_page_content": false,
         "text": "<p>Alphablitz Online is the web version of Alphablitz!, our cooperative word board game coming in 2027. Online it's a solo daily challenge: spell words from a letter grid to match each category, as fast as you can. Everyone gets the same puzzle each day, so you can compare scores with friends.</p>",
         "button_label": "Play Alphablitz Online",
         "button_link": "https://alphablitz.online/?utm_source=playsmidgen&utm_medium=referral&utm_campaign=online_games&utm_content=play_online_page",
         "button_style": "primary",
-        "bg": "#FFFFFF",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "bg": "#ffffff",
         "fg": "#000000",
         "divider": "none",
+        "divider_to": "#fff503",
         "pad_top": 56,
         "pad_bottom": 56
       }
     },
     "dailybanana": {
       "type": "sm-image-text",
-      "blocks": {},
-      "block_order": [],
       "settings": {
+        "image": "shopify://shop_images/dailybanana.io__1.png",
         "image_style": "framed",
-        "image_side": "right",
+        "image_side": "left",
+        "note": "Over 1000 daily players!",
+        "note_color": "{{ settings.color_palette.color6 }}",
+        "note_outline_color": "#000000",
+        "note_outline": 6,
         "eyebrow": "Daily guessing game",
         "heading": "Daily Banana",
-        "text": "<p>Daily Banana is a daily game about ridiculous measurements for everyday objects. Each puzzle asks how many of one thing it takes to measure another, and you get six guesses to get close. Share your result and challenge your friends.</p>",
+        "use_page_content": false,
+        "text": "<p>Daily Banana (dailybanana.io)is a daily game about ridiculous measurements for everyday objects. Each puzzle asks how many of one thing it takes to measure another, and you get six guesses to get close. Share your result and challenge your friends.</p>",
         "button_label": "Play Daily Banana",
         "button_link": "https://dailybanana.io/?utm_source=playsmidgen&utm_medium=referral&utm_campaign=online_games&utm_content=play_online_page",
         "button_style": "primary",
-        "bg": "#FFF503",
+        "doodle_tl": "dot",
+        "doodle_tl_color": "#ea5d00",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "{{ settings.color_palette.background }}",
+        "btn_bg": "",
+        "btn_fg": "",
+        "btn2_bg": "",
+        "btn2_fg": "",
+        "bg": "{{ settings.color_palette.background }}",
         "fg": "#000000",
         "divider": "wave",
-        "divider_to": "#FFFFFF",
+        "divider_to": "{{ settings.color_palette.color7 }}",
         "pad_top": 56,
-        "pad_bottom": 64,
-        "doodle_tl": "dot",
-        "doodle_tl_color": "#EA5D00"
+        "pad_bottom": 64
       }
     },
     "faq": {
@@ -125,10 +166,22 @@
         "open_first": false,
         "schema": true,
         "show_box": false,
-        "bg": "#FFFFFF",
+        "box_heading": "What's in the box",
+        "components_field": "custom.components",
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "none",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "{{ settings.color_palette.color7 }}",
         "fg": "#000000",
         "divider_top": "none",
+        "divider_from": "#ffffff",
         "divider": "none",
+        "divider_to": "#ffffff",
         "pad_top": 48,
         "pad_bottom": 56
       }
@@ -161,15 +214,13 @@
         "doodle_bl_color": "#20a4f3",
         "doodle_br": "none",
         "doodle_br_color": "#fff503",
-        "bg": "#F7F2FA",
+        "bg": "#f7f2fa",
         "fg": "#000000",
-        "divider": "zigzag",
+        "divider": "none",
         "divider_to": "#20a4f3",
         "pad_top": 48,
         "pad_bottom": 88
-      },
-      "blocks": {},
-      "block_order": []
+      }
     },
     "data": {
       "type": "sm-online-games-data",
