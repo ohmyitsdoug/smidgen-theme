@@ -1,0 +1,222 @@
+{
+  "sections": {
+    "hero": {
+      "type": "sm-help-hero",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading_tag": "h1",
+        "heading": "Play online",
+        "text": "<p>Two free daily games from Smidgen Games, the Baltimore tabletop publisher behind CUNO and MRBLS. Both play in your browser on a phone or computer, with nothing to download.</p>",
+        "bg": "#FFF503",
+        "fg": "#000000",
+        "divider": "wave",
+        "divider_to": "#FFFFFF",
+        "pad_top": 64,
+        "pad_bottom": 40,
+        "doodle_tr": "spiral",
+        "doodle_tr_color": "#753189",
+        "doodle_bl": "none",
+        "doodle_tl": "none",
+        "doodle_br": "none"
+      }
+    },
+    "alphablitz": {
+      "type": "sm-image-text",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "image_style": "framed",
+        "image_side": "left",
+        "eyebrow": "Daily word game",
+        "heading": "Alphablitz Online",
+        "text": "<p>Alphablitz Online is the web version of Alphablitz!, our cooperative word board game coming in 2027. Online it's a solo daily challenge: spell words from a letter grid to match each category, as fast as you can. Everyone gets the same puzzle each day, so you can compare scores with friends.</p>",
+        "button_label": "Play Alphablitz Online",
+        "button_link": "https://alphablitz.online/?utm_source=playsmidgen&utm_medium=referral&utm_campaign=online_games&utm_content=play_online_page",
+        "button_style": "primary",
+        "bg": "#FFFFFF",
+        "fg": "#000000",
+        "divider": "none",
+        "pad_top": 56,
+        "pad_bottom": 56
+      }
+    },
+    "dailybanana": {
+      "type": "sm-image-text",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "image_style": "framed",
+        "image_side": "right",
+        "eyebrow": "Daily guessing game",
+        "heading": "Daily Banana",
+        "text": "<p>Daily Banana is a daily game about ridiculous measurements for everyday objects. Each puzzle asks how many of one thing it takes to measure another, and you get six guesses to get close. Share your result and challenge your friends.</p>",
+        "button_label": "Play Daily Banana",
+        "button_link": "https://dailybanana.io/?utm_source=playsmidgen&utm_medium=referral&utm_campaign=online_games&utm_content=play_online_page",
+        "button_style": "primary",
+        "bg": "#FFF503",
+        "fg": "#000000",
+        "divider": "wave",
+        "divider_to": "#FFFFFF",
+        "pad_top": 56,
+        "pad_bottom": 64,
+        "doodle_tl": "dot",
+        "doodle_tl_color": "#EA5D00"
+      }
+    },
+    "faq": {
+      "type": "sm-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Are Smidgen's online games free?",
+            "answer": "<p>Yes. Alphablitz Online and Daily Banana are free to play in your web browser.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to download an app?",
+            "answer": "<p>No. Both games run in the browser on your phone, tablet or computer. Open the link and start playing.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Is Alphablitz Online the same as the Alphablitz! board game?",
+            "answer": "<p>They share the same idea: spell words from a grid of letters to match categories. The board game is cooperative, for 3 to 5 players working together against a timer. Alphablitz Online is a solo daily version you can play right now.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "When does the Alphablitz! board game come out?",
+            "answer": "<p>Alphablitz! is planned for 2027. Sign up for our newsletter to hear first.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "How does Daily Banana work?",
+            "answer": "<p>Each day there's a new puzzle that compares two everyday things using a ridiculous unit of measure. You get six guesses. When you're done, share your result and challenge your friends to beat it.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Who makes these games?",
+            "answer": "<p>Smidgen Games, a small tabletop game publisher based in Baltimore, Maryland. We also make board and card games like CUNO, MRBLS and Going Bananas!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "anchor": "faq",
+        "heading": "Questions about our online games",
+        "use_product": false,
+        "open_first": false,
+        "schema": true,
+        "show_box": false,
+        "bg": "#FFFFFF",
+        "fg": "#000000",
+        "divider_top": "none",
+        "divider": "none",
+        "pad_top": 48,
+        "pad_bottom": 56
+      }
+    },
+    "games": {
+      "type": "sm-game-grid",
+      "settings": {
+        "heading": "Prefer cardboard?",
+        "link_label": "All games →",
+        "link": "shopify://collections/our-games",
+        "source": "products",
+        "collection": "our-games",
+        "products": [],
+        "blog": "",
+        "limit": 8,
+        "card_min": 240,
+        "image_fit": "fill",
+        "card_bg_mode": "game",
+        "card_bg": "#753189",
+        "card_max": 280,
+        "more_label": "View game →",
+        "soon_label": "Get notified →",
+        "article_label": "Read more →",
+        "show_date": false,
+        "doodle_tl": "none",
+        "doodle_tl_color": "#753189",
+        "doodle_tr": "shape-11",
+        "doodle_tr_color": "#ea5d00",
+        "doodle_bl": "none",
+        "doodle_bl_color": "#20a4f3",
+        "doodle_br": "none",
+        "doodle_br_color": "#fff503",
+        "bg": "#F7F2FA",
+        "fg": "#000000",
+        "divider": "zigzag",
+        "divider_to": "#20a4f3",
+        "pad_top": 48,
+        "pad_bottom": 88
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "data": {
+      "type": "sm-online-games-data",
+      "blocks": {
+        "g1": {
+          "type": "game",
+          "settings": {
+            "name": "Alphablitz Online",
+            "url": "https://alphablitz.online/",
+            "description": "A free solo daily word game. Spell words from a grid of letters to match each category as fast as you can. The web version of Alphablitz!, a cooperative word board game from Smidgen Games coming in 2027.",
+            "genre": "Word game,Puzzle,Daily puzzle",
+            "play_mode": "SinglePlayer",
+            "free": true,
+            "based_on": "Alphablitz!",
+            "same_as": "https://www.reddit.com/r/alphablitz"
+          }
+        },
+        "g2": {
+          "type": "game",
+          "settings": {
+            "name": "Daily Banana",
+            "url": "https://dailybanana.io/",
+            "description": "A free daily game about ridiculous measurements for everyday objects. Six guesses each day, then share your result and challenge your friends.",
+            "genre": "Puzzle,Estimation game,Daily puzzle",
+            "play_mode": "SinglePlayer",
+            "free": true,
+            "based_on": "",
+            "same_as": "https://www.instagram.com/dailybanana.io\nhttps://www.reddit.com/r/dailybananaio"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2"
+      ],
+      "settings": {
+        "page_name": "Play online",
+        "page_description": "Free daily web games from Smidgen Games: Alphablitz Online, a solo word game based on the upcoming Alphablitz! board game, and Daily Banana, a daily game of ridiculous measurements."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "alphablitz",
+    "dailybanana",
+    "faq",
+    "games",
+    "data"
+  ]
+}
