@@ -64,15 +64,24 @@
 
       {%- if sm_block_count > 0 -%}
         <nav class="sm-footer__card" aria-label="Footer">
+          {%- assign sm_col = 0 -%}
           {%- for block in section.blocks -%}{%- if block.type == 'doodle' -%}{%- continue -%}{%- endif -%}
             {%- assign menu = block.settings.menu -%}
             {%- if menu != blank and menu.links.size > 0 -%}
+              {%- assign sm_col = sm_col | plus: 1 -%}
               <div class="sm-footer__col" {{ block.shopify_attributes }}>
                 <h2 class="sm-footer__heading">{{ block.settings.heading | default: menu.title }}</h2>
                 <ul>
                   {%- for link in menu.links -%}
                     <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
                   {%- endfor -%}
+                  {%- if settings.sm_extra_link_footer and sm_col == settings.sm_extra_link_footer_col and settings.sm_extra_link_label != blank and settings.sm_extra_link_url != blank -%}
+                    {%- assign extra_in_menu = false -%}
+                    {%- for link in menu.links -%}{%- if link.url == settings.sm_extra_link_url -%}{%- assign extra_in_menu = true -%}{%- endif -%}{%- endfor -%}
+                    {%- unless extra_in_menu -%}
+                      <li><a href="{{ settings.sm_extra_link_url }}" {% if request.path == settings.sm_extra_link_url %}aria-current="page"{% endif %}>{{ settings.sm_extra_link_label | escape }}</a></li>
+                    {%- endunless -%}
+                  {%- endif -%}
                 </ul>
               </div>
             {%- endif -%}

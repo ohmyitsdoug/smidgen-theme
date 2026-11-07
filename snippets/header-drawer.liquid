@@ -258,6 +258,14 @@
                 {% endif %}
               </li>
             {%- endfor -%}
+            {%- assign sm_extra_dupe = false -%}{%- for l in linklist.links -%}{%- if l.url == settings.sm_extra_link_url -%}{%- assign sm_extra_dupe = true -%}{%- endif -%}{%- endfor -%}
+      {%- if settings.sm_extra_link_header and sm_extra_dupe == false and settings.sm_extra_link_label != blank and settings.sm_extra_link_url != blank -%}
+              <li class="menu-drawer__list-item sm-extra-link">
+                <a href="{{ settings.sm_extra_link_url }}" class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"{% if request.path == settings.sm_extra_link_url %} aria-current="page"{% endif %}>
+                  <span class="menu-drawer__menu-item-text wrap-text">{{ settings.sm_extra_link_label | escape }}</span>
+                </a>
+              </li>
+            {%- endif -%}
             {%- capture sm_ws -%}{%- render 'sm-is-wholesale' -%}{%- endcapture -%}
             {%- if sm_ws == 'true' -%}
               <li class="menu-drawer__list-item sm-ws-link">

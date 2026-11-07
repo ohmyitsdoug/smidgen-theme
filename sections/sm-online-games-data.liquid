@@ -1,0 +1,123 @@
+{%- comment -%}
+  Search data for the Play online page: describes each web game to search
+  engines and AI assistants (schema.org VideoGame inside an ItemList, on a
+  CollectionPage). Nothing shows on the page; in the editor a note lists the games.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign org_name = settings.sm_brand_name | default: shop.name
+  assign page_url = shop.url | append: request.path
+  assign game_count = 0
+  for block in section.blocks
+    if block.type == 'game' and block.settings.name != blank and block.settings.url != blank
+      assign game_count = game_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if game_count > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ page_url | append: '#page' | json }},
+  "url": {{ page_url | json }},
+  "name": {{ s.page_name | default: page.title | default: 'Play online' | json }},
+  {%- if s.page_description != blank %}
+  "description": {{ s.page_description | json }},
+  {%- endif %}
+  "publisher": { "@type": "Organization", "name": {{ org_name | json }}, "url": {{ shop.url | json }} },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+      { "@type": "ListItem", "position": 2, "name": {{ s.page_name | default: page.title | default: 'Play online' | json }}, "item": {{ page_url | json }} }
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ game_count }},
+    "itemListElement": [
+      {%- assign n = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        {%- if block.type != 'game' or b.name == blank or b.url == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign n = n | plus: 1 -%}
+        {%- if n > 1 -%},{%- endif %}
+      {
+        "@type": "ListItem",
+        "position": {{ n }},
+        "item": {
+          "@type": "VideoGame",
+          "name": {{ b.name | json }},
+          "url": {{ b.url | json }},
+          {%- if b.description != blank %}
+          "description": {{ b.description | strip_newlines | json }},
+          {%- endif %}
+          {%- if b.image != blank %}
+          "image": {{ b.image | image_url: width: 1200 | prepend: 'https:' | json }},
+          {%- endif %}
+          {%- if b.genre != blank %}
+          "genre": {{ b.genre | split: ',' | json }},
+          {%- endif %}
+          "playMode": "https://schema.org/{{ b.play_mode | default: 'SinglePlayer' }}",
+          "gamePlatform": "Web browser",
+          "applicationCategory": "GameApplication",
+          "operatingSystem": "Any (plays in a web browser)",
+          "inLanguage": "en",
+          {%- if b.based_on != blank %}
+          "isBasedOn": { "@type": "Game", "name": {{ b.based_on | json }}, "publisher": { "@type": "Organization", "name": {{ org_name | json }} } },
+          {%- endif %}
+          {%- if b.same_as != blank %}
+          {%- assign same = b.same_as | newline_to_br | split: '<br />' -%}
+          {%- capture same_list -%}{%- for u in same -%}{%- assign u2 = u | strip -%}{%- if u2 != blank -%}{{ u2 }}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
+          "sameAs": {{ same_list | split: '|' | json }},
+          {%- endif %}
+          {%- if b.free %}
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": {{ cart.currency.iso_code | default: 'USD' | json }}, "availability": "https://schema.org/InStock", "url": {{ b.url | json }} },
+          {%- endif %}
+          "author": { "@type": "Organization", "name": {{ org_name | json }}, "url": {{ shop.url | json }} },
+          "publisher": { "@type": "Organization", "name": {{ org_name | json }}, "url": {{ shop.url | json }} }
+        }
+      }
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+{%- if request.design_mode -%}
+  <div class="sm-container sm-container--narrow" style="--sm-pad-top: 16px; --sm-pad-bottom: 16px;">
+    <p class="sm-bridge-note"><strong>Search data for {{ game_count }} online game{% if game_count != 1 %}s{% endif %}</strong> (only you see this note). It tells Google and AI assistants what each game is, that it's free, and that Smidgen makes it. Edit the games in this section's blocks.</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Smidgen · Web games data",
+  "tag": "div",
+  "settings": [
+    { "type": "paragraph", "content": "Invisible to shoppers. Describes your web games to search engines and AI assistants." },
+    { "type": "text", "id": "page_name", "label": "Page name", "info": "Empty uses the page title." },
+    { "type": "textarea", "id": "page_description", "label": "Page description", "info": "One or two plain sentences about the page." }
+  ],
+  "blocks": [
+    {
+      "type": "game",
+      "name": "Game",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Game name" },
+        { "type": "url", "id": "url", "label": "Game link", "info": "The game's own address, without tracking tags." },
+        { "type": "textarea", "id": "description", "label": "Description", "info": "Plain sentences: what it is and how you play." },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "The game's icon or a screenshot." },
+        { "type": "text", "id": "genre", "label": "Genres", "placeholder": "Word game, Puzzle", "info": "Separate with commas." },
+        { "type": "select", "id": "play_mode", "label": "Play mode", "options": [{ "value": "SinglePlayer", "label": "Single player" }, { "value": "MultiPlayer", "label": "Multiplayer" }, { "value": "CoOp", "label": "Co-op" }], "default": "SinglePlayer" },
+        { "type": "checkbox", "id": "free", "label": "Free to play", "default": true },
+        { "type": "text", "id": "based_on", "label": "Based on (board game)", "info": "e.g. Alphablitz!" },
+        { "type": "textarea", "id": "same_as", "label": "Other official links", "info": "One per line: the game's Instagram, subreddit, Discord and so on." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Smidgen · Web games data" }]
+}
+{% endschema %}

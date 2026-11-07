@@ -2225,5 +2225,48 @@
         "info": "Sends an AmazonClick event to Meta from bridge pages so ad clicks can be credited. Leave blank to turn off."
       }
     ]
+  },
+  {
+    "name": "Smidgen · Extra menu link",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "One extra link added to the end of the main menu (desktop and phone) and to a footer column, without editing your Shopify menus."
+      },
+      {
+        "type": "text",
+        "id": "sm_extra_link_label",
+        "label": "Link text",
+        "default": "Play online"
+      },
+      {
+        "type": "url",
+        "id": "sm_extra_link_url",
+        "label": "Link",
+        "default": "/pages/play-online"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_extra_link_header",
+        "label": "Show in the main menu",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_extra_link_footer",
+        "label": "Show in the footer",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "sm_extra_link_footer_col",
+        "label": "Footer column",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "default": 1,
+        "info": "Which footer menu column it's added to, counting from the left."
+      }
+    ]
   }
 ]

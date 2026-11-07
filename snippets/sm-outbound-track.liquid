@@ -1,0 +1,19 @@
+{%- doc -%}
+  One click listener for links marked [data-sm-outbound] (e.g. the online
+  game buttons). Sends an "outbound_click" event to Google Analytics
+  (gtag / GTM dataLayer) and Shopify customer events.
+{%- enddoc -%}
+<script>
+  (function () {
+    if (window.__smOutTrack) return;
+    window.__smOutTrack = true;
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('a[data-sm-outbound]');
+      if (!el) return;
+      var data = { link_url: el.href, link_label: el.dataset.smOutbound || '', page_path: location.pathname };
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'outbound_click', data); } catch (err) {}
+      try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'outbound_click' }, data)); } catch (err) {}
+      try { if (window.Shopify && Shopify.analytics && Shopify.analytics.publish) Shopify.analytics.publish('outbound_click', data); } catch (err) {}
+    });
+  })();
+</script>

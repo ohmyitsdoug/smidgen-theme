@@ -37,7 +37,15 @@
             <div class="sm-rte">{{ body }}</div>
           {%- endif -%}
           {%- if s.button_label != blank -%}
-            <a class="sm-btn{% if s.button_style == 'secondary' %} sm-btn--secondary{% endif %}" href="{{ s.button_link | default: '#' }}">{{ s.button_label }}</a>
+            {%- liquid
+              assign btn_ext = false
+              if s.button_link contains '://'
+                unless s.button_link contains shop.domain
+                  assign btn_ext = true
+                endunless
+              endif
+            -%}
+            <a class="sm-btn{% if s.button_style == 'secondary' %} sm-btn--secondary{% endif %}" href="{{ s.button_link | default: '#' }}"{% if btn_ext %} target="_blank" rel="noopener" data-sm-outbound="{{ s.heading | escape }}"{% endif %}>{{ s.button_label }}{% if btn_ext %}<span class="sm-visually-hidden"> (opens in a new tab)</span>{% endif %}</a>
           {%- endif -%}
         </div>
       </div>

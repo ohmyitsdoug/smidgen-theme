@@ -168,6 +168,25 @@
           {%- endif -%}
         </li>
       {% endfor %}
+      {%- assign sm_extra_dupe = false -%}{%- for l in block_settings.menu.links -%}{%- if l.url == settings.sm_extra_link_url -%}{%- assign sm_extra_dupe = true -%}{%- endif -%}{%- endfor -%}
+      {%- if settings.sm_extra_link_header and sm_extra_dupe == false and settings.sm_extra_link_label != blank and settings.sm_extra_link_url != blank -%}
+        <li
+          class="menu-list__list-item sm-extra-link"
+          on:blur="/deactivate"
+          on:pointerenter="/activate"
+          on:pointerleave="/deactivate"
+        >
+          <a
+            href="{{ settings.sm_extra_link_url }}"
+            data-skip-node-update="true"
+            class="menu-list__link"
+            {% if request.path == settings.sm_extra_link_url %}aria-current="page"{% endif %}
+            ref="menuitem"
+          >
+            <span class="menu-list__link-title">{{ settings.sm_extra_link_label | escape }}</span>
+          </a>
+        </li>
+      {%- endif -%}
       {%- capture sm_ws -%}{%- render 'sm-is-wholesale' -%}{%- endcapture -%}
       {%- if sm_ws == 'true' -%}
         <li
