@@ -107,7 +107,7 @@
             "weight": "",
             "letter_spacing": "normal",
             "case": "none",
-            "text_color": ""
+            "text_color": "#000000"
           },
           "blocks": {}
         }
